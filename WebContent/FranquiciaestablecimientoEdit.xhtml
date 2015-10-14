@@ -1,0 +1,97 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:a="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    template="layout/template.xhtml">
+
+<ui:define name="body">
+
+    <h:form id="franquiciaestablecimiento" styleClass="edit">
+
+        <rich:panel>
+            <f:facet name="header">#{franquiciaestablecimientoHome.managed ? 'Edit' : 'Add'} Franquiciaestablecimiento</f:facet>
+
+
+            <s:decorate id="establecimientoField" template="layout/edit.xhtml">
+                <ui:define name="label">Establecimiento</ui:define>
+                <h:inputText id="establecimiento"
+                       disabled="#{franquiciaestablecimientoHome.managed}"
+                      required="true"
+                          size="8"
+                     maxlength="8"
+                         value="#{franquiciaestablecimientoHome.instance.id.establecimiento}">
+                    <a:support event="onblur" reRender="establecimientoField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+            <s:decorate id="franquiciaField" template="layout/edit.xhtml">
+                <ui:define name="label">Franquicia</ui:define>
+                <h:inputText id="franquicia"
+                       disabled="#{franquiciaestablecimientoHome.managed}"
+                      required="true"
+                          size="1"
+                     maxlength="1"
+                         value="#{franquiciaestablecimientoHome.instance.id.franquicia}">
+                    <a:support event="onblur" reRender="franquiciaField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="porcentajeField" template="layout/edit.xhtml">
+                <ui:define name="label">Porcentaje</ui:define>
+                <h:inputText id="porcentaje"
+                          value="#{franquiciaestablecimientoHome.instance.porcentaje}"
+                           size="10">
+                    <a:support event="onblur" reRender="porcentajeField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+            <div style="clear:both">
+                <span class="required">*</span>
+                required fields
+            </div>
+
+        </rich:panel>
+
+        <div class="actionButtons">
+
+            <h:commandButton id="save"
+                          value="Save"
+                         action="#{franquiciaestablecimientoHome.persist}"
+                       disabled="#{!franquiciaestablecimientoHome.wired}"
+                       rendered="#{!franquiciaestablecimientoHome.managed}"/>
+
+            <h:commandButton id="update"
+                          value="Save"
+                         action="#{franquiciaestablecimientoHome.update}"
+                       rendered="#{franquiciaestablecimientoHome.managed}"/>
+
+            <h:commandButton id="delete"
+                          value="Delete"
+                         action="#{franquiciaestablecimientoHome.remove}"
+                      immediate="true"
+                       rendered="#{franquiciaestablecimientoHome.managed}"/>
+
+            <s:button id="cancelEdit"
+                   value="Cancel"
+             propagation="end"
+                    view="/Franquiciaestablecimiento.xhtml"
+                rendered="#{franquiciaestablecimientoHome.managed}"/>
+
+            <s:button id="cancelAdd"
+                   value="Cancel"
+             propagation="end"
+                    view="/#{empty franquiciaestablecimientoFrom ? 'FranquiciaestablecimientoList' : franquiciaestablecimientoFrom}.xhtml"
+                rendered="#{!franquiciaestablecimientoHome.managed}"/>
+
+        </div>
+    </h:form>
+
+</ui:define>
+
+</ui:composition>

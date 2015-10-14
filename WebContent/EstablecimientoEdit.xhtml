@@ -1,0 +1,1040 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:a="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    template="layout/template.xhtml">
+
+<ui:define name="body">
+
+    <h:form id="establecimiento" styleClass="edit">
+
+        <rich:panel>
+            <f:facet name="header">#{establecimientoHome.managed ? 'Edit' : 'Add'} Establecimiento</f:facet>
+
+
+            <s:decorate id="codigounicoField" template="layout/edit.xhtml">
+                <ui:define name="label">Codigounico</ui:define>
+                <h:inputText id="codigounico"
+                       disabled="#{establecimientoHome.managed}"
+                       required="true"
+                           size="8"
+                      maxlength="8"
+                          value="#{establecimientoHome.instance.codigounico}">
+                    <a:support event="onblur" reRender="codigounicoField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+
+
+
+            <s:decorate id="nombreestableField" template="layout/edit.xhtml">
+                <ui:define name="label">Nombreestable</ui:define>
+                <h:inputText id="nombreestable"
+                       required="true"
+                           size="30"
+                      maxlength="30"
+                          value="#{establecimientoHome.instance.nombreestable}">
+                    <a:support event="onblur" reRender="nombreestableField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="direccionField" template="layout/edit.xhtml">
+                <ui:define name="label">Direccion</ui:define>
+                <h:inputText id="direccion"
+                           size="50"
+                      maxlength="50"
+                          value="#{establecimientoHome.instance.direccion}">
+                    <a:support event="onblur" reRender="direccionField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="telefonoField" template="layout/edit.xhtml">
+                <ui:define name="label">Telefono</ui:define>
+                <h:inputText id="telefono"
+                           size="15"
+                      maxlength="15"
+                          value="#{establecimientoHome.instance.telefono}">
+                    <a:support event="onblur" reRender="telefonoField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="porcentajeField" template="layout/edit.xhtml">
+                <ui:define name="label">Porcentaje</ui:define>
+                <h:inputText id="porcentaje"
+                          value="#{establecimientoHome.instance.porcentaje}"
+                           size="12">
+                    <a:support event="onblur" reRender="porcentajeField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="ivaField" template="layout/edit.xhtml">
+                <ui:define name="label">Iva</ui:define>
+                <h:selectBooleanCheckbox id="iva"
+                                      value="#{establecimientoHome.instance.iva}"/>
+            </s:decorate>
+
+
+            <s:decorate id="numcuentaField" template="layout/edit.xhtml">
+                <ui:define name="label">Numcuenta</ui:define>
+                <h:inputText id="numcuenta"
+                           size="20"
+                      maxlength="20"
+                          value="#{establecimientoHome.instance.numcuenta}">
+                    <a:support event="onblur" reRender="numcuentaField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="facturarField" template="layout/edit.xhtml">
+                <ui:define name="label">Facturar</ui:define>
+                <h:selectBooleanCheckbox id="facturar"
+                                      value="#{establecimientoHome.instance.facturar}"/>
+            </s:decorate>
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <div style="clear:both">
+                <span class="required">*</span>
+                required fields
+            </div>
+
+        </rich:panel>
+
+        <div class="actionButtons">
+
+            <h:commandButton id="save"
+                          value="Save"
+                         action="#{establecimientoHome.persist}"
+                       disabled="#{!establecimientoHome.wired}"
+                       rendered="#{!establecimientoHome.managed}"/>
+
+            <h:commandButton id="update"
+                          value="Save"
+                         action="#{establecimientoHome.update}"
+                       rendered="#{establecimientoHome.managed}"/>
+
+            <h:commandButton id="delete"
+                          value="Delete"
+                         action="#{establecimientoHome.remove}"
+                      immediate="true"
+                       rendered="#{establecimientoHome.managed}"/>
+
+            <s:button id="cancelEdit"
+                   value="Cancel"
+             propagation="end"
+                    view="/Establecimiento.xhtml"
+                rendered="#{establecimientoHome.managed}"/>
+
+            <s:button id="cancelAdd"
+                   value="Cancel"
+             propagation="end"
+                    view="/#{empty establecimientoFrom ? 'EstablecimientoList' : establecimientoFrom}.xhtml"
+                rendered="#{!establecimientoHome.managed}"/>
+
+        </div>
+    </h:form>
+
+<rich:tabPanel switchType="ajax">
+
+    <rich:tab label="Pais">
+    <div class="association" id="paisParent">
+
+        <h:outputText value="There is no pais associated with this establecimiento."
+                   rendered="#{establecimientoHome.instance.pais == null}"/>
+
+        <rich:dataTable var="_pais"
+                   value="#{establecimientoHome.instance.pais}"
+                rendered="#{establecimientoHome.instance.pais != null}"
+              rowClasses="rvgRowOne,rvgRowTwo"
+                      id="paisTable">
+            <h:column>
+                <f:facet name="header">Codigopais</f:facet>
+                <h:outputText value="#{_pais.codigopais}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Paisiso codigopais</f:facet>
+                <h:outputText value="#{_pais.paisiso.codigopais}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Nombre</f:facet>
+                <h:outputText value="#{_pais.nombre}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Estado</f:facet>
+                <h:outputText value="#{_pais.estado}"/>
+            </h:column>
+        </rich:dataTable>
+
+        <div class="actionButtons">
+            <s:button id="#{establecimientoHome.instance.pais != null ? 'changeParent' : 'selectParent'}" value="#{establecimientoHome.instance.pais != null ? 'Change' : 'Select'} pais"
+                       view="/PaisList.xhtml">
+                <f:param name="from" value="EstablecimientoEdit"/>
+            </s:button>
+        </div>
+
+    </div>
+    </rich:tab>
+
+    <rich:tab label="Empresa">
+    <div class="association" id="empresaParent">
+
+        <h:outputText value="There is no empresa associated with this establecimiento."
+                   rendered="#{establecimientoHome.instance.empresa == null}"/>
+
+        <rich:dataTable var="_empresa"
+                   value="#{establecimientoHome.instance.empresa}"
+                rendered="#{establecimientoHome.instance.empresa != null}"
+              rowClasses="rvgRowOne,rvgRowTwo"
+                      id="empresaTable">
+            <h:column>
+                <f:facet name="header">Nit</f:facet>
+                <h:outputText value="#{_empresa.nit}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Nombrerazonsocial</f:facet>
+                <h:outputText value="#{_empresa.nombrerazonsocial}"/>
+            </h:column>
+        </rich:dataTable>
+
+        <div class="actionButtons">
+            <s:button id="#{establecimientoHome.instance.empresa != null ? 'changeParent' : 'selectParent'}" value="#{establecimientoHome.instance.empresa != null ? 'Change' : 'Select'} empresa"
+                       view="/EmpresaList.xhtml">
+                <f:param name="from" value="EstablecimientoEdit"/>
+            </s:button>
+        </div>
+
+    </div>
+    </rich:tab>
+
+    <rich:tab label="Bancocol">
+    <div class="association" id="bancocolParent">
+
+        <h:outputText value="There is no bancocol associated with this establecimiento."
+                   rendered="#{establecimientoHome.instance.bancocol == null}"/>
+
+        <rich:dataTable var="_bancocol"
+                   value="#{establecimientoHome.instance.bancocol}"
+                rendered="#{establecimientoHome.instance.bancocol != null}"
+              rowClasses="rvgRowOne,rvgRowTwo"
+                      id="bancocolTable">
+            <h:column>
+                <f:facet name="header">Codbanco</f:facet>
+                <h:outputText value="#{_bancocol.codbanco}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Nombre</f:facet>
+                <h:outputText value="#{_bancocol.nombre}"/>
+            </h:column>
+        </rich:dataTable>
+
+        <div class="actionButtons">
+            <s:button id="#{establecimientoHome.instance.bancocol != null ? 'changeParent' : 'selectParent'}" value="#{establecimientoHome.instance.bancocol != null ? 'Change' : 'Select'} bancocol"
+                       view="/BancocolList.xhtml">
+                <f:param name="from" value="EstablecimientoEdit"/>
+            </s:button>
+        </div>
+
+    </div>
+    </rich:tab>
+
+    <rich:tab label="Tasadolarpromotorparametros">
+        <h:form styleClass="association" id="tasadolarpromotorparametrosChildren">
+
+            <h:outputText value="There are no tasadolarpromotorparametros associated with this establecimiento."
+                       rendered="#{empty establecimientoHome.tasadolarpromotorparametros}"/>
+
+            <rich:dataTable value="#{establecimientoHome.tasadolarpromotorparametros}"
+                           var="_tasadolarpromotorparametro"
+                      rendered="#{not empty establecimientoHome.tasadolarpromotorparametros}"
+                    rowClasses="rvgRowOne,rvgRowTwo"
+                            id="tasadolarpromotorparametrosTable">
+                <rich:column sortBy="#{_tasadolarpromotorparametro.consecutivo}">
+                    <f:facet name="header">Consecutivo</f:facet>
+                    <h:outputText value="#{_tasadolarpromotorparametro.consecutivo}"/>
+                </rich:column>
+                <rich:column sortBy="#{_tasadolarpromotorparametro.tipocupo}">
+                    <f:facet name="header">Tipocupo</f:facet>
+                    <h:outputText value="#{_tasadolarpromotorparametro.tipocupo}"/>
+                </rich:column>
+                <rich:column sortBy="#{_tasadolarpromotorparametro.tasadolar}">
+                    <f:facet name="header">Tasadolar</f:facet>
+                    <h:outputText value="#{_tasadolarpromotorparametro.tasadolar}">
+                        <f:convertNumber/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_tasadolarpromotorparametro.fechainicio}">
+                    <f:facet name="header">Fechainicio</f:facet>
+                    <h:outputText value="#{_tasadolarpromotorparametro.fechainicio}">
+                        <s:convertDateTime type="both" dateStyle="short"/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_tasadolarpromotorparametro.fechafin}">
+                    <f:facet name="header">Fechafin</f:facet>
+                    <h:outputText value="#{_tasadolarpromotorparametro.fechafin}">
+                        <s:convertDateTime type="both" dateStyle="short"/>
+                    </h:outputText>
+                </rich:column>
+            </rich:dataTable>
+
+        </h:form>
+
+        <f:subview rendered="#{establecimientoHome.managed}" id="tasadolarpromotorparametros">
+        <div class="actionButtons">
+            <s:button id="addtasadolarpromotorparametro"
+                   value="Add tasadolarpromotorparametro"
+                    view="/TasadolarpromotorparametroEdit.xhtml"
+             propagation="none">
+                 <f:param name="establecimientoCodigounico"
+                         value="#{establecimientoHome.instance.codigounico}"/>
+                 <f:param name="tasadolarpromotorparametroFrom" value="Establecimiento"/>
+            </s:button>
+        </div>
+        </f:subview>
+    </rich:tab>
+
+    <rich:tab label="Porcentcomisiontxparampromos">
+        <h:form styleClass="association" id="porcentcomisiontxparampromosChildren">
+
+            <h:outputText value="There are no porcentcomisiontxparampromos associated with this establecimiento."
+                       rendered="#{empty establecimientoHome.porcentcomisiontxparampromos}"/>
+
+            <rich:dataTable value="#{establecimientoHome.porcentcomisiontxparampromos}"
+                           var="_porcentcomisiontxparampromo"
+                      rendered="#{not empty establecimientoHome.porcentcomisiontxparampromos}"
+                    rowClasses="rvgRowOne,rvgRowTwo"
+                            id="porcentcomisiontxparampromosTable">
+                <rich:column sortBy="#{_porcentcomisiontxparampromo.consecutivo}">
+                    <f:facet name="header">Consecutivo</f:facet>
+                    <h:outputText value="#{_porcentcomisiontxparampromo.consecutivo}"/>
+                </rich:column>
+                <rich:column sortBy="#{_porcentcomisiontxparampromo.tipocupo}">
+                    <f:facet name="header">Tipocupo</f:facet>
+                    <h:outputText value="#{_porcentcomisiontxparampromo.tipocupo}"/>
+                </rich:column>
+                <rich:column sortBy="#{_porcentcomisiontxparampromo.porcentaje}">
+                    <f:facet name="header">Porcentaje</f:facet>
+                    <h:outputText value="#{_porcentcomisiontxparampromo.porcentaje}">
+                        <f:convertNumber/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_porcentcomisiontxparampromo.fechainicio}">
+                    <f:facet name="header">Fechainicio</f:facet>
+                    <h:outputText value="#{_porcentcomisiontxparampromo.fechainicio}">
+                        <s:convertDateTime type="both" dateStyle="short"/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_porcentcomisiontxparampromo.fechafin}">
+                    <f:facet name="header">Fechafin</f:facet>
+                    <h:outputText value="#{_porcentcomisiontxparampromo.fechafin}">
+                        <s:convertDateTime type="both" dateStyle="short"/>
+                    </h:outputText>
+                </rich:column>
+            </rich:dataTable>
+
+        </h:form>
+
+        <f:subview rendered="#{establecimientoHome.managed}" id="porcentcomisiontxparampromos">
+        <div class="actionButtons">
+            <s:button id="addporcentcomisiontxparampromo"
+                   value="Add porcentcomisiontxparampromo"
+                    view="/PorcentcomisiontxparampromoEdit.xhtml"
+             propagation="none">
+                 <f:param name="establecimientoCodigounico"
+                         value="#{establecimientoHome.instance.codigounico}"/>
+                 <f:param name="porcentcomisiontxparampromoFrom" value="Establecimiento"/>
+            </s:button>
+        </div>
+        </f:subview>
+    </rich:tab>
+
+    <rich:tab label="Porcentajecomisiontxparams">
+        <h:form styleClass="association" id="porcentajecomisiontxparamsChildren">
+
+            <h:outputText value="There are no porcentajecomisiontxparams associated with this establecimiento."
+                       rendered="#{empty establecimientoHome.porcentajecomisiontxparams}"/>
+
+            <rich:dataTable value="#{establecimientoHome.porcentajecomisiontxparams}"
+                           var="_porcentajecomisiontxparam"
+                      rendered="#{not empty establecimientoHome.porcentajecomisiontxparams}"
+                    rowClasses="rvgRowOne,rvgRowTwo"
+                            id="porcentajecomisiontxparamsTable">
+                <rich:column sortBy="#{_porcentajecomisiontxparam.consecutivo}">
+                    <f:facet name="header">Consecutivo</f:facet>
+                    <h:outputText value="#{_porcentajecomisiontxparam.consecutivo}"/>
+                </rich:column>
+                <rich:column sortBy="#{_porcentajecomisiontxparam.tipocupo}">
+                    <f:facet name="header">Tipocupo</f:facet>
+                    <h:outputText value="#{_porcentajecomisiontxparam.tipocupo}"/>
+                </rich:column>
+                <rich:column sortBy="#{_porcentajecomisiontxparam.porcentaje}">
+                    <f:facet name="header">Porcentaje</f:facet>
+                    <h:outputText value="#{_porcentajecomisiontxparam.porcentaje}">
+                        <f:convertNumber/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_porcentajecomisiontxparam.porcentajeTac}">
+                    <f:facet name="header">Porcentaje tac</f:facet>
+                    <h:outputText value="#{_porcentajecomisiontxparam.porcentajeTac}">
+                        <f:convertNumber/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_porcentajecomisiontxparam.fechainicio}">
+                    <f:facet name="header">Fechainicio</f:facet>
+                    <h:outputText value="#{_porcentajecomisiontxparam.fechainicio}">
+                        <s:convertDateTime type="both" dateStyle="short"/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_porcentajecomisiontxparam.fechafin}">
+                    <f:facet name="header">Fechafin</f:facet>
+                    <h:outputText value="#{_porcentajecomisiontxparam.fechafin}">
+                        <s:convertDateTime type="both" dateStyle="short"/>
+                    </h:outputText>
+                </rich:column>
+            </rich:dataTable>
+
+        </h:form>
+
+        <f:subview rendered="#{establecimientoHome.managed}" id="porcentajecomisiontxparams">
+        <div class="actionButtons">
+            <s:button id="addporcentajecomisiontxparam"
+                   value="Add porcentajecomisiontxparam"
+                    view="/PorcentajecomisiontxparamEdit.xhtml"
+             propagation="none">
+                 <f:param name="establecimientoCodigounico"
+                         value="#{establecimientoHome.instance.codigounico}"/>
+                 <f:param name="porcentajecomisiontxparamFrom" value="Establecimiento"/>
+            </s:button>
+        </div>
+        </f:subview>
+    </rich:tab>
+
+    <rich:tab label="Tasaeuropromotorparametros">
+        <h:form styleClass="association" id="tasaeuropromotorparametrosChildren">
+
+            <h:outputText value="There are no tasaeuropromotorparametros associated with this establecimiento."
+                       rendered="#{empty establecimientoHome.tasaeuropromotorparametros}"/>
+
+            <rich:dataTable value="#{establecimientoHome.tasaeuropromotorparametros}"
+                           var="_tasaeuropromotorparametro"
+                      rendered="#{not empty establecimientoHome.tasaeuropromotorparametros}"
+                    rowClasses="rvgRowOne,rvgRowTwo"
+                            id="tasaeuropromotorparametrosTable">
+                <rich:column sortBy="#{_tasaeuropromotorparametro.consecutivo}">
+                    <f:facet name="header">Consecutivo</f:facet>
+                    <h:outputText value="#{_tasaeuropromotorparametro.consecutivo}"/>
+                </rich:column>
+                <rich:column sortBy="#{_tasaeuropromotorparametro.tipocupo}">
+                    <f:facet name="header">Tipocupo</f:facet>
+                    <h:outputText value="#{_tasaeuropromotorparametro.tipocupo}"/>
+                </rich:column>
+                <rich:column sortBy="#{_tasaeuropromotorparametro.tasaeuro}">
+                    <f:facet name="header">Tasaeuro</f:facet>
+                    <h:outputText value="#{_tasaeuropromotorparametro.tasaeuro}">
+                        <f:convertNumber/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_tasaeuropromotorparametro.tasaeuroTac}">
+                    <f:facet name="header">Tasaeuro tac</f:facet>
+                    <h:outputText value="#{_tasaeuropromotorparametro.tasaeuroTac}">
+                        <f:convertNumber/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_tasaeuropromotorparametro.fechainicio}">
+                    <f:facet name="header">Fechainicio</f:facet>
+                    <h:outputText value="#{_tasaeuropromotorparametro.fechainicio}">
+                        <s:convertDateTime type="both" dateStyle="short"/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_tasaeuropromotorparametro.fechafin}">
+                    <f:facet name="header">Fechafin</f:facet>
+                    <h:outputText value="#{_tasaeuropromotorparametro.fechafin}">
+                        <s:convertDateTime type="both" dateStyle="short"/>
+                    </h:outputText>
+                </rich:column>
+            </rich:dataTable>
+
+        </h:form>
+
+        <f:subview rendered="#{establecimientoHome.managed}" id="tasaeuropromotorparametros">
+        <div class="actionButtons">
+            <s:button id="addtasaeuropromotorparametro"
+                   value="Add tasaeuropromotorparametro"
+                    view="/TasaeuropromotorparametroEdit.xhtml"
+             propagation="none">
+                 <f:param name="establecimientoCodigounico"
+                         value="#{establecimientoHome.instance.codigounico}"/>
+                 <f:param name="tasaeuropromotorparametroFrom" value="Establecimiento"/>
+            </s:button>
+        </div>
+        </f:subview>
+    </rich:tab>
+
+    <rich:tab label="Tasadolarparametros">
+        <h:form styleClass="association" id="tasadolarparametrosChildren">
+
+            <h:outputText value="There are no tasadolarparametros associated with this establecimiento."
+                       rendered="#{empty establecimientoHome.tasadolarparametros}"/>
+
+            <rich:dataTable value="#{establecimientoHome.tasadolarparametros}"
+                           var="_tasadolarparametro"
+                      rendered="#{not empty establecimientoHome.tasadolarparametros}"
+                    rowClasses="rvgRowOne,rvgRowTwo"
+                            id="tasadolarparametrosTable">
+                <rich:column sortBy="#{_tasadolarparametro.consecutivo}">
+                    <f:facet name="header">Consecutivo</f:facet>
+                    <h:outputText value="#{_tasadolarparametro.consecutivo}"/>
+                </rich:column>
+                <rich:column sortBy="#{_tasadolarparametro.tipocupo}">
+                    <f:facet name="header">Tipocupo</f:facet>
+                    <h:outputText value="#{_tasadolarparametro.tipocupo}"/>
+                </rich:column>
+                <rich:column sortBy="#{_tasadolarparametro.tasadolar}">
+                    <f:facet name="header">Tasadolar</f:facet>
+                    <h:outputText value="#{_tasadolarparametro.tasadolar}">
+                        <f:convertNumber/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_tasadolarparametro.tasadolarTac}">
+                    <f:facet name="header">Tasadolar tac</f:facet>
+                    <h:outputText value="#{_tasadolarparametro.tasadolarTac}">
+                        <f:convertNumber/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_tasadolarparametro.fechainicio}">
+                    <f:facet name="header">Fechainicio</f:facet>
+                    <h:outputText value="#{_tasadolarparametro.fechainicio}">
+                        <s:convertDateTime type="both" dateStyle="short"/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_tasadolarparametro.fechafin}">
+                    <f:facet name="header">Fechafin</f:facet>
+                    <h:outputText value="#{_tasadolarparametro.fechafin}">
+                        <s:convertDateTime type="both" dateStyle="short"/>
+                    </h:outputText>
+                </rich:column>
+            </rich:dataTable>
+
+        </h:form>
+
+        <f:subview rendered="#{establecimientoHome.managed}" id="tasadolarparametros">
+        <div class="actionButtons">
+            <s:button id="addtasadolarparametro"
+                   value="Add tasadolarparametro"
+                    view="/TasadolarparametroEdit.xhtml"
+             propagation="none">
+                 <f:param name="establecimientoCodigounico"
+                         value="#{establecimientoHome.instance.codigounico}"/>
+                 <f:param name="tasadolarparametroFrom" value="Establecimiento"/>
+            </s:button>
+        </div>
+        </f:subview>
+    </rich:tab>
+
+    <rich:tab label="Inventarios">
+        <h:form styleClass="association" id="inventariosChildren">
+
+            <h:outputText value="There are no inventarios associated with this establecimiento."
+                       rendered="#{empty establecimientoHome.inventarios}"/>
+
+            <rich:dataTable value="#{establecimientoHome.inventarios}"
+                           var="_inventario"
+                      rendered="#{not empty establecimientoHome.inventarios}"
+                    rowClasses="rvgRowOne,rvgRowTwo"
+                            id="inventariosTable">
+                <rich:column sortBy="#{_inventario.id.refproducto}">
+                    <f:facet name="header">Refproducto</f:facet>
+                    <h:outputText value="#{_inventario.id.refproducto}"/>
+                </rich:column>
+                <rich:column sortBy="#{_inventario.id.codigounico}">
+                    <f:facet name="header">Codigounico</f:facet>
+                    <h:outputText value="#{_inventario.id.codigounico}"/>
+                </rich:column>
+                <rich:column sortBy="#{_inventario.valor}">
+                    <f:facet name="header">Valor</f:facet>
+                    <h:outputText value="#{_inventario.valor}">
+                        <f:convertNumber/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_inventario.cantidad}">
+                    <f:facet name="header">Cantidad</f:facet>
+                    <h:outputText value="#{_inventario.cantidad}">
+                        <f:convertNumber/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_inventario.activo}">
+                    <f:facet name="header">Activo</f:facet>
+                    <h:outputText value="#{_inventario.activo}"/>
+                </rich:column>
+                <rich:column sortBy="#{_inventario.prioridad}">
+                    <f:facet name="header">Prioridad</f:facet>
+                    <h:outputText value="#{_inventario.prioridad}"/>
+                </rich:column>
+            </rich:dataTable>
+
+        </h:form>
+
+        <f:subview rendered="#{establecimientoHome.managed}" id="inventarios">
+        <div class="actionButtons">
+            <s:button id="addinventario"
+                   value="Add inventario"
+                    view="/InventarioEdit.xhtml"
+             propagation="none">
+                 <f:param name="establecimientoCodigounico"
+                         value="#{establecimientoHome.instance.codigounico}"/>
+                 <f:param name="inventarioFrom" value="Establecimiento"/>
+            </s:button>
+        </div>
+        </f:subview>
+    </rich:tab>
+
+    <rich:tab label="Tasaeuroparametros">
+        <h:form styleClass="association" id="tasaeuroparametrosChildren">
+
+            <h:outputText value="There are no tasaeuroparametros associated with this establecimiento."
+                       rendered="#{empty establecimientoHome.tasaeuroparametros}"/>
+
+            <rich:dataTable value="#{establecimientoHome.tasaeuroparametros}"
+                           var="_tasaeuroparametro"
+                      rendered="#{not empty establecimientoHome.tasaeuroparametros}"
+                    rowClasses="rvgRowOne,rvgRowTwo"
+                            id="tasaeuroparametrosTable">
+                <rich:column sortBy="#{_tasaeuroparametro.consecutivo}">
+                    <f:facet name="header">Consecutivo</f:facet>
+                    <h:outputText value="#{_tasaeuroparametro.consecutivo}"/>
+                </rich:column>
+                <rich:column sortBy="#{_tasaeuroparametro.tipocupo}">
+                    <f:facet name="header">Tipocupo</f:facet>
+                    <h:outputText value="#{_tasaeuroparametro.tipocupo}"/>
+                </rich:column>
+                <rich:column sortBy="#{_tasaeuroparametro.tasaeuro}">
+                    <f:facet name="header">Tasaeuro</f:facet>
+                    <h:outputText value="#{_tasaeuroparametro.tasaeuro}">
+                        <f:convertNumber/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_tasaeuroparametro.tasaeuroTac}">
+                    <f:facet name="header">Tasaeuro tac</f:facet>
+                    <h:outputText value="#{_tasaeuroparametro.tasaeuroTac}">
+                        <f:convertNumber/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_tasaeuroparametro.fechainicio}">
+                    <f:facet name="header">Fechainicio</f:facet>
+                    <h:outputText value="#{_tasaeuroparametro.fechainicio}">
+                        <s:convertDateTime type="both" dateStyle="short"/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_tasaeuroparametro.fechafin}">
+                    <f:facet name="header">Fechafin</f:facet>
+                    <h:outputText value="#{_tasaeuroparametro.fechafin}">
+                        <s:convertDateTime type="both" dateStyle="short"/>
+                    </h:outputText>
+                </rich:column>
+            </rich:dataTable>
+
+        </h:form>
+
+        <f:subview rendered="#{establecimientoHome.managed}" id="tasaeuroparametros">
+        <div class="actionButtons">
+            <s:button id="addtasaeuroparametro"
+                   value="Add tasaeuroparametro"
+                    view="/TasaeuroparametroEdit.xhtml"
+             propagation="none">
+                 <f:param name="establecimientoCodigounico"
+                         value="#{establecimientoHome.instance.codigounico}"/>
+                 <f:param name="tasaeuroparametroFrom" value="Establecimiento"/>
+            </s:button>
+        </div>
+        </f:subview>
+    </rich:tab>
+
+    <rich:tab label="Establecimientoprecios">
+        <h:form styleClass="association" id="establecimientopreciosChildren">
+
+            <h:outputText value="There are no establecimientoprecios associated with this establecimiento."
+                       rendered="#{empty establecimientoHome.establecimientoprecios}"/>
+
+            <rich:dataTable value="#{establecimientoHome.establecimientoprecios}"
+                           var="_establecimientoprecio"
+                      rendered="#{not empty establecimientoHome.establecimientoprecios}"
+                    rowClasses="rvgRowOne,rvgRowTwo"
+                            id="establecimientopreciosTable">
+                <rich:column sortBy="#{_establecimientoprecio.id.codigounico}">
+                    <f:facet name="header">Codigounico</f:facet>
+                    <h:outputText value="#{_establecimientoprecio.id.codigounico}"/>
+                </rich:column>
+                <rich:column sortBy="#{_establecimientoprecio.id.fechainicio}">
+                    <f:facet name="header">Fechainicio</f:facet>
+                    <h:outputText value="#{_establecimientoprecio.id.fechainicio}">
+                        <s:convertDateTime type="both" dateStyle="short"/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_establecimientoprecio.fechafin}">
+                    <f:facet name="header">Fechafin</f:facet>
+                    <h:outputText value="#{_establecimientoprecio.fechafin}">
+                        <s:convertDateTime type="both" dateStyle="short"/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_establecimientoprecio.dolaroficina}">
+                    <f:facet name="header">Dolaroficina</f:facet>
+                    <h:outputText value="#{_establecimientoprecio.dolaroficina}">
+                        <f:convertNumber/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_establecimientoprecio.porcentajeoficina}">
+                    <f:facet name="header">Porcentajeoficina</f:facet>
+                    <h:outputText value="#{_establecimientoprecio.porcentajeoficina}">
+                        <f:convertNumber/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_establecimientoprecio.paridad}">
+                    <f:facet name="header">Paridad</f:facet>
+                    <h:outputText value="#{_establecimientoprecio.paridad}">
+                        <f:convertNumber/>
+                    </h:outputText>
+                </rich:column>
+            </rich:dataTable>
+
+        </h:form>
+
+        <f:subview rendered="#{establecimientoHome.managed}" id="establecimientoprecios">
+        <div class="actionButtons">
+            <s:button id="addestablecimientoprecio"
+                   value="Add establecimientoprecio"
+                    view="/EstablecimientoprecioEdit.xhtml"
+             propagation="none">
+                 <f:param name="establecimientoCodigounico"
+                         value="#{establecimientoHome.instance.codigounico}"/>
+                 <f:param name="establecimientoprecioFrom" value="Establecimiento"/>
+            </s:button>
+        </div>
+        </f:subview>
+    </rich:tab>
+
+    <rich:tab label="Puntoestablecimientos">
+        <h:form styleClass="association" id="puntoestablecimientosChildren">
+
+            <h:outputText value="There are no puntoestablecimientos associated with this establecimiento."
+                       rendered="#{empty establecimientoHome.puntoestablecimientos}"/>
+
+            <rich:dataTable value="#{establecimientoHome.puntoestablecimientos}"
+                           var="_puntoestablecimiento"
+                      rendered="#{not empty establecimientoHome.puntoestablecimientos}"
+                    rowClasses="rvgRowOne,rvgRowTwo"
+                            id="puntoestablecimientosTable">
+                <rich:column sortBy="#{_puntoestablecimiento.id.codigounico}">
+                    <f:facet name="header">Codigounico</f:facet>
+                    <h:outputText value="#{_puntoestablecimiento.id.codigounico}"/>
+                </rich:column>
+                <rich:column sortBy="#{_puntoestablecimiento.id.codpuntoventa}">
+                    <f:facet name="header">Codpuntoventa</f:facet>
+                    <h:outputText value="#{_puntoestablecimiento.id.codpuntoventa}"/>
+                </rich:column>
+                <rich:column sortBy="#{_puntoestablecimiento.id.fechainicio}">
+                    <f:facet name="header">Fechainicio</f:facet>
+                    <h:outputText value="#{_puntoestablecimiento.id.fechainicio}">
+                        <s:convertDateTime type="both" dateStyle="short"/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_puntoestablecimiento.fechafin}">
+                    <f:facet name="header">Fechafin</f:facet>
+                    <h:outputText value="#{_puntoestablecimiento.fechafin}">
+                        <s:convertDateTime type="both" dateStyle="short"/>
+                    </h:outputText>
+                </rich:column>
+            </rich:dataTable>
+
+        </h:form>
+
+        <f:subview rendered="#{establecimientoHome.managed}" id="puntoestablecimientos">
+        <div class="actionButtons">
+            <s:button id="addpuntoestablecimiento"
+                   value="Add puntoestablecimiento"
+                    view="/PuntoestablecimientoEdit.xhtml"
+             propagation="none">
+                 <f:param name="establecimientoCodigounico"
+                         value="#{establecimientoHome.instance.codigounico}"/>
+                 <f:param name="puntoestablecimientoFrom" value="Establecimiento"/>
+            </s:button>
+        </div>
+        </f:subview>
+    </rich:tab>
+
+    <rich:tab label="Transaccions">
+        <h:form styleClass="association" id="transaccionsChildren">
+
+            <h:outputText value="There are no transaccions associated with this establecimiento."
+                       rendered="#{empty establecimientoHome.transaccions}"/>
+
+            <rich:dataTable value="#{establecimientoHome.transaccions}"
+                           var="_transaccion"
+                      rendered="#{not empty establecimientoHome.transaccions}"
+                    rowClasses="rvgRowOne,rvgRowTwo"
+                            id="transaccionsTable">
+                <rich:column sortBy="#{_transaccion.consecutivo}">
+                    <f:facet name="header">Consecutivo</f:facet>
+                    <h:outputText value="#{_transaccion.consecutivo}"/>
+                </rich:column>
+                <rich:column sortBy="#{_transaccion.fechatx}">
+                    <f:facet name="header">Fechatx</f:facet>
+                    <h:outputText value="#{_transaccion.fechatx}">
+                        <s:convertDateTime type="both" dateStyle="short"/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_transaccion.tipotx}">
+                    <f:facet name="header">Tipotx</f:facet>
+                    <h:outputText value="#{_transaccion.tipotx}"/>
+                </rich:column>
+                <rich:column sortBy="#{_transaccion.valortxpesos}">
+                    <f:facet name="header">Valortxpesos</f:facet>
+                    <h:outputText value="#{_transaccion.valortxpesos}">
+                        <f:convertNumber/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_transaccion.valortxdolares}">
+                    <f:facet name="header">Valortxdolares</f:facet>
+                    <h:outputText value="#{_transaccion.valortxdolares}">
+                        <f:convertNumber/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_transaccion.numfactura}">
+                    <f:facet name="header">Numfactura</f:facet>
+                    <h:outputText value="#{_transaccion.numfactura}"/>
+                </rich:column>
+                <rich:column sortBy="#{_transaccion.valorcomision}">
+                    <f:facet name="header">Valorcomision</f:facet>
+                    <h:outputText value="#{_transaccion.valorcomision}">
+                        <f:convertNumber/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_transaccion.asesorcomision}">
+                    <f:facet name="header">Asesorcomision</f:facet>
+                    <h:outputText value="#{_transaccion.asesorcomision}">
+                        <f:convertNumber/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_transaccion.arrastradorcomision}">
+                    <f:facet name="header">Arrastradorcomision</f:facet>
+                    <h:outputText value="#{_transaccion.arrastradorcomision}">
+                        <f:convertNumber/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_transaccion.establecimientocomision}">
+                    <f:facet name="header">Establecimientocomision</f:facet>
+                    <h:outputText value="#{_transaccion.establecimientocomision}">
+                        <f:convertNumber/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_transaccion.porcentajecomision}">
+                    <f:facet name="header">Porcentajecomision</f:facet>
+                    <h:outputText value="#{_transaccion.porcentajecomision}">
+                        <f:convertNumber/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_transaccion.fechamod}">
+                    <f:facet name="header">Fechamod</f:facet>
+                    <h:outputText value="#{_transaccion.fechamod}">
+                        <s:convertDateTime type="both" dateStyle="short"/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_transaccion.usuariomod}">
+                    <f:facet name="header">Usuariomod</f:facet>
+                    <h:outputText value="#{_transaccion.usuariomod}"/>
+                </rich:column>
+                <rich:column sortBy="#{_transaccion.asesor}">
+                    <f:facet name="header">Asesor</f:facet>
+                    <h:outputText value="#{_transaccion.asesor}"/>
+                </rich:column>
+                <rich:column sortBy="#{_transaccion.promotor}">
+                    <f:facet name="header">Promotor</f:facet>
+                    <h:outputText value="#{_transaccion.promotor}"/>
+                </rich:column>
+                <rich:column sortBy="#{_transaccion.arrastrador}">
+                    <f:facet name="header">Arrastrador</f:facet>
+                    <h:outputText value="#{_transaccion.arrastrador}"/>
+                </rich:column>
+                <rich:column sortBy="#{_transaccion.digitador}">
+                    <f:facet name="header">Digitador</f:facet>
+                    <h:outputText value="#{_transaccion.digitador}"/>
+                </rich:column>
+                <rich:column sortBy="#{_transaccion.valortxeuros}">
+                    <f:facet name="header">Valortxeuros</f:facet>
+                    <h:outputText value="#{_transaccion.valortxeuros}">
+                        <f:convertNumber/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_transaccion.paridad}">
+                    <f:facet name="header">Paridad</f:facet>
+                    <h:outputText value="#{_transaccion.paridad}">
+                        <f:convertNumber/>
+                    </h:outputText>
+                </rich:column>
+            </rich:dataTable>
+
+        </h:form>
+
+        <f:subview rendered="#{establecimientoHome.managed}" id="transaccions">
+        <div class="actionButtons">
+            <s:button id="addtransaccion"
+                   value="Add transaccion"
+                    view="/TransaccionEdit.xhtml"
+             propagation="none">
+                 <f:param name="establecimientoCodigounico"
+                         value="#{establecimientoHome.instance.codigounico}"/>
+                 <f:param name="transaccionFrom" value="Establecimiento"/>
+            </s:button>
+        </div>
+        </f:subview>
+    </rich:tab>
+
+    <rich:tab label="Autovozs">
+        <h:form styleClass="association" id="autovozsChildren">
+
+            <h:outputText value="There are no autovozs associated with this establecimiento."
+                       rendered="#{empty establecimientoHome.autovozs}"/>
+
+            <rich:dataTable value="#{establecimientoHome.autovozs}"
+                           var="_autovoz"
+                      rendered="#{not empty establecimientoHome.autovozs}"
+                    rowClasses="rvgRowOne,rvgRowTwo"
+                            id="autovozsTable">
+                <rich:column sortBy="#{_autovoz.consecutivo}">
+                    <f:facet name="header">Consecutivo</f:facet>
+                    <h:outputText value="#{_autovoz.consecutivo}"/>
+                </rich:column>
+                <rich:column sortBy="#{_autovoz.fechatx}">
+                    <f:facet name="header">Fechatx</f:facet>
+                    <h:outputText value="#{_autovoz.fechatx}">
+                        <s:convertDateTime type="both" dateStyle="short"/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_autovoz.tipotx}">
+                    <f:facet name="header">Tipotx</f:facet>
+                    <h:outputText value="#{_autovoz.tipotx}"/>
+                </rich:column>
+                <rich:column sortBy="#{_autovoz.valortxpesos}">
+                    <f:facet name="header">Valortxpesos</f:facet>
+                    <h:outputText value="#{_autovoz.valortxpesos}">
+                        <f:convertNumber/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_autovoz.fechamod}">
+                    <f:facet name="header">Fechamod</f:facet>
+                    <h:outputText value="#{_autovoz.fechamod}">
+                        <s:convertDateTime type="both" dateStyle="short"/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_autovoz.usuariomod}">
+                    <f:facet name="header">Usuariomod</f:facet>
+                    <h:outputText value="#{_autovoz.usuariomod}"/>
+                </rich:column>
+                <rich:column sortBy="#{_autovoz.numtransaccion}">
+                    <f:facet name="header">Numtransaccion</f:facet>
+                    <h:outputText value="#{_autovoz.numtransaccion}"/>
+                </rich:column>
+                <rich:column sortBy="#{_autovoz.numautorizacion}">
+                    <f:facet name="header">Numautorizacion</f:facet>
+                    <h:outputText value="#{_autovoz.numautorizacion}"/>
+                </rich:column>
+                <rich:column sortBy="#{_autovoz.valor}">
+                    <f:facet name="header">Valor</f:facet>
+                    <h:outputText value="#{_autovoz.valor}">
+                        <f:convertNumber/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_autovoz.asesor}">
+                    <f:facet name="header">Asesor</f:facet>
+                    <h:outputText value="#{_autovoz.asesor}"/>
+                </rich:column>
+            </rich:dataTable>
+
+        </h:form>
+
+        <f:subview rendered="#{establecimientoHome.managed}" id="autovozs">
+        <div class="actionButtons">
+            <s:button id="addautovoz"
+                   value="Add autovoz"
+                    view="/AutovozEdit.xhtml"
+             propagation="none">
+                 <f:param name="establecimientoCodigounico"
+                         value="#{establecimientoHome.instance.codigounico}"/>
+                 <f:param name="autovozFrom" value="Establecimiento"/>
+            </s:button>
+        </div>
+        </f:subview>
+    </rich:tab>
+
+    <rich:tab label="Gravamenestablecimientos">
+        <h:form styleClass="association" id="gravamenestablecimientosChildren">
+
+            <h:outputText value="There are no gravamenestablecimientos associated with this establecimiento."
+                       rendered="#{empty establecimientoHome.gravamenestablecimientos}"/>
+
+            <rich:dataTable value="#{establecimientoHome.gravamenestablecimientos}"
+                           var="_gravamenestablecimiento"
+                      rendered="#{not empty establecimientoHome.gravamenestablecimientos}"
+                    rowClasses="rvgRowOne,rvgRowTwo"
+                            id="gravamenestablecimientosTable">
+                <rich:column sortBy="#{_gravamenestablecimiento.id.codigounico}">
+                    <f:facet name="header">Codigounico</f:facet>
+                    <h:outputText value="#{_gravamenestablecimiento.id.codigounico}"/>
+                </rich:column>
+                <rich:column sortBy="#{_gravamenestablecimiento.id.gravamen}">
+                    <f:facet name="header">Gravamen</f:facet>
+                    <h:outputText value="#{_gravamenestablecimiento.id.gravamen}"/>
+                </rich:column>
+                <rich:column sortBy="#{_gravamenestablecimiento.porcentaje}">
+                    <f:facet name="header">Porcentaje</f:facet>
+                    <h:outputText value="#{_gravamenestablecimiento.porcentaje}">
+                        <f:convertNumber/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_gravamenestablecimiento.iva}">
+                    <f:facet name="header">Iva</f:facet>
+                    <h:outputText value="#{_gravamenestablecimiento.iva}"/>
+                </rich:column>
+                <rich:column sortBy="#{_gravamenestablecimiento.activo}">
+                    <f:facet name="header">Activo</f:facet>
+                    <h:outputText value="#{_gravamenestablecimiento.activo}"/>
+                </rich:column>
+            </rich:dataTable>
+
+        </h:form>
+
+        <f:subview rendered="#{establecimientoHome.managed}" id="gravamenestablecimientos">
+        <div class="actionButtons">
+            <s:button id="addgravamenestablecimiento"
+                   value="Add gravamenestablecimiento"
+                    view="/GravamenestablecimientoEdit.xhtml"
+             propagation="none">
+                 <f:param name="establecimientoCodigounico"
+                         value="#{establecimientoHome.instance.codigounico}"/>
+                 <f:param name="gravamenestablecimientoFrom" value="Establecimiento"/>
+            </s:button>
+        </div>
+        </f:subview>
+    </rich:tab>
+</rich:tabPanel>
+</ui:define>
+
+</ui:composition>

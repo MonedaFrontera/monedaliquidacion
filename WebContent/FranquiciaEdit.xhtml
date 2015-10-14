@@ -1,0 +1,591 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:a="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    template="layout/template.xhtml">
+
+<ui:define name="body">
+
+    <h:form id="franquicia" styleClass="edit">
+
+        <rich:panel>
+            <f:facet name="header">#{franquiciaHome.managed ? 'Edit' : 'Add'} Franquicia</f:facet>
+
+
+            <s:decorate id="codfranquiciaField" template="layout/edit.xhtml">
+                <ui:define name="label">Codfranquicia</ui:define>
+                <h:inputText id="codfranquicia"
+                       disabled="#{franquiciaHome.managed}"
+                       required="true"
+                           size="1"
+                      maxlength="1"
+                          value="#{franquiciaHome.instance.codfranquicia}">
+                    <a:support event="onblur" reRender="codfranquiciaField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="nombrefranquiciaField" template="layout/edit.xhtml">
+                <ui:define name="label">Nombrefranquicia</ui:define>
+                <h:inputText id="nombrefranquicia"
+                       required="true"
+                           size="50"
+                      maxlength="50"
+                          value="#{franquiciaHome.instance.nombrefranquicia}">
+                    <a:support event="onblur" reRender="nombrefranquiciaField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="porcentajeField" template="layout/edit.xhtml">
+                <ui:define name="label">Porcentaje</ui:define>
+                <h:inputText id="porcentaje"
+                          value="#{franquiciaHome.instance.porcentaje}"
+                           size="12">
+                    <a:support event="onblur" reRender="porcentajeField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+
+
+
+
+
+
+
+            <div style="clear:both">
+                <span class="required">*</span>
+                required fields
+            </div>
+
+        </rich:panel>
+
+        <div class="actionButtons">
+
+            <h:commandButton id="save"
+                          value="Save"
+                         action="#{franquiciaHome.persist}"
+                       disabled="#{!franquiciaHome.wired}"
+                       rendered="#{!franquiciaHome.managed}"/>
+
+            <h:commandButton id="update"
+                          value="Save"
+                         action="#{franquiciaHome.update}"
+                       rendered="#{franquiciaHome.managed}"/>
+
+            <h:commandButton id="delete"
+                          value="Delete"
+                         action="#{franquiciaHome.remove}"
+                      immediate="true"
+                       rendered="#{franquiciaHome.managed}"/>
+
+            <s:button id="cancelEdit"
+                   value="Cancel"
+             propagation="end"
+                    view="/Franquicia.xhtml"
+                rendered="#{franquiciaHome.managed}"/>
+
+            <s:button id="cancelAdd"
+                   value="Cancel"
+             propagation="end"
+                    view="/#{empty franquiciaFrom ? 'FranquiciaList' : franquiciaFrom}.xhtml"
+                rendered="#{!franquiciaHome.managed}"/>
+
+        </div>
+    </h:form>
+
+<rich:tabPanel switchType="ajax">
+
+    <rich:tab label="Tasadolarpromotorparametros">
+        <h:form styleClass="association" id="tasadolarpromotorparametrosChildren">
+
+            <h:outputText value="There are no tasadolarpromotorparametros associated with this franquicia."
+                       rendered="#{empty franquiciaHome.tasadolarpromotorparametros}"/>
+
+            <rich:dataTable value="#{franquiciaHome.tasadolarpromotorparametros}"
+                           var="_tasadolarpromotorparametro"
+                      rendered="#{not empty franquiciaHome.tasadolarpromotorparametros}"
+                    rowClasses="rvgRowOne,rvgRowTwo"
+                            id="tasadolarpromotorparametrosTable">
+                <rich:column sortBy="#{_tasadolarpromotorparametro.consecutivo}">
+                    <f:facet name="header">Consecutivo</f:facet>
+                    <h:outputText value="#{_tasadolarpromotorparametro.consecutivo}"/>
+                </rich:column>
+                <rich:column sortBy="#{_tasadolarpromotorparametro.tipocupo}">
+                    <f:facet name="header">Tipocupo</f:facet>
+                    <h:outputText value="#{_tasadolarpromotorparametro.tipocupo}"/>
+                </rich:column>
+                <rich:column sortBy="#{_tasadolarpromotorparametro.tasadolar}">
+                    <f:facet name="header">Tasadolar</f:facet>
+                    <h:outputText value="#{_tasadolarpromotorparametro.tasadolar}">
+                        <f:convertNumber/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_tasadolarpromotorparametro.fechainicio}">
+                    <f:facet name="header">Fechainicio</f:facet>
+                    <h:outputText value="#{_tasadolarpromotorparametro.fechainicio}">
+                        <s:convertDateTime type="both" dateStyle="short"/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_tasadolarpromotorparametro.fechafin}">
+                    <f:facet name="header">Fechafin</f:facet>
+                    <h:outputText value="#{_tasadolarpromotorparametro.fechafin}">
+                        <s:convertDateTime type="both" dateStyle="short"/>
+                    </h:outputText>
+                </rich:column>
+            </rich:dataTable>
+
+        </h:form>
+
+        <f:subview rendered="#{franquiciaHome.managed}" id="tasadolarpromotorparametros">
+        <div class="actionButtons">
+            <s:button id="addtasadolarpromotorparametro"
+                   value="Add tasadolarpromotorparametro"
+                    view="/TasadolarpromotorparametroEdit.xhtml"
+             propagation="none">
+                 <f:param name="franquiciaCodfranquicia"
+                         value="#{franquiciaHome.instance.codfranquicia}"/>
+                 <f:param name="tasadolarpromotorparametroFrom" value="Franquicia"/>
+            </s:button>
+        </div>
+        </f:subview>
+    </rich:tab>
+
+    <rich:tab label="Porcentajecomisiontxparams">
+        <h:form styleClass="association" id="porcentajecomisiontxparamsChildren">
+
+            <h:outputText value="There are no porcentajecomisiontxparams associated with this franquicia."
+                       rendered="#{empty franquiciaHome.porcentajecomisiontxparams}"/>
+
+            <rich:dataTable value="#{franquiciaHome.porcentajecomisiontxparams}"
+                           var="_porcentajecomisiontxparam"
+                      rendered="#{not empty franquiciaHome.porcentajecomisiontxparams}"
+                    rowClasses="rvgRowOne,rvgRowTwo"
+                            id="porcentajecomisiontxparamsTable">
+                <rich:column sortBy="#{_porcentajecomisiontxparam.consecutivo}">
+                    <f:facet name="header">Consecutivo</f:facet>
+                    <h:outputText value="#{_porcentajecomisiontxparam.consecutivo}"/>
+                </rich:column>
+                <rich:column sortBy="#{_porcentajecomisiontxparam.tipocupo}">
+                    <f:facet name="header">Tipocupo</f:facet>
+                    <h:outputText value="#{_porcentajecomisiontxparam.tipocupo}"/>
+                </rich:column>
+                <rich:column sortBy="#{_porcentajecomisiontxparam.porcentaje}">
+                    <f:facet name="header">Porcentaje</f:facet>
+                    <h:outputText value="#{_porcentajecomisiontxparam.porcentaje}">
+                        <f:convertNumber/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_porcentajecomisiontxparam.porcentajeTac}">
+                    <f:facet name="header">Porcentaje tac</f:facet>
+                    <h:outputText value="#{_porcentajecomisiontxparam.porcentajeTac}">
+                        <f:convertNumber/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_porcentajecomisiontxparam.fechainicio}">
+                    <f:facet name="header">Fechainicio</f:facet>
+                    <h:outputText value="#{_porcentajecomisiontxparam.fechainicio}">
+                        <s:convertDateTime type="both" dateStyle="short"/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_porcentajecomisiontxparam.fechafin}">
+                    <f:facet name="header">Fechafin</f:facet>
+                    <h:outputText value="#{_porcentajecomisiontxparam.fechafin}">
+                        <s:convertDateTime type="both" dateStyle="short"/>
+                    </h:outputText>
+                </rich:column>
+            </rich:dataTable>
+
+        </h:form>
+
+        <f:subview rendered="#{franquiciaHome.managed}" id="porcentajecomisiontxparams">
+        <div class="actionButtons">
+            <s:button id="addporcentajecomisiontxparam"
+                   value="Add porcentajecomisiontxparam"
+                    view="/PorcentajecomisiontxparamEdit.xhtml"
+             propagation="none">
+                 <f:param name="franquiciaCodfranquicia"
+                         value="#{franquiciaHome.instance.codfranquicia}"/>
+                 <f:param name="porcentajecomisiontxparamFrom" value="Franquicia"/>
+            </s:button>
+        </div>
+        </f:subview>
+    </rich:tab>
+
+    <rich:tab label="Tasaeuroparametros">
+        <h:form styleClass="association" id="tasaeuroparametrosChildren">
+
+            <h:outputText value="There are no tasaeuroparametros associated with this franquicia."
+                       rendered="#{empty franquiciaHome.tasaeuroparametros}"/>
+
+            <rich:dataTable value="#{franquiciaHome.tasaeuroparametros}"
+                           var="_tasaeuroparametro"
+                      rendered="#{not empty franquiciaHome.tasaeuroparametros}"
+                    rowClasses="rvgRowOne,rvgRowTwo"
+                            id="tasaeuroparametrosTable">
+                <rich:column sortBy="#{_tasaeuroparametro.consecutivo}">
+                    <f:facet name="header">Consecutivo</f:facet>
+                    <h:outputText value="#{_tasaeuroparametro.consecutivo}"/>
+                </rich:column>
+                <rich:column sortBy="#{_tasaeuroparametro.tipocupo}">
+                    <f:facet name="header">Tipocupo</f:facet>
+                    <h:outputText value="#{_tasaeuroparametro.tipocupo}"/>
+                </rich:column>
+                <rich:column sortBy="#{_tasaeuroparametro.tasaeuro}">
+                    <f:facet name="header">Tasaeuro</f:facet>
+                    <h:outputText value="#{_tasaeuroparametro.tasaeuro}">
+                        <f:convertNumber/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_tasaeuroparametro.tasaeuroTac}">
+                    <f:facet name="header">Tasaeuro tac</f:facet>
+                    <h:outputText value="#{_tasaeuroparametro.tasaeuroTac}">
+                        <f:convertNumber/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_tasaeuroparametro.fechainicio}">
+                    <f:facet name="header">Fechainicio</f:facet>
+                    <h:outputText value="#{_tasaeuroparametro.fechainicio}">
+                        <s:convertDateTime type="both" dateStyle="short"/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_tasaeuroparametro.fechafin}">
+                    <f:facet name="header">Fechafin</f:facet>
+                    <h:outputText value="#{_tasaeuroparametro.fechafin}">
+                        <s:convertDateTime type="both" dateStyle="short"/>
+                    </h:outputText>
+                </rich:column>
+            </rich:dataTable>
+
+        </h:form>
+
+        <f:subview rendered="#{franquiciaHome.managed}" id="tasaeuroparametros">
+        <div class="actionButtons">
+            <s:button id="addtasaeuroparametro"
+                   value="Add tasaeuroparametro"
+                    view="/TasaeuroparametroEdit.xhtml"
+             propagation="none">
+                 <f:param name="franquiciaCodfranquicia"
+                         value="#{franquiciaHome.instance.codfranquicia}"/>
+                 <f:param name="tasaeuroparametroFrom" value="Franquicia"/>
+            </s:button>
+        </div>
+        </f:subview>
+    </rich:tab>
+
+    <rich:tab label="Tasaeuropromotorparametros">
+        <h:form styleClass="association" id="tasaeuropromotorparametrosChildren">
+
+            <h:outputText value="There are no tasaeuropromotorparametros associated with this franquicia."
+                       rendered="#{empty franquiciaHome.tasaeuropromotorparametros}"/>
+
+            <rich:dataTable value="#{franquiciaHome.tasaeuropromotorparametros}"
+                           var="_tasaeuropromotorparametro"
+                      rendered="#{not empty franquiciaHome.tasaeuropromotorparametros}"
+                    rowClasses="rvgRowOne,rvgRowTwo"
+                            id="tasaeuropromotorparametrosTable">
+                <rich:column sortBy="#{_tasaeuropromotorparametro.consecutivo}">
+                    <f:facet name="header">Consecutivo</f:facet>
+                    <h:outputText value="#{_tasaeuropromotorparametro.consecutivo}"/>
+                </rich:column>
+                <rich:column sortBy="#{_tasaeuropromotorparametro.tipocupo}">
+                    <f:facet name="header">Tipocupo</f:facet>
+                    <h:outputText value="#{_tasaeuropromotorparametro.tipocupo}"/>
+                </rich:column>
+                <rich:column sortBy="#{_tasaeuropromotorparametro.tasaeuro}">
+                    <f:facet name="header">Tasaeuro</f:facet>
+                    <h:outputText value="#{_tasaeuropromotorparametro.tasaeuro}">
+                        <f:convertNumber/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_tasaeuropromotorparametro.tasaeuroTac}">
+                    <f:facet name="header">Tasaeuro tac</f:facet>
+                    <h:outputText value="#{_tasaeuropromotorparametro.tasaeuroTac}">
+                        <f:convertNumber/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_tasaeuropromotorparametro.fechainicio}">
+                    <f:facet name="header">Fechainicio</f:facet>
+                    <h:outputText value="#{_tasaeuropromotorparametro.fechainicio}">
+                        <s:convertDateTime type="both" dateStyle="short"/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_tasaeuropromotorparametro.fechafin}">
+                    <f:facet name="header">Fechafin</f:facet>
+                    <h:outputText value="#{_tasaeuropromotorparametro.fechafin}">
+                        <s:convertDateTime type="both" dateStyle="short"/>
+                    </h:outputText>
+                </rich:column>
+            </rich:dataTable>
+
+        </h:form>
+
+        <f:subview rendered="#{franquiciaHome.managed}" id="tasaeuropromotorparametros">
+        <div class="actionButtons">
+            <s:button id="addtasaeuropromotorparametro"
+                   value="Add tasaeuropromotorparametro"
+                    view="/TasaeuropromotorparametroEdit.xhtml"
+             propagation="none">
+                 <f:param name="franquiciaCodfranquicia"
+                         value="#{franquiciaHome.instance.codfranquicia}"/>
+                 <f:param name="tasaeuropromotorparametroFrom" value="Franquicia"/>
+            </s:button>
+        </div>
+        </f:subview>
+    </rich:tab>
+
+    <rich:tab label="Tasadolarparametros">
+        <h:form styleClass="association" id="tasadolarparametrosChildren">
+
+            <h:outputText value="There are no tasadolarparametros associated with this franquicia."
+                       rendered="#{empty franquiciaHome.tasadolarparametros}"/>
+
+            <rich:dataTable value="#{franquiciaHome.tasadolarparametros}"
+                           var="_tasadolarparametro"
+                      rendered="#{not empty franquiciaHome.tasadolarparametros}"
+                    rowClasses="rvgRowOne,rvgRowTwo"
+                            id="tasadolarparametrosTable">
+                <rich:column sortBy="#{_tasadolarparametro.consecutivo}">
+                    <f:facet name="header">Consecutivo</f:facet>
+                    <h:outputText value="#{_tasadolarparametro.consecutivo}"/>
+                </rich:column>
+                <rich:column sortBy="#{_tasadolarparametro.tipocupo}">
+                    <f:facet name="header">Tipocupo</f:facet>
+                    <h:outputText value="#{_tasadolarparametro.tipocupo}"/>
+                </rich:column>
+                <rich:column sortBy="#{_tasadolarparametro.tasadolar}">
+                    <f:facet name="header">Tasadolar</f:facet>
+                    <h:outputText value="#{_tasadolarparametro.tasadolar}">
+                        <f:convertNumber/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_tasadolarparametro.tasadolarTac}">
+                    <f:facet name="header">Tasadolar tac</f:facet>
+                    <h:outputText value="#{_tasadolarparametro.tasadolarTac}">
+                        <f:convertNumber/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_tasadolarparametro.fechainicio}">
+                    <f:facet name="header">Fechainicio</f:facet>
+                    <h:outputText value="#{_tasadolarparametro.fechainicio}">
+                        <s:convertDateTime type="both" dateStyle="short"/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_tasadolarparametro.fechafin}">
+                    <f:facet name="header">Fechafin</f:facet>
+                    <h:outputText value="#{_tasadolarparametro.fechafin}">
+                        <s:convertDateTime type="both" dateStyle="short"/>
+                    </h:outputText>
+                </rich:column>
+            </rich:dataTable>
+
+        </h:form>
+
+        <f:subview rendered="#{franquiciaHome.managed}" id="tasadolarparametros">
+        <div class="actionButtons">
+            <s:button id="addtasadolarparametro"
+                   value="Add tasadolarparametro"
+                    view="/TasadolarparametroEdit.xhtml"
+             propagation="none">
+                 <f:param name="franquiciaCodfranquicia"
+                         value="#{franquiciaHome.instance.codfranquicia}"/>
+                 <f:param name="tasadolarparametroFrom" value="Franquicia"/>
+            </s:button>
+        </div>
+        </f:subview>
+    </rich:tab>
+
+    <rich:tab label="Porcentcomisiontxparampromos">
+        <h:form styleClass="association" id="porcentcomisiontxparampromosChildren">
+
+            <h:outputText value="There are no porcentcomisiontxparampromos associated with this franquicia."
+                       rendered="#{empty franquiciaHome.porcentcomisiontxparampromos}"/>
+
+            <rich:dataTable value="#{franquiciaHome.porcentcomisiontxparampromos}"
+                           var="_porcentcomisiontxparampromo"
+                      rendered="#{not empty franquiciaHome.porcentcomisiontxparampromos}"
+                    rowClasses="rvgRowOne,rvgRowTwo"
+                            id="porcentcomisiontxparampromosTable">
+                <rich:column sortBy="#{_porcentcomisiontxparampromo.consecutivo}">
+                    <f:facet name="header">Consecutivo</f:facet>
+                    <h:outputText value="#{_porcentcomisiontxparampromo.consecutivo}"/>
+                </rich:column>
+                <rich:column sortBy="#{_porcentcomisiontxparampromo.tipocupo}">
+                    <f:facet name="header">Tipocupo</f:facet>
+                    <h:outputText value="#{_porcentcomisiontxparampromo.tipocupo}"/>
+                </rich:column>
+                <rich:column sortBy="#{_porcentcomisiontxparampromo.porcentaje}">
+                    <f:facet name="header">Porcentaje</f:facet>
+                    <h:outputText value="#{_porcentcomisiontxparampromo.porcentaje}">
+                        <f:convertNumber/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_porcentcomisiontxparampromo.fechainicio}">
+                    <f:facet name="header">Fechainicio</f:facet>
+                    <h:outputText value="#{_porcentcomisiontxparampromo.fechainicio}">
+                        <s:convertDateTime type="both" dateStyle="short"/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_porcentcomisiontxparampromo.fechafin}">
+                    <f:facet name="header">Fechafin</f:facet>
+                    <h:outputText value="#{_porcentcomisiontxparampromo.fechafin}">
+                        <s:convertDateTime type="both" dateStyle="short"/>
+                    </h:outputText>
+                </rich:column>
+            </rich:dataTable>
+
+        </h:form>
+
+        <f:subview rendered="#{franquiciaHome.managed}" id="porcentcomisiontxparampromos">
+        <div class="actionButtons">
+            <s:button id="addporcentcomisiontxparampromo"
+                   value="Add porcentcomisiontxparampromo"
+                    view="/PorcentcomisiontxparampromoEdit.xhtml"
+             propagation="none">
+                 <f:param name="franquiciaCodfranquicia"
+                         value="#{franquiciaHome.instance.codfranquicia}"/>
+                 <f:param name="porcentcomisiontxparampromoFrom" value="Franquicia"/>
+            </s:button>
+        </div>
+        </f:subview>
+    </rich:tab>
+
+    <rich:tab label="Tarjetas">
+        <h:form styleClass="association" id="tarjetasChildren">
+
+            <h:outputText value="There are no tarjetas associated with this franquicia."
+                       rendered="#{empty franquiciaHome.tarjetas}"/>
+
+            <rich:dataTable value="#{franquiciaHome.tarjetas}"
+                           var="_tarjeta"
+                      rendered="#{not empty franquiciaHome.tarjetas}"
+                    rowClasses="rvgRowOne,rvgRowTwo"
+                            id="tarjetasTable">
+                <rich:column sortBy="#{_tarjeta.numerotarjeta}">
+                    <f:facet name="header">Numerotarjeta</f:facet>
+                    <h:outputText value="#{_tarjeta.numerotarjeta}"/>
+                </rich:column>
+                <rich:column sortBy="#{_tarjeta.limite}">
+                    <f:facet name="header">Limite</f:facet>
+                    <h:outputText value="#{_tarjeta.limite}"/>
+                </rich:column>
+                <rich:column sortBy="#{_tarjeta.fechainicio}">
+                    <f:facet name="header">Fechainicio</f:facet>
+                    <h:outputText value="#{_tarjeta.fechainicio}">
+                        <s:convertDateTime type="both" dateStyle="short"/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_tarjeta.fechafin}">
+                    <f:facet name="header">Fechafin</f:facet>
+                    <h:outputText value="#{_tarjeta.fechafin}">
+                        <s:convertDateTime type="both" dateStyle="short"/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_tarjeta.fechavencimiento}">
+                    <f:facet name="header">Fechavencimiento</f:facet>
+                    <h:outputText value="#{_tarjeta.fechavencimiento}"/>
+                </rich:column>
+                <rich:column sortBy="#{_tarjeta.codseguridad}">
+                    <f:facet name="header">Codseguridad</f:facet>
+                    <h:outputText value="#{_tarjeta.codseguridad}"/>
+                </rich:column>
+                <rich:column sortBy="#{_tarjeta.tarjetahabiente}">
+                    <f:facet name="header">Tarjetahabiente</f:facet>
+                    <h:outputText value="#{_tarjeta.tarjetahabiente}"/>
+                </rich:column>
+                <rich:column sortBy="#{_tarjeta.direcciontarjetahabiente}">
+                    <f:facet name="header">Direcciontarjetahabiente</f:facet>
+                    <h:outputText value="#{_tarjeta.direcciontarjetahabiente}"/>
+                </rich:column>
+                <rich:column sortBy="#{_tarjeta.cedulatarjetahabiente}">
+                    <f:facet name="header">Cedulatarjetahabiente</f:facet>
+                    <h:outputText value="#{_tarjeta.cedulatarjetahabiente}"/>
+                </rich:column>
+                <rich:column sortBy="#{_tarjeta.telefonotarjetahabiente}">
+                    <f:facet name="header">Telefonotarjetahabiente</f:facet>
+                    <h:outputText value="#{_tarjeta.telefonotarjetahabiente}"/>
+                </rich:column>
+                <rich:column sortBy="#{_tarjeta.fechamod}">
+                    <f:facet name="header">Fechamod</f:facet>
+                    <h:outputText value="#{_tarjeta.fechamod}">
+                        <s:convertDateTime type="both" dateStyle="short"/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_tarjeta.usuariomod}">
+                    <f:facet name="header">Usuariomod</f:facet>
+                    <h:outputText value="#{_tarjeta.usuariomod}"/>
+                </rich:column>
+                <rich:column sortBy="#{_tarjeta.tac}">
+                    <f:facet name="header">Tac</f:facet>
+                    <h:outputText value="#{_tarjeta.tac}"/>
+                </rich:column>
+            </rich:dataTable>
+
+        </h:form>
+
+        <f:subview rendered="#{franquiciaHome.managed}" id="tarjetas">
+        <div class="actionButtons">
+            <s:button id="addtarjeta"
+                   value="Add tarjeta"
+                    view="/TarjetaEdit.xhtml"
+             propagation="none">
+                 <f:param name="franquiciaCodfranquicia"
+                         value="#{franquiciaHome.instance.codfranquicia}"/>
+                 <f:param name="tarjetaFrom" value="Franquicia"/>
+            </s:button>
+        </div>
+        </f:subview>
+    </rich:tab>
+
+    <rich:tab label="Promotorfranquicias">
+        <h:form styleClass="association" id="promotorfranquiciasChildren">
+
+            <h:outputText value="There are no promotorfranquicias associated with this franquicia."
+                       rendered="#{empty franquiciaHome.promotorfranquicias}"/>
+
+            <rich:dataTable value="#{franquiciaHome.promotorfranquicias}"
+                           var="_promotorfranquicia"
+                      rendered="#{not empty franquiciaHome.promotorfranquicias}"
+                    rowClasses="rvgRowOne,rvgRowTwo"
+                            id="promotorfranquiciasTable">
+                <rich:column sortBy="#{_promotorfranquicia.id.codfranquicia}">
+                    <f:facet name="header">Codfranquicia</f:facet>
+                    <h:outputText value="#{_promotorfranquicia.id.codfranquicia}"/>
+                </rich:column>
+                <rich:column sortBy="#{_promotorfranquicia.id.documento}">
+                    <f:facet name="header">Documento</f:facet>
+                    <h:outputText value="#{_promotorfranquicia.id.documento}"/>
+                </rich:column>
+                <rich:column sortBy="#{_promotorfranquicia.porcentaje}">
+                    <f:facet name="header">Porcentaje</f:facet>
+                    <h:outputText value="#{_promotorfranquicia.porcentaje}">
+                        <f:convertNumber/>
+                    </h:outputText>
+                </rich:column>
+            </rich:dataTable>
+
+        </h:form>
+
+        <f:subview rendered="#{franquiciaHome.managed}" id="promotorfranquicias">
+        <div class="actionButtons">
+            <s:button id="addpromotorfranquicia"
+                   value="Add promotorfranquicia"
+                    view="/PromotorfranquiciaEdit.xhtml"
+             propagation="none">
+                 <f:param name="franquiciaCodfranquicia"
+                         value="#{franquiciaHome.instance.codfranquicia}"/>
+                 <f:param name="promotorfranquiciaFrom" value="Franquicia"/>
+            </s:button>
+        </div>
+        </f:subview>
+    </rich:tab>
+</rich:tabPanel>
+</ui:define>
+
+</ui:composition>

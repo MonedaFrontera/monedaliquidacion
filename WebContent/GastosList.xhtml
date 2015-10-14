@@ -1,0 +1,204 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    template="layout/template.xhtml">
+
+<ui:define name="body">
+
+    <h:form id="gastosSearch" styleClass="edit">
+
+        <rich:simpleTogglePanel label="Gastos Search Filter" switchType="ajax">
+
+            <s:decorate template="layout/display.xhtml">
+                <ui:define name="label">Observacion</ui:define>
+                <h:inputText id="observacion" value="#{gastosList.gastos.observacion}"/>
+            </s:decorate>
+
+            <s:decorate template="layout/display.xhtml">
+                <ui:define name="label">Match</ui:define>
+                <h:selectOneRadio id="logic" value="#{gastosList.restrictionLogicOperator}" styleClass="radio">
+                    <f:selectItem itemLabel="All" itemValue="and"/>
+                    <f:selectItem itemLabel="Any" itemValue="or"/>
+                </h:selectOneRadio>
+            </s:decorate>
+
+        </rich:simpleTogglePanel>
+
+        <div class="actionButtons">
+            <h:commandButton id="search" value="Search" action="/GastosList.xhtml"/>
+            <s:button id="reset" value="Reset" includePageParams="false"/>
+        </div>
+
+    </h:form>
+
+    <rich:panel>
+        <f:facet name="header">Gastos Search Results (#{empty gastosList.resultList ? 0 : (gastosList.paginated ? gastosList.resultCount : gastosList.resultList.size)})</f:facet>
+    <div class="results" id="gastosList">
+
+    <h:outputText value="The gastos search returned no results."
+               rendered="#{empty gastosList.resultList}"/>
+
+    <rich:dataTable id="gastosList"
+                var="_gastos"
+              value="#{gastosList.resultList}"
+           rendered="#{not empty gastosList.resultList}">
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{gastosList}"/>
+                    <ui:param name="propertyLabel" value="Consecutivo"/>
+                    <ui:param name="propertyPath" value="gastos.consecutivo"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_gastos.consecutivo}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{gastosList}"/>
+                    <ui:param name="propertyLabel" value="Personal documento"/>
+                    <ui:param name="propertyPath" value="gastos.personal.documento"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_gastos.personal.documento}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{gastosList}"/>
+                    <ui:param name="propertyLabel" value="Tipogasto codtipogasto"/>
+                    <ui:param name="propertyPath" value="gastos.tipogasto.codtipogasto"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_gastos.tipogasto.codtipogasto}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{gastosList}"/>
+                    <ui:param name="propertyLabel" value="Fecha"/>
+                    <ui:param name="propertyPath" value="gastos.fecha"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_gastos.fecha}">
+                <s:convertDateTime type="date" dateStyle="short"/>
+            </h:outputText>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{gastosList}"/>
+                    <ui:param name="propertyLabel" value="Valor"/>
+                    <ui:param name="propertyPath" value="gastos.valor"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_gastos.valor}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{gastosList}"/>
+                    <ui:param name="propertyLabel" value="Observacion"/>
+                    <ui:param name="propertyPath" value="gastos.observacion"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_gastos.observacion}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{gastosList}"/>
+                    <ui:param name="propertyLabel" value="Valorbolivar"/>
+                    <ui:param name="propertyPath" value="gastos.valorbolivar"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_gastos.valorbolivar}">
+                <f:convertNumber/>
+            </h:outputText>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{gastosList}"/>
+                    <ui:param name="propertyLabel" value="Transferencia consecutivo"/>
+                    <ui:param name="propertyPath" value="gastos.transferencia.consecutivo"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_gastos.transferencia.consecutivo}"/>
+        </h:column>
+        <rich:column styleClass="action">
+            <f:facet name="header">Action</f:facet>
+            <s:link view="/#{empty from ? 'Gastos' : from}.xhtml"
+                   value="#{empty from ? 'View' : 'Select'}"
+             propagation="#{empty from ? 'none' : 'default'}"
+                      id="gastosViewId">
+                <f:param name="gastosConsecutivo"
+                        value="#{_gastos.consecutivo}"/>
+            </s:link>
+            #{' '}
+            <s:link view="/GastosEdit.xhtml"
+                   value="Edit"
+             propagation="none"
+                      id="gastosEdit"
+                rendered="#{empty from}">
+                <f:param name="gastosConsecutivo"
+                        value="#{_gastos.consecutivo}"/>
+            </s:link>
+        </rich:column>
+    </rich:dataTable>
+
+    </div>
+    </rich:panel>
+
+    <div class="tableControl">
+
+        <s:link view="/GastosList.xhtml"
+            rendered="#{gastosList.previousExists}"
+               value="#{messages.left}#{messages.left} First Page"
+                  id="firstPage">
+          <f:param name="firstResult" value="0"/>
+        </s:link>
+
+        <s:link view="/GastosList.xhtml"
+            rendered="#{gastosList.previousExists}"
+               value="#{messages.left} Previous Page"
+                  id="previousPage">
+            <f:param name="firstResult"
+                    value="#{gastosList.previousFirstResult}"/>
+        </s:link>
+
+        <s:link view="/GastosList.xhtml"
+            rendered="#{gastosList.nextExists}"
+               value="Next Page #{messages.right}"
+                  id="nextPage">
+            <f:param name="firstResult"
+                    value="#{gastosList.nextFirstResult}"/>
+        </s:link>
+
+        <s:link view="/GastosList.xhtml"
+            rendered="#{gastosList.nextExists}"
+               value="Last Page #{messages.right}#{messages.right}"
+                  id="lastPage">
+            <f:param name="firstResult"
+                    value="#{gastosList.lastFirstResult}"/>
+        </s:link>
+
+    </div>
+
+    <s:div styleClass="actionButtons" rendered="#{empty from}">
+        <s:button view="/GastosEdit.xhtml"
+                    id="create"
+           propagation="none"
+                 value="Create gastos">
+            <f:param name="gastosConsecutivo"/>
+        </s:button>
+    </s:div>
+
+</ui:define>
+
+</ui:composition>

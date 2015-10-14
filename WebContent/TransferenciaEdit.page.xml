@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page xmlns="http://jboss.com/products/seam/pages"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://jboss.com/products/seam/pages http://jboss.com/products/seam/pages-2.2.xsd"
+      no-conversation-view-id="/TransferenciaList.xhtml"
+      login-required="true">
+
+   <begin-conversation join="true" flush-mode="MANUAL"/>
+
+   <action execute="#{transferenciaHome.wire}"/>
+
+   <param name="transferenciaFrom"/>
+   <param name="transferenciaConsecutivo" value="#{transferenciaHome.transferenciaConsecutivo}"/>
+   <param name="gastosFrom"/>
+   <param name="gastosConsecutivo" value="#{gastosHome.gastosConsecutivo}"/>
+   <param name="personalFrom"/>
+   <param name="personalDocumento" value="#{personalHome.personalDocumento}"/>
+   <param name="cargoFrom"/>
+   <param name="cargoCodcargo" value="#{cargoHome.cargoCodcargo}"/>
+
+   <param name="gestorFrom"/>
+   <param name="gestorDocumento" value="#{gestorHome.gestorDocumento}"/>
+
+   <param name="arrastradorFrom"/>
+   <param name="arrastradorDocumento" value="#{arrastradorHome.arrastradorDocumento}"/>
+
+   <param name="administrativoFrom"/>
+   <param name="administrativoDocumento" value="#{administrativoHome.administrativoDocumento}"/>
+
+   <param name="promotorFrom"/>
+   <param name="promotorDocumento" value="#{promotorHome.promotorDocumento}"/>
+   <param name="asesorFrom"/>
+   <param name="asesorDocumento" value="#{asesorHome.asesorDocumento}"/>
+
+
+
+   <param name="tipogastoFrom"/>
+   <param name="tipogastoCodtipogasto" value="#{tipogastoHome.tipogastoCodtipogasto}"/>
+
+
+   <param name="cuentapromotorFrom"/>
+   <param name="cuentapromotorNumcuenta" value="#{cuentapromotorHome.cuentapromotorId.numcuenta}"/>
+   <param name="cuentapromotorDocumento" value="#{cuentapromotorHome.cuentapromotorId.documento}"/>
+   <param name="bancoFrom"/>
+   <param name="bancoCodbanco" value="#{bancoHome.bancoCodbanco}"/>
+
+
+
+
+   <navigation from-action="#{transferenciaHome.persist}">
+      <rule if-outcome="persisted">
+         <end-conversation/>
+         <redirect view-id="/Transferencia.xhtml"/>
+      </rule>
+   </navigation>
+
+   <navigation from-action="#{transferenciaHome.update}">
+      <rule if-outcome="updated">
+         <end-conversation/>
+         <redirect view-id="/Transferencia.xhtml"/>
+      </rule>
+   </navigation>
+
+   <navigation from-action="#{transferenciaHome.remove}">
+      <rule if-outcome="removed">
+         <end-conversation/>
+         <redirect view-id="/TransferenciaList.xhtml"/>
+      </rule>
+   </navigation>
+
+</page>

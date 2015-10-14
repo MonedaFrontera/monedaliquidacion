@@ -1,0 +1,382 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    template="layout/template.xhtml">
+
+<ui:define name="body">
+
+    <h:form id="transaccionSearch" styleClass="edit">
+
+        <rich:simpleTogglePanel label="Transaccion Search Filter" switchType="ajax">
+
+            <s:decorate template="layout/display.xhtml">
+                <ui:define name="label">Tipotx</ui:define>
+                <h:inputText id="tipotx" value="#{transaccionList.transaccion.tipotx}"/>
+            </s:decorate>
+
+            <s:decorate template="layout/display.xhtml">
+                <ui:define name="label">Numfactura</ui:define>
+                <h:inputText id="numfactura" value="#{transaccionList.transaccion.numfactura}"/>
+            </s:decorate>
+
+            <s:decorate template="layout/display.xhtml">
+                <ui:define name="label">Usuariomod</ui:define>
+                <h:inputText id="usuariomod" value="#{transaccionList.transaccion.usuariomod}"/>
+            </s:decorate>
+
+            <s:decorate template="layout/display.xhtml">
+                <ui:define name="label">Asesor</ui:define>
+                <h:inputText id="asesor" value="#{transaccionList.transaccion.asesor}"/>
+            </s:decorate>
+
+            <s:decorate template="layout/display.xhtml">
+                <ui:define name="label">Promotor</ui:define>
+                <h:inputText id="promotor" value="#{transaccionList.transaccion.promotor}"/>
+            </s:decorate>
+
+            <s:decorate template="layout/display.xhtml">
+                <ui:define name="label">Arrastrador</ui:define>
+                <h:inputText id="arrastrador" value="#{transaccionList.transaccion.arrastrador}"/>
+            </s:decorate>
+
+            <s:decorate template="layout/display.xhtml">
+                <ui:define name="label">Digitador</ui:define>
+                <h:inputText id="digitador" value="#{transaccionList.transaccion.digitador}"/>
+            </s:decorate>
+
+            <s:decorate template="layout/display.xhtml">
+                <ui:define name="label">Match</ui:define>
+                <h:selectOneRadio id="logic" value="#{transaccionList.restrictionLogicOperator}" styleClass="radio">
+                    <f:selectItem itemLabel="All" itemValue="and"/>
+                    <f:selectItem itemLabel="Any" itemValue="or"/>
+                </h:selectOneRadio>
+            </s:decorate>
+
+        </rich:simpleTogglePanel>
+
+        <div class="actionButtons">
+            <h:commandButton id="search" value="Search" action="/TransaccionList.xhtml"/>
+            <s:button id="reset" value="Reset" includePageParams="false"/>
+        </div>
+
+    </h:form>
+
+    <rich:panel>
+        <f:facet name="header">Transaccion Search Results (#{empty transaccionList.resultList ? 0 : (transaccionList.paginated ? transaccionList.resultCount : transaccionList.resultList.size)})</f:facet>
+    <div class="results" id="transaccionList">
+
+    <h:outputText value="The transaccion search returned no results."
+               rendered="#{empty transaccionList.resultList}"/>
+
+    <rich:dataTable id="transaccionList"
+                var="_transaccion"
+              value="#{transaccionList.resultList}"
+           rendered="#{not empty transaccionList.resultList}">
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{transaccionList}"/>
+                    <ui:param name="propertyLabel" value="Consecutivo"/>
+                    <ui:param name="propertyPath" value="transaccion.consecutivo"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_transaccion.consecutivo}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{transaccionList}"/>
+                    <ui:param name="propertyLabel" value="Establecimiento codigounico"/>
+                    <ui:param name="propertyPath" value="transaccion.establecimiento.codigounico"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_transaccion.establecimiento.codigounico}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{transaccionList}"/>
+                    <ui:param name="propertyLabel" value="Tarjeta numerotarjeta"/>
+                    <ui:param name="propertyPath" value="transaccion.tarjeta.numerotarjeta"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_transaccion.tarjeta.numerotarjeta}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{transaccionList}"/>
+                    <ui:param name="propertyLabel" value="Fechatx"/>
+                    <ui:param name="propertyPath" value="transaccion.fechatx"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_transaccion.fechatx}">
+                <s:convertDateTime type="both" dateStyle="short"/>
+            </h:outputText>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{transaccionList}"/>
+                    <ui:param name="propertyLabel" value="Tipotx"/>
+                    <ui:param name="propertyPath" value="transaccion.tipotx"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_transaccion.tipotx}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{transaccionList}"/>
+                    <ui:param name="propertyLabel" value="Valortxpesos"/>
+                    <ui:param name="propertyPath" value="transaccion.valortxpesos"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_transaccion.valortxpesos}">
+                <f:convertNumber/>
+            </h:outputText>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{transaccionList}"/>
+                    <ui:param name="propertyLabel" value="Valortxdolares"/>
+                    <ui:param name="propertyPath" value="transaccion.valortxdolares"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_transaccion.valortxdolares}">
+                <f:convertNumber/>
+            </h:outputText>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{transaccionList}"/>
+                    <ui:param name="propertyLabel" value="Numfactura"/>
+                    <ui:param name="propertyPath" value="transaccion.numfactura"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_transaccion.numfactura}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{transaccionList}"/>
+                    <ui:param name="propertyLabel" value="Valorcomision"/>
+                    <ui:param name="propertyPath" value="transaccion.valorcomision"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_transaccion.valorcomision}">
+                <f:convertNumber/>
+            </h:outputText>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{transaccionList}"/>
+                    <ui:param name="propertyLabel" value="Asesorcomision"/>
+                    <ui:param name="propertyPath" value="transaccion.asesorcomision"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_transaccion.asesorcomision}">
+                <f:convertNumber/>
+            </h:outputText>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{transaccionList}"/>
+                    <ui:param name="propertyLabel" value="Arrastradorcomision"/>
+                    <ui:param name="propertyPath" value="transaccion.arrastradorcomision"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_transaccion.arrastradorcomision}">
+                <f:convertNumber/>
+            </h:outputText>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{transaccionList}"/>
+                    <ui:param name="propertyLabel" value="Establecimientocomision"/>
+                    <ui:param name="propertyPath" value="transaccion.establecimientocomision"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_transaccion.establecimientocomision}">
+                <f:convertNumber/>
+            </h:outputText>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{transaccionList}"/>
+                    <ui:param name="propertyLabel" value="Porcentajecomision"/>
+                    <ui:param name="propertyPath" value="transaccion.porcentajecomision"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_transaccion.porcentajecomision}">
+                <f:convertNumber/>
+            </h:outputText>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{transaccionList}"/>
+                    <ui:param name="propertyLabel" value="Fechamod"/>
+                    <ui:param name="propertyPath" value="transaccion.fechamod"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_transaccion.fechamod}">
+                <s:convertDateTime type="both" dateStyle="short"/>
+            </h:outputText>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{transaccionList}"/>
+                    <ui:param name="propertyLabel" value="Usuariomod"/>
+                    <ui:param name="propertyPath" value="transaccion.usuariomod"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_transaccion.usuariomod}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{transaccionList}"/>
+                    <ui:param name="propertyLabel" value="Asesor"/>
+                    <ui:param name="propertyPath" value="transaccion.asesor"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_transaccion.asesor}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{transaccionList}"/>
+                    <ui:param name="propertyLabel" value="Promotor"/>
+                    <ui:param name="propertyPath" value="transaccion.promotor"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_transaccion.promotor}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{transaccionList}"/>
+                    <ui:param name="propertyLabel" value="Arrastrador"/>
+                    <ui:param name="propertyPath" value="transaccion.arrastrador"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_transaccion.arrastrador}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{transaccionList}"/>
+                    <ui:param name="propertyLabel" value="Digitador"/>
+                    <ui:param name="propertyPath" value="transaccion.digitador"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_transaccion.digitador}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{transaccionList}"/>
+                    <ui:param name="propertyLabel" value="Valortxeuros"/>
+                    <ui:param name="propertyPath" value="transaccion.valortxeuros"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_transaccion.valortxeuros}">
+                <f:convertNumber/>
+            </h:outputText>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{transaccionList}"/>
+                    <ui:param name="propertyLabel" value="Paridad"/>
+                    <ui:param name="propertyPath" value="transaccion.paridad"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_transaccion.paridad}">
+                <f:convertNumber/>
+            </h:outputText>
+        </h:column>
+        <rich:column styleClass="action">
+            <f:facet name="header">Action</f:facet>
+            <s:link view="/#{empty from ? 'Transaccion' : from}.xhtml"
+                   value="#{empty from ? 'View' : 'Select'}"
+             propagation="#{empty from ? 'none' : 'default'}"
+                      id="transaccionViewId">
+                <f:param name="transaccionConsecutivo"
+                        value="#{_transaccion.consecutivo}"/>
+            </s:link>
+            #{' '}
+            <s:link view="/TransaccionEdit.xhtml"
+                   value="Edit"
+             propagation="none"
+                      id="transaccionEdit"
+                rendered="#{empty from}">
+                <f:param name="transaccionConsecutivo"
+                        value="#{_transaccion.consecutivo}"/>
+            </s:link>
+        </rich:column>
+    </rich:dataTable>
+
+    </div>
+    </rich:panel>
+
+    <div class="tableControl">
+
+        <s:link view="/TransaccionList.xhtml"
+            rendered="#{transaccionList.previousExists}"
+               value="#{messages.left}#{messages.left} First Page"
+                  id="firstPage">
+          <f:param name="firstResult" value="0"/>
+        </s:link>
+
+        <s:link view="/TransaccionList.xhtml"
+            rendered="#{transaccionList.previousExists}"
+               value="#{messages.left} Previous Page"
+                  id="previousPage">
+            <f:param name="firstResult"
+                    value="#{transaccionList.previousFirstResult}"/>
+        </s:link>
+
+        <s:link view="/TransaccionList.xhtml"
+            rendered="#{transaccionList.nextExists}"
+               value="Next Page #{messages.right}"
+                  id="nextPage">
+            <f:param name="firstResult"
+                    value="#{transaccionList.nextFirstResult}"/>
+        </s:link>
+
+        <s:link view="/TransaccionList.xhtml"
+            rendered="#{transaccionList.nextExists}"
+               value="Last Page #{messages.right}#{messages.right}"
+                  id="lastPage">
+            <f:param name="firstResult"
+                    value="#{transaccionList.lastFirstResult}"/>
+        </s:link>
+
+    </div>
+
+    <s:div styleClass="actionButtons" rendered="#{empty from}">
+        <s:button view="/TransaccionEdit.xhtml"
+                    id="create"
+           propagation="none"
+                 value="Create transaccion">
+            <f:param name="transaccionConsecutivo"/>
+        </s:button>
+    </s:div>
+
+</ui:define>
+
+</ui:composition>

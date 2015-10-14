@@ -1,0 +1,311 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:a="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    template="layout/template.xhtml">
+
+<ui:define name="body">
+
+    <h:form id="depositostarjeta" styleClass="edit">
+
+        <rich:panel>
+            <f:facet name="header">#{depositostarjetaHome.managed ? 'Edit' : 'Add'} Depositostarjeta</f:facet>
+
+
+            <s:decorate id="consecutivoField" template="layout/edit.xhtml">
+                <ui:define name="label">Consecutivo</ui:define>
+                <h:inputText id="consecutivo"
+                       required="true"
+                       disabled="#{depositostarjetaHome.managed}"
+                          value="#{depositostarjetaHome.instance.consecutivo}">
+                    <a:support event="onblur" reRender="consecutivoField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+
+
+            <s:decorate id="fechaField" template="layout/edit.xhtml">
+                <ui:define name="label">Fecha</ui:define>
+                <rich:calendar id="fecha"
+                       required="true"
+                          value="#{depositostarjetaHome.instance.fecha}" datePattern="MM/dd/yyyy hh:mm a"/>
+            </s:decorate>
+
+
+            <s:decorate id="preciobolivarField" template="layout/edit.xhtml">
+                <ui:define name="label">Preciobolivar</ui:define>
+                <h:inputText id="preciobolivar"
+                          value="#{depositostarjetaHome.instance.preciobolivar}"
+                           size="11">
+                    <a:support event="onblur" reRender="preciobolivarField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="valordepositoField" template="layout/edit.xhtml">
+                <ui:define name="label">Valordeposito</ui:define>
+                <h:inputText id="valordeposito"
+                          value="#{depositostarjetaHome.instance.valordeposito}"
+                           size="15">
+                    <a:support event="onblur" reRender="valordepositoField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="tipodebolivarField" template="layout/edit.xhtml">
+                <ui:define name="label">Tipodebolivar</ui:define>
+                <h:inputText id="tipodebolivar"
+                           size="3"
+                      maxlength="3"
+                          value="#{depositostarjetaHome.instance.tipodebolivar}">
+                    <a:support event="onblur" reRender="tipodebolivarField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="depositopesosField" template="layout/edit.xhtml">
+                <ui:define name="label">Depositopesos</ui:define>
+                <h:inputText id="depositopesos"
+                          value="#{depositostarjetaHome.instance.depositopesos}"
+                           size="17">
+                    <a:support event="onblur" reRender="depositopesosField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="tipodepField" template="layout/edit.xhtml">
+                <ui:define name="label">Tipodep</ui:define>
+                <h:inputText id="tipodep"
+                           size="1"
+                      maxlength="1"
+                          value="#{depositostarjetaHome.instance.tipodep}">
+                    <a:support event="onblur" reRender="tipodepField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="fechamodField" template="layout/edit.xhtml">
+                <ui:define name="label">Fechamod</ui:define>
+                <rich:calendar id="fechamod"
+                          value="#{depositostarjetaHome.instance.fechamod}" datePattern="MM/dd/yyyy hh:mm a"/>
+            </s:decorate>
+
+
+            <s:decorate id="usuariomodField" template="layout/edit.xhtml">
+                <ui:define name="label">Usuariomod</ui:define>
+                <h:inputText id="usuariomod"
+                           size="15"
+                      maxlength="15"
+                          value="#{depositostarjetaHome.instance.usuariomod}">
+                    <a:support event="onblur" reRender="usuariomodField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="asesorField" template="layout/edit.xhtml">
+                <ui:define name="label">Asesor</ui:define>
+                <h:inputText id="asesor"
+                           size="15"
+                      maxlength="15"
+                          value="#{depositostarjetaHome.instance.asesor}">
+                    <a:support event="onblur" reRender="asesorField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="promotorField" template="layout/edit.xhtml">
+                <ui:define name="label">Promotor</ui:define>
+                <h:inputText id="promotor"
+                           size="15"
+                      maxlength="15"
+                          value="#{depositostarjetaHome.instance.promotor}">
+                    <a:support event="onblur" reRender="promotorField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+            <div style="clear:both">
+                <span class="required">*</span>
+                required fields
+            </div>
+
+        </rich:panel>
+
+        <div class="actionButtons">
+
+            <h:commandButton id="save"
+                          value="Save"
+                         action="#{depositostarjetaHome.persist}"
+                       disabled="#{!depositostarjetaHome.wired}"
+                       rendered="#{!depositostarjetaHome.managed}"/>
+
+            <h:commandButton id="update"
+                          value="Save"
+                         action="#{depositostarjetaHome.update}"
+                       rendered="#{depositostarjetaHome.managed}"/>
+
+            <h:commandButton id="delete"
+                          value="Delete"
+                         action="#{depositostarjetaHome.remove}"
+                      immediate="true"
+                       rendered="#{depositostarjetaHome.managed}"/>
+
+            <s:button id="cancelEdit"
+                   value="Cancel"
+             propagation="end"
+                    view="/Depositostarjeta.xhtml"
+                rendered="#{depositostarjetaHome.managed}"/>
+
+            <s:button id="cancelAdd"
+                   value="Cancel"
+             propagation="end"
+                    view="/#{empty depositostarjetaFrom ? 'DepositostarjetaList' : depositostarjetaFrom}.xhtml"
+                rendered="#{!depositostarjetaHome.managed}"/>
+
+        </div>
+    </h:form>
+
+<rich:tabPanel switchType="ajax">
+
+    <rich:tab label="Cuenta">
+    <div class="association" id="cuentaParent">
+
+        <h:outputText value="There is no cuenta associated with this depositostarjeta."
+                   rendered="#{depositostarjetaHome.instance.cuenta == null}"/>
+
+        <rich:dataTable var="_cuenta"
+                   value="#{depositostarjetaHome.instance.cuenta}"
+                rendered="#{depositostarjetaHome.instance.cuenta != null}"
+              rowClasses="rvgRowOne,rvgRowTwo"
+                      id="cuentaTable">
+            <h:column>
+                <f:facet name="header">Numcuenta</f:facet>
+                <h:outputText value="#{_cuenta.numcuenta}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Banco codbanco</f:facet>
+                <h:outputText value="#{_cuenta.banco.codbanco}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Nombre</f:facet>
+                <h:outputText value="#{_cuenta.nombre}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Saldo</f:facet>
+                <h:outputText value="#{_cuenta.saldo}">
+                    <f:convertNumber/>
+                </h:outputText>
+            </h:column>
+        </rich:dataTable>
+
+        <div class="actionButtons">
+            <s:button id="#{depositostarjetaHome.instance.cuenta != null ? 'changeParent' : 'selectParent'}" value="#{depositostarjetaHome.instance.cuenta != null ? 'Change' : 'Select'} cuenta"
+                       view="/CuentaList.xhtml">
+                <f:param name="from" value="DepositostarjetaEdit"/>
+            </s:button>
+        </div>
+
+    </div>
+    </rich:tab>
+
+    <rich:tab label="Tarjeta *" labelClass="required">
+    <div class="association" id="tarjetaParent">
+
+        <h:outputText value="There is no tarjeta associated with this depositostarjeta."
+                   rendered="#{depositostarjetaHome.instance.tarjeta == null}"/>
+
+        <rich:dataTable var="_tarjeta"
+                   value="#{depositostarjetaHome.instance.tarjeta}"
+                rendered="#{depositostarjetaHome.instance.tarjeta != null}"
+              rowClasses="rvgRowOne,rvgRowTwo"
+                      id="tarjetaTable">
+            <h:column>
+                <f:facet name="header">Numerotarjeta</f:facet>
+                <h:outputText value="#{_tarjeta.numerotarjeta}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Promotor documento</f:facet>
+                <h:outputText value="#{_tarjeta.promotor.documento}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Franquicia codfranquicia</f:facet>
+                <h:outputText value="#{_tarjeta.franquicia.codfranquicia}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Banco codbanco</f:facet>
+                <h:outputText value="#{_tarjeta.banco.codbanco}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Limite</f:facet>
+                <h:outputText value="#{_tarjeta.limite}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Fechainicio</f:facet>
+                <h:outputText value="#{_tarjeta.fechainicio}">
+                    <s:convertDateTime type="both" dateStyle="short"/>
+                </h:outputText>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Fechafin</f:facet>
+                <h:outputText value="#{_tarjeta.fechafin}">
+                    <s:convertDateTime type="both" dateStyle="short"/>
+                </h:outputText>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Fechavencimiento</f:facet>
+                <h:outputText value="#{_tarjeta.fechavencimiento}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Codseguridad</f:facet>
+                <h:outputText value="#{_tarjeta.codseguridad}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Tarjetahabiente</f:facet>
+                <h:outputText value="#{_tarjeta.tarjetahabiente}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Direcciontarjetahabiente</f:facet>
+                <h:outputText value="#{_tarjeta.direcciontarjetahabiente}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Cedulatarjetahabiente</f:facet>
+                <h:outputText value="#{_tarjeta.cedulatarjetahabiente}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Telefonotarjetahabiente</f:facet>
+                <h:outputText value="#{_tarjeta.telefonotarjetahabiente}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Fechamod</f:facet>
+                <h:outputText value="#{_tarjeta.fechamod}">
+                    <s:convertDateTime type="both" dateStyle="short"/>
+                </h:outputText>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Usuariomod</f:facet>
+                <h:outputText value="#{_tarjeta.usuariomod}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Tac</f:facet>
+                <h:outputText value="#{_tarjeta.tac}"/>
+            </h:column>
+        </rich:dataTable>
+
+        <div class="actionButtons">
+            <s:button id="#{depositostarjetaHome.instance.tarjeta != null ? 'changeParent' : 'selectParent'}" value="#{depositostarjetaHome.instance.tarjeta != null ? 'Change' : 'Select'} tarjeta"
+                       view="/TarjetaList.xhtml">
+                <f:param name="from" value="DepositostarjetaEdit"/>
+            </s:button>
+        </div>
+
+    </div>
+    </rich:tab>
+</rich:tabPanel>
+</ui:define>
+
+</ui:composition>

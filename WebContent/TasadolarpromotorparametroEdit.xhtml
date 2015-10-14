@@ -1,0 +1,354 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:a="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    template="layout/template.xhtml">
+
+<ui:define name="body">
+
+    <h:form id="tasadolarpromotorparametro" styleClass="edit">
+
+        <rich:panel>
+            <f:facet name="header">#{tasadolarpromotorparametroHome.managed ? 'Editando' : 'Grabando'} Parametros de Transacciones</f:facet>
+			
+			<s:div id="parametrostasa" style="float:left; width:60%">
+			
+			<rich:panel id="banderaImg" 
+						style="padding: 0px; margin:0px 0px 10px 125px; width:110px; height:80px" 
+						bodyClass="rich-laguna-panel-no-header">
+				<h:graphicImage style="padding: 0px; width:90px; height:60px;" 
+								rendered="true" 
+								value="#{AdministrarTasa.pathBandera}" alt=""/>
+    		</rich:panel>
+			
+			<s:decorate id="codigopaisField" template="layout/edit.xhtml">
+                <ui:define name="label">Pais</ui:define>
+                <h:selectOneMenu id="paisSel" value="#{AdministrarTasa.paisTemp}" required="true" >
+				<s:selectItems value="#{paisList.resultList}" var="pais" label="#{pais.nombre}" 
+			                    noSelectionLabel="Seleccione..." />
+			    <s:convertEntity />
+			    <a:support event="onchange" action="#{AdministrarTasa.listarComercios(AdministrarTasa.paisTemp.codigopais)}" 
+			    					reRender="dolarTasas, dolarGlobal, tasadolarField, tasadolarFieldTac, tasadolarFieldOf, dolarGlobalEst,
+                				dolarGlobalEstS, tasadolarFieldNeg, euroTasas, euroGlobal, euroGlobalEst, euroGlobalEstS,
+                				tasaeuroField, tasaeuroFieldTac, tasaeuroFieldOf, tasaeuroFieldNeg, 
+                				banderaImg" ajaxSingle="true"/>
+			</h:selectOneMenu>
+            </s:decorate>
+            
+            <s:decorate id="promotorField" template="layout/edit.xhtml">
+                <ui:define name="label">Promotor</ui:define>                		
+				<h:inputText value="#{AdministrarTasa.nombre}" id="namepromotor" size="50">			
+                	<a:support event="onblur" reRender="dolarTasas, dolarGlobal, tasadolarField, tasadolarFieldTac, tasadolarFieldOf, dolarGlobalEst,
+                				dolarGlobalEstS, tasadolarFieldNeg, euroTasas, euroGlobal, euroGlobalEst, euroGlobalEstS,
+                				tasaeuroField, tasaeuroFieldTac, tasaeuroFieldOf, tasaeuroFieldNeg, porcentdiv, paridaddiv, 
+                				pariFieldClt, porcentFieldOf, paridadFielddOf"  
+                				action="#{AdministrarTasa.ubicarPromotor()}" 
+                				ajaxSingle="true"/>
+                </h:inputText>
+                <h:graphicImage value="/img/arrow.png"
+                	    		onclick="#{rich:component('tarjetahabienteBoxId')}.callSuggestion(true)" 
+                    			alt="" />
+			    <rich:suggestionbox id="tarjetahabienteBoxId" for="namepromotor"
+                                        suggestionAction="#{AdministrarTasa.autocompletar}" var="result"
+                                        tokens="," height="150" width="260" cellpadding="2"
+                                        cellspacing="2"   shadowOpacity="4" shadowDepth="4"
+                                        minChars="1" rules="none" nothingLabel="No se encontro ningun promotor con estos datos">
+                                        <h:column>
+                                            <h:outputText value="#{result}" style="font-style:bold" />
+                                        </h:column>
+            	</rich:suggestionbox>
+        	</s:decorate> 
+        	
+        	
+        	<s:decorate id="codigounicoField" template="layout/edit.xhtml">
+                <ui:define name="label">Establecimiento</ui:define>
+                <h:inputText value="#{AdministrarTasa.sugestion}" id="name" styleClass="textBox" size="50">
+                <a:support event="onblur" action="#{AdministrarTasa.ubicarEstablecimiento()}" ajaxSingle="true"/>
+                </h:inputText><h:graphicImage value="/img/arrow.png"
+                    onclick="#{rich:component('suggestionBoxId')}.callSuggestion(true)"
+                    alt="" />
+				<rich:suggestionbox id="suggestionBoxId" for="name"
+                                        suggestionAction="#{AdministrarTasa.autocompletarEstablecimiento}" var="result"
+                                        tokens="," height="150" width="260" cellpadding="2"
+                                        cellspacing="2"   shadowOpacity="4" shadowDepth="4"
+                                        minChars="1" rules="none" nothingLabel="No se encontro ningun establecimiento">
+                                        <h:column>
+                                            <h:outputText value="#{result}" style="font-style:bold" />
+                                        </h:column>
+                                    </rich:suggestionbox>
+                
+            </s:decorate>
+            
+            <s:decorate id="franquiciaField" template="layout/edit.xhtml">
+                <ui:define name="label">Franquicia</ui:define>
+                <h:selectOneMenu id="franquiciaSel" value="#{AdministrarTasa.frqTemp}" required="false" >
+			<s:selectItems value="#{franquiciaList.resultList}" var="franquicia" label="#{franquicia.nombrefranquicia}" 
+			                    noSelectionLabel="Seleccione..." />
+			      <s:convertEntity />
+			      <a:support event="onchange" reRender="franquiciaField" ajaxSingle="true"/>
+			</h:selectOneMenu>
+        	</s:decorate>
+        	
+        	<s:decorate id="bancoField" template="layout/edit.xhtml">
+                <ui:define name="label">Banco</ui:define>
+                <h:selectOneMenu id="bancoSel" value="#{AdministrarTasa.bancoTemp}" required="false" >
+			<s:selectItems value="#{bancoList.resultList}" var="banco" label="#{banco.nombrebanco}" 
+			                    noSelectionLabel="Seleccione..." />
+			      <s:convertEntity />
+			      <a:support event="onchange" reRender="bancoField" ajaxSingle="true"/>
+			</h:selectOneMenu>
+        	</s:decorate>
+        	
+        	<s:decorate id="tipotxField" template="layout/edit.xhtml">
+                <ui:define name="label">Tipo Transaccion</ui:define>
+                <h:selectOneMenu id="tipotx" value="#{AdministrarTasa.tipoCupoTemp}" required="true">
+					<f:selectItem itemValue="V" itemLabel="Viajero"/>
+					<f:selectItem itemValue="I" itemLabel="Internet"/>
+				</h:selectOneMenu>   
+            </s:decorate>
+            
+            </s:div>            
+            <s:div id="valorestasa" style="float:right; width:40%">
+          
+
+            <s:decorate id="fechainicioField" template="layout/edit.xhtml">
+                <ui:define name="label">Fechainicio</ui:define>
+                <rich:calendar id="fechainicio"
+                          value="#{AdministrarTasa.fechaIniTemp}" datePattern="dd/MM/yyyy"/>
+            </s:decorate>
+
+            <s:decorate id="fechafinField" template="layout/edit.xhtml">
+                <ui:define name="label">Fechafin</ui:define>
+                <rich:calendar id="fechafin" 
+                          value="#{AdministrarTasa.fechaFinTemp}" datePattern="dd/MM/yyyy"/>
+            </s:decorate>
+            
+                        
+            <s:div id="dolarTasas" style="width=100%">
+			<s:decorate id="dolarGlobal" rendered="#{AdministrarTasa.codMoneda != 'EUR' &amp;&amp; AdministrarTasa.paisTemp != null }">
+            <fieldset style="border-color:#d2d2d2; float:left; width: 65%">            
+            <legend style="color:#07890d;font-weight:bold;">Tasas Dolar </legend>
+            	<!-- Este div rederiza cuando solo estan los parametros de Pais, 
+            		 Estable, Tipo Cupo Viajero-->
+            	<s:div id="dolarGlobalEst">
+            	<!-- Renderiza si hay promotor -->
+            	<s:decorate id="dolarGlobalEstS" rendered="#{AdministrarTasa.codMoneda != 'EUR' &amp;&amp;  
+            												  AdministrarTasa.promoTemp == null}" >
+            	
+            		<s:decorate id="tasadolarField" template="layout/edit.xhtml"
+            					rendered="#{AdministrarTasa.codMoneda != 'EUR'}">
+                		<ui:define name="label">Tasa Dolar Cliente</ui:define>
+               			<h:inputText id="tasadolar"
+                          value="#{AdministrarTasa.tasaDolarTemp}"
+                           size="13">
+                    	<a:support event="onblur" reRender="tasadolarField" bypassUpdates="true" ajaxSingle="true"/>
+                		</h:inputText> 
+            		</s:decorate>
+            		
+            		<s:decorate id="tasadolarFieldTac" template="layout/edit.xhtml" 
+            					rendered="#{AdministrarTasa.codMoneda != 'EUR'}">
+                		<ui:define name="label">Tasa Dolar TAC</ui:define>
+               			<h:inputText id="tasadolarTac"
+                          value="#{AdministrarTasa.tasaDolarTacTemp}"
+                           size="13">
+                    	<a:support event="onblur" reRender="tasadolarFieldTac" bypassUpdates="true" ajaxSingle="true"/>
+                		</h:inputText>
+            		</s:decorate>
+            		
+            		<s:decorate id="tasadolarFieldOf" template="layout/edit.xhtml" 
+            					rendered="#{AdministrarTasa.codMoneda != 'EUR'}">
+                		<ui:define name="label">Tasa Dolar Oficina</ui:define>
+               			<h:inputText id="tasadolarOf"
+                          value="#{AdministrarTasa.tasaDolarOfTemp}"
+                           size="13">
+                    	<a:support event="onblur" reRender="tasadolarFieldOf" bypassUpdates="true" ajaxSingle="true"/>
+                		</h:inputText>
+            		</s:decorate>
+            	<!-- end s:decorate dolarGlobalEstS -->
+            	</s:decorate>
+            	</s:div>  
+            		
+            	<s:div id="dolarNeg">            	
+            		<s:decorate id="tasadolarFieldNeg" template="layout/edit.xhtml" 
+            					rendered="#{AdministrarTasa.codMoneda != 'EUR' &amp;&amp;  
+            												  AdministrarTasa.promoTemp != null}" >
+                		<ui:define name="label">Tasa Dolar Negociado</ui:define>
+               			<h:inputText id="tasadolarNeg"
+                          value="#{AdministrarTasa.tasaDolarNegTemp}"
+                           size="13">
+                    	<a:support event="onblur" reRender="tasadolarFieldNeg" bypassUpdates="true" ajaxSingle="true"/>
+                		</h:inputText>
+            		</s:decorate>
+            	</s:div>
+			 </fieldset> 
+			 </s:decorate>          
+            </s:div>
+           
+            
+            <br/>
+            
+            <s:div id="euroTasas" style="width=100%" > 
+            <s:decorate id="euroGlobal" rendered="#{AdministrarTasa.codMoneda == 'EUR' &amp;&amp; AdministrarTasa.paisTemp != null }">           
+            <fieldset style="border-color:#d2d2d2; float:left; width: 65%">            
+            <legend style="color:#cc0000; font-weight:bold;">Tasas Euro </legend>
+            	
+            	<!-- Este div rederiza cuando solo estan los parametros de Pais, 
+            		 Estable, Tipo Cupo Viajero-->
+            	<s:div id="euroGlobalEst" >
+            	<s:decorate id="euroGlobalEstS" rendered="#{AdministrarTasa.codMoneda == 'EUR' &amp;&amp;  
+            												  AdministrarTasa.promoTemp == null}" >
+            	
+            		<s:decorate id="tasaeuroField" template="layout/edit.xhtml" 
+            									   rendered="#{AdministrarTasa.codMoneda == 'EUR'}">
+                		<ui:define name="label">Tasa Euro Cliente</ui:define>
+               			<h:inputText id="tasaEuro"
+                          value="#{AdministrarTasa.tasaEuroTemp}"
+                           size="13">
+                    	<a:support event="onblur" reRender="tasaeuroField" bypassUpdates="true" ajaxSingle="true"/>
+                		</h:inputText>
+            		</s:decorate>
+            		
+            		<s:decorate id="tasaeuroFieldTac" template="layout/edit.xhtml" 
+            										  rendered="#{AdministrarTasa.codMoneda == 'EUR'}">
+                		<ui:define name="label">Tasa Euro TAC</ui:define>
+               			<h:inputText id="tasaeuroTac"
+                          value="#{AdministrarTasa.tasaEuroTacTemp}"
+                           size="13">
+                    	<a:support event="onblur" reRender="tasaeuroFieldTac" bypassUpdates="true" ajaxSingle="true"/>
+                		</h:inputText>
+            		</s:decorate>
+            		
+            		<s:decorate id="tasaeuroFieldOf" template="layout/edit.xhtml" 
+            										 rendered="#{AdministrarTasa.codMoneda == 'EUR'}">
+                		<ui:define name="label">Tasa Euro Oficina</ui:define>
+               			<h:inputText id="tasaeurorOf"
+                          value="#{AdministrarTasa.tasaEuroOfTemp}"
+                           size="13">
+                    	<a:support event="onblur" reRender="tasaeuroFieldOf" bypassUpdates="true" ajaxSingle="true"/>
+                		</h:inputText>
+            		</s:decorate>
+            	</s:decorate>
+            	</s:div> 
+            	 	
+            	<s:div id="euroNeg">            	
+            		<s:decorate id="tasaeuroFieldNeg" template="layout/edit.xhtml" rendered="#{AdministrarTasa.codMoneda == 'EUR' &amp;&amp;  
+            												  AdministrarTasa.promoTemp != null}">
+                		<ui:define name="label">Tasa Euro Negociado</ui:define>
+               			<h:inputText id="tasaeurorNeg"
+                          value="#{AdministrarTasa.tasaEuroNegTemp}"
+                           size="13">
+                    	<a:support event="onblur" reRender="tasaeuroFieldNeg" bypassUpdates="true" ajaxSingle="true"/>
+                		</h:inputText>
+            		</s:decorate>
+            	</s:div>
+			 </fieldset>   
+			 </s:decorate>        
+            </s:div>
+            
+            <s:div id="porcentdiv" style="width=100%">
+            	<fieldset style="border-color:#d2d2d2; float:left; width: 65%">    
+					<legend>Porcentajes</legend>
+					
+					<s:decorate id="porcentFieldClt" template="layout/edit.xhtml">
+						<ui:define name="label">Porcentaje Cliente</ui:define>
+						<h:inputText id="porcentClient"
+			  					 value="#{AdministrarTasa.porcentCt}"
+			   					 size="13">
+		  				<a:support event="onblur" reRender="porcentFieldClt" 
+		  								bypassUpdates="true" ajaxSingle="true"/>
+						</h:inputText>
+					</s:decorate>
+					
+					<s:decorate id="porcentFieldOf" rendered="#{AdministrarTasa.promoTemp == null}" template="layout/edit.xhtml">
+						<ui:define name="label">Porcentaje Oficina</ui:define>
+						<h:inputText id="porcentOf"
+			  					 value="#{AdministrarTasa.porcentOfi}"
+			   					 size="13">
+		  				<a:support event="onblur" reRender="porcentFieldOf" 
+		  								bypassUpdates="true" ajaxSingle="true"/>
+						</h:inputText>
+					</s:decorate>
+	  			</fieldset>
+            </s:div>
+            
+            <s:div id="paridaddiv" style="width=100%">
+            	<fieldset style="border-color:#d2d2d2; float:left; width: 65%">    
+					<legend>Paridad Cambiaria</legend>
+					
+					<s:decorate id="pariFieldClt" rendered="#{AdministrarTasa.promoTemp == null}" template="layout/edit.xhtml">
+						<ui:define name="label">Paridad Cliente</ui:define>
+						<h:inputText id="paridadClient"
+			  					 value="#{AdministrarTasa.paridadClienteTemp}"
+			   					 size="13">
+		  				<a:support event="onblur" reRender="pariFieldClt" 
+		  								bypassUpdates="true" ajaxSingle="true"/>
+						</h:inputText>
+					</s:decorate>
+					
+					<s:decorate id="paridadFielddOf" rendered="#{AdministrarTasa.promoTemp == null}" template="layout/edit.xhtml">
+						<ui:define name="label">Paridad Oficina</ui:define>
+						<h:inputText id="paridadOf"
+			  					 value="#{AdministrarTasa.paridadEstTemp}"
+			   					 size="13">
+		  				<a:support event="onblur" reRender="paridadFielddOf" 
+		  								bypassUpdates="true" ajaxSingle="true"/>
+						</h:inputText>
+					</s:decorate>
+	  			</fieldset>
+            </s:div>
+            
+            <!-- fin div izquierdo -->
+            </s:div>
+
+			<div style="clear:both">
+                <span class="required">*</span>
+                required fields
+            </div>
+
+        </rich:panel>
+
+        <div class="actionButtons">
+        
+        	<h:commandButton id="save"
+                          value="Guardar"
+                         action="#{AdministrarTasa.guardarTasaDolarParam}"
+                       rendered="#{!tasadolarpromotorparametroHome.managed}"/>
+
+            <h:commandButton id="update"
+                          value="Save"
+                         action="#{tasadolarpromotorparametroHome.update}"
+                       rendered="#{tasadolarpromotorparametroHome.managed}"/>
+
+            <h:commandButton id="delete"
+                          value="Delete"
+                         action="#{tasadolarpromotorparametroHome.remove}"
+                      immediate="true"
+                       rendered="#{tasadolarpromotorparametroHome.managed}"/>
+
+            <s:button id="cancelEdit"
+                   value="Cancel"
+             propagation="end"
+                    view="/Tasadolarpromotorparametro.xhtml"
+                rendered="#{tasadolarpromotorparametroHome.managed}"/>
+
+            <s:button id="cancelAdd"
+                   value="Cancel"
+             propagation="end"
+                    view="/#{empty tasadolarpromotorparametroFrom ? 'TasadolarpromotorparametroList' : tasadolarpromotorparametroFrom}.xhtml"
+                rendered="#{!tasadolarpromotorparametroHome.managed}"/>
+
+        </div>
+    </h:form>
+
+ 
+
+
+
+</ui:define>
+
+</ui:composition>

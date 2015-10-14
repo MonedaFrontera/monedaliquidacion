@@ -1,0 +1,789 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:a="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    template="layout/template.xhtml">
+
+<ui:define name="body">
+
+    <h:form id="activacion" styleClass="edit">
+
+        <rich:panel>
+            <f:facet name="header">#{activacionHome.managed ? 'Edit' : 'Add'} Activacion</f:facet>
+
+
+            <s:decorate id="consecutivoField" template="layout/edit.xhtml">
+                <ui:define name="label">Consecutivo</ui:define>
+                <h:inputText id="consecutivo"
+                       required="true"
+                       disabled="#{activacionHome.managed}"
+                          value="#{activacionHome.instance.consecutivo}">
+                    <a:support event="onblur" reRender="consecutivoField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+
+
+
+
+            <s:decorate id="cedulaField" template="layout/edit.xhtml">
+                <ui:define name="label">Cedula</ui:define>
+                <h:inputText id="cedula"
+                           size="15"
+                      maxlength="15"
+                          value="#{activacionHome.instance.cedula}">
+                    <a:support event="onblur" reRender="cedulaField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="nombreField" template="layout/edit.xhtml">
+                <ui:define name="label">Nombre</ui:define>
+                <h:inputText id="nombre"
+                           size="50"
+                      maxlength="50"
+                          value="#{activacionHome.instance.nombre}">
+                    <a:support event="onblur" reRender="nombreField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="fecharegField" template="layout/edit.xhtml">
+                <ui:define name="label">Fechareg</ui:define>
+                <rich:calendar id="fechareg"
+                          value="#{activacionHome.instance.fechareg}" datePattern="MM/dd/yyyy hh:mm a"/>
+            </s:decorate>
+
+
+            <s:decorate id="usuarioregField" template="layout/edit.xhtml">
+                <ui:define name="label">Usuarioreg</ui:define>
+                <h:inputText id="usuarioreg"
+                           size="20"
+                      maxlength="20"
+                          value="#{activacionHome.instance.usuarioreg}">
+                    <a:support event="onblur" reRender="usuarioregField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="correoField" template="layout/edit.xhtml">
+                <ui:define name="label">Correo</ui:define>
+                <h:inputText id="correo"
+                           size="50"
+                      maxlength="50"
+                          value="#{activacionHome.instance.correo}">
+                    <a:support event="onblur" reRender="correoField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="claveField" template="layout/edit.xhtml">
+                <ui:define name="label">Clave</ui:define>
+                <h:inputText id="clave"
+                           size="50"
+                      maxlength="50"
+                          value="#{activacionHome.instance.clave}">
+                    <a:support event="onblur" reRender="claveField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="usuarioField" template="layout/edit.xhtml">
+                <ui:define name="label">Usuario</ui:define>
+                <h:inputText id="usuario"
+                           size="50"
+                      maxlength="50"
+                          value="#{activacionHome.instance.usuario}">
+                    <a:support event="onblur" reRender="usuarioField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="llaveField" template="layout/edit.xhtml">
+                <ui:define name="label">Llave</ui:define>
+                <h:inputText id="llave"
+                           size="50"
+                      maxlength="50"
+                          value="#{activacionHome.instance.llave}">
+                    <a:support event="onblur" reRender="llaveField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="anoField" template="layout/edit.xhtml">
+                <ui:define name="label">Ano</ui:define>
+                <h:inputText id="ano"
+                          value="#{activacionHome.instance.ano}">
+                    <a:support event="onblur" reRender="anoField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="usuariomodField" template="layout/edit.xhtml">
+                <ui:define name="label">Usuariomod</ui:define>
+                <h:inputText id="usuariomod"
+                           size="20"
+                      maxlength="20"
+                          value="#{activacionHome.instance.usuariomod}">
+                    <a:support event="onblur" reRender="usuariomodField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="fechacitaField" template="layout/edit.xhtml">
+                <ui:define name="label">Fechacita</ui:define>
+                <rich:calendar id="fechacita"
+                          value="#{activacionHome.instance.fechacita}" datePattern="MM/dd/yyyy hh:mm a"/>
+            </s:decorate>
+
+
+            <s:decorate id="fechaactField" template="layout/edit.xhtml">
+                <ui:define name="label">Fechaact</ui:define>
+                <rich:calendar id="fechaact"
+                          value="#{activacionHome.instance.fechaact}" datePattern="MM/dd/yyyy hh:mm a"/>
+            </s:decorate>
+
+
+            <s:decorate id="fechamodField" template="layout/edit.xhtml">
+                <ui:define name="label">Fechamod</ui:define>
+                <rich:calendar id="fechamod"
+                          value="#{activacionHome.instance.fechamod}" datePattern="MM/dd/yyyy hh:mm a"/>
+            </s:decorate>
+
+
+            <s:decorate id="ingresocadiviField" template="layout/edit.xhtml">
+                <ui:define name="label">Ingresocadivi</ui:define>
+                <h:selectBooleanCheckbox id="ingresocadivi"
+                                      value="#{activacionHome.instance.ingresocadivi}"/>
+            </s:decorate>
+
+
+            <s:decorate id="documentoscompletosField" template="layout/edit.xhtml">
+                <ui:define name="label">Documentoscompletos</ui:define>
+                <h:selectBooleanCheckbox id="documentoscompletos"
+                                      value="#{activacionHome.instance.documentoscompletos}"/>
+            </s:decorate>
+
+
+            <s:decorate id="citaasignadaField" template="layout/edit.xhtml">
+                <ui:define name="label">Citaasignada</ui:define>
+                <h:selectBooleanCheckbox id="citaasignada"
+                                      value="#{activacionHome.instance.citaasignada}"/>
+            </s:decorate>
+
+
+            <s:decorate id="agenciaField" template="layout/edit.xhtml">
+                <ui:define name="label">Agencia</ui:define>
+                <h:inputText id="agencia"
+                           size="100"
+                      maxlength="100"
+                          value="#{activacionHome.instance.agencia}">
+                    <a:support event="onblur" reRender="agenciaField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="tipoviajeField" template="layout/edit.xhtml">
+                <ui:define name="label">Tipoviaje</ui:define>
+                <h:inputText id="tipoviaje"
+                           size="10"
+                      maxlength="10"
+                          value="#{activacionHome.instance.tipoviaje}">
+                    <a:support event="onblur" reRender="tipoviajeField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="fechainicioviajeField" template="layout/edit.xhtml">
+                <ui:define name="label">Fechainicioviaje</ui:define>
+                <rich:calendar id="fechainicioviaje"
+                          value="#{activacionHome.instance.fechainicioviaje}" datePattern="MM/dd/yyyy hh:mm a"/>
+            </s:decorate>
+
+
+            <s:decorate id="fechafinviajeField" template="layout/edit.xhtml">
+                <ui:define name="label">Fechafinviaje</ui:define>
+                <rich:calendar id="fechafinviaje"
+                          value="#{activacionHome.instance.fechafinviaje}" datePattern="MM/dd/yyyy hh:mm a"/>
+            </s:decorate>
+
+
+            <s:decorate id="clavemercantilField" template="layout/edit.xhtml">
+                <ui:define name="label">Clavemercantil</ui:define>
+                <h:inputText id="clavemercantil"
+                           size="50"
+                      maxlength="50"
+                          value="#{activacionHome.instance.clavemercantil}">
+                    <a:support event="onblur" reRender="clavemercantilField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="coordenadasField" template="layout/edit.xhtml">
+                <ui:define name="label">Coordenadas</ui:define>
+                <h:selectBooleanCheckbox id="coordenadas"
+                                      value="#{activacionHome.instance.coordenadas}"/>
+            </s:decorate>
+
+
+            <s:decorate id="provinetField" template="layout/edit.xhtml">
+                <ui:define name="label">Provinet</ui:define>
+                <h:inputText id="provinet"
+                           size="50"
+                      maxlength="50"
+                          value="#{activacionHome.instance.provinet}">
+                    <a:support event="onblur" reRender="provinetField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="claveprovinetField" template="layout/edit.xhtml">
+                <ui:define name="label">Claveprovinet</ui:define>
+                <h:inputText id="claveprovinet"
+                           size="50"
+                      maxlength="50"
+                          value="#{activacionHome.instance.claveprovinet}">
+                    <a:support event="onblur" reRender="claveprovinetField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="rusadField" template="layout/edit.xhtml">
+                <ui:define name="label">Rusad</ui:define>
+                <h:selectBooleanCheckbox id="rusad"
+                                      value="#{activacionHome.instance.rusad}"/>
+            </s:decorate>
+
+
+            <s:decorate id="noingresacadiviField" template="layout/edit.xhtml">
+                <ui:define name="label">Noingresacadivi</ui:define>
+                <h:selectBooleanCheckbox id="noingresacadivi"
+                                      value="#{activacionHome.instance.noingresacadivi}"/>
+            </s:decorate>
+
+
+            <s:decorate id="rifField" template="layout/edit.xhtml">
+                <ui:define name="label">Rif</ui:define>
+                <h:selectBooleanCheckbox id="rif"
+                                      value="#{activacionHome.instance.rif}"/>
+            </s:decorate>
+
+
+            <s:decorate id="depositoField" template="layout/edit.xhtml">
+                <ui:define name="label">Deposito</ui:define>
+                <h:inputText id="deposito"
+                           size="40"
+                      maxlength="40"
+                          value="#{activacionHome.instance.deposito}">
+                    <a:support event="onblur" reRender="depositoField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="fechadepositoField" template="layout/edit.xhtml">
+                <ui:define name="label">Fechadeposito</ui:define>
+                <rich:calendar id="fechadeposito"
+                          value="#{activacionHome.instance.fechadeposito}" datePattern="MM/dd/yyyy hh:mm a"/>
+            </s:decorate>
+
+
+            <s:decorate id="valordepositoField" template="layout/edit.xhtml">
+                <ui:define name="label">Valordeposito</ui:define>
+                <h:inputText id="valordeposito"
+                          value="#{activacionHome.instance.valordeposito}"
+                           size="13">
+                    <a:support event="onblur" reRender="valordepositoField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="fechadevolucionField" template="layout/edit.xhtml">
+                <ui:define name="label">Fechadevolucion</ui:define>
+                <rich:calendar id="fechadevolucion"
+                          value="#{activacionHome.instance.fechadevolucion}" datePattern="MM/dd/yyyy hh:mm a"/>
+            </s:decorate>
+
+
+            <s:decorate id="valordevolucionField" template="layout/edit.xhtml">
+                <ui:define name="label">Valordevolucion</ui:define>
+                <h:inputText id="valordevolucion"
+                          value="#{activacionHome.instance.valordevolucion}"
+                           size="13">
+                    <a:support event="onblur" reRender="valordevolucionField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="erroringresocadiviField" template="layout/edit.xhtml">
+                <ui:define name="label">Erroringresocadivi</ui:define>
+                <h:selectBooleanCheckbox id="erroringresocadivi"
+                                      value="#{activacionHome.instance.erroringresocadivi}"/>
+            </s:decorate>
+
+
+            <s:decorate id="cupoaprobadoField" template="layout/edit.xhtml">
+                <ui:define name="label">Cupoaprobado</ui:define>
+                <h:inputText id="cupoaprobado"
+                          value="#{activacionHome.instance.cupoaprobado}">
+                    <a:support event="onblur" reRender="cupoaprobadoField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="usuariobancoField" template="layout/edit.xhtml">
+                <ui:define name="label">Usuariobanco</ui:define>
+                <h:inputText id="usuariobanco"
+                           size="20"
+                      maxlength="20"
+                          value="#{activacionHome.instance.usuariobanco}">
+                    <a:support event="onblur" reRender="usuariobancoField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="ingresobancalineaField" template="layout/edit.xhtml">
+                <ui:define name="label">Ingresobancalinea</ui:define>
+                <h:selectBooleanCheckbox id="ingresobancalinea"
+                                      value="#{activacionHome.instance.ingresobancalinea}"/>
+            </s:decorate>
+
+
+            <s:decorate id="noingresobancalineaField" template="layout/edit.xhtml">
+                <ui:define name="label">Noingresobancalinea</ui:define>
+                <h:selectBooleanCheckbox id="noingresobancalinea"
+                                      value="#{activacionHome.instance.noingresobancalinea}"/>
+            </s:decorate>
+
+
+
+
+
+
+
+            <div style="clear:both">
+                <span class="required">*</span>
+                required fields
+            </div>
+
+        </rich:panel>
+
+        <div class="actionButtons">
+
+            <h:commandButton id="save"
+                          value="Save"
+                         action="#{activacionHome.persist}"
+                       disabled="#{!activacionHome.wired}"
+                       rendered="#{!activacionHome.managed}"/>
+
+            <h:commandButton id="update"
+                          value="Save"
+                         action="#{activacionHome.update}"
+                       rendered="#{activacionHome.managed}"/>
+
+            <h:commandButton id="delete"
+                          value="Delete"
+                         action="#{activacionHome.remove}"
+                      immediate="true"
+                       rendered="#{activacionHome.managed}"/>
+
+            <s:button id="cancelEdit"
+                   value="Cancel"
+             propagation="end"
+                    view="/Activacion.xhtml"
+                rendered="#{activacionHome.managed}"/>
+
+            <s:button id="cancelAdd"
+                   value="Cancel"
+             propagation="end"
+                    view="/#{empty activacionFrom ? 'ActivacionList' : activacionFrom}.xhtml"
+                rendered="#{!activacionHome.managed}"/>
+
+        </div>
+    </h:form>
+
+<rich:tabPanel switchType="ajax">
+
+    <rich:tab label="Gestor">
+    <div class="association" id="gestorParent">
+
+        <h:outputText value="There is no gestor associated with this activacion."
+                   rendered="#{activacionHome.instance.gestor == null}"/>
+
+        <rich:dataTable var="_gestor"
+                   value="#{activacionHome.instance.gestor}"
+                rendered="#{activacionHome.instance.gestor != null}"
+              rowClasses="rvgRowOne,rvgRowTwo"
+                      id="gestorTable">
+            <h:column>
+                <f:facet name="header">Documento</f:facet>
+                <h:outputText value="#{_gestor.documento}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Personal documento</f:facet>
+                <h:outputText value="#{_gestor.personal.documento}"/>
+            </h:column>
+        </rich:dataTable>
+
+        <div class="actionButtons">
+            <s:button id="#{activacionHome.instance.gestor != null ? 'changeParent' : 'selectParent'}" value="#{activacionHome.instance.gestor != null ? 'Change' : 'Select'} gestor"
+                       view="/GestorList.xhtml">
+                <f:param name="from" value="ActivacionEdit"/>
+            </s:button>
+        </div>
+
+    </div>
+    </rich:tab>
+
+    <rich:tab label="Actestado">
+    <div class="association" id="actestadoParent">
+
+        <h:outputText value="There is no actestado associated with this activacion."
+                   rendered="#{activacionHome.instance.actestado == null}"/>
+
+        <rich:dataTable var="_actestado"
+                   value="#{activacionHome.instance.actestado}"
+                rendered="#{activacionHome.instance.actestado != null}"
+              rowClasses="rvgRowOne,rvgRowTwo"
+                      id="actestadoTable">
+            <h:column>
+                <f:facet name="header">Codestado</f:facet>
+                <h:outputText value="#{_actestado.codestado}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Descripcion</f:facet>
+                <h:outputText value="#{_actestado.descripcion}"/>
+            </h:column>
+        </rich:dataTable>
+
+        <div class="actionButtons">
+            <s:button id="#{activacionHome.instance.actestado != null ? 'changeParent' : 'selectParent'}" value="#{activacionHome.instance.actestado != null ? 'Change' : 'Select'} actestado"
+                       view="/ActestadoList.xhtml">
+                <f:param name="from" value="ActivacionEdit"/>
+            </s:button>
+        </div>
+
+    </div>
+    </rich:tab>
+
+    <rich:tab label="Promotor">
+    <div class="association" id="promotorParent">
+
+        <h:outputText value="There is no promotor associated with this activacion."
+                   rendered="#{activacionHome.instance.promotor == null}"/>
+
+        <rich:dataTable var="_promotor"
+                   value="#{activacionHome.instance.promotor}"
+                rendered="#{activacionHome.instance.promotor != null}"
+              rowClasses="rvgRowOne,rvgRowTwo"
+                      id="promotorTable">
+            <h:column>
+                <f:facet name="header">Documento</f:facet>
+                <h:outputText value="#{_promotor.documento}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Personal documento</f:facet>
+                <h:outputText value="#{_promotor.personal.documento}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Asesor documento</f:facet>
+                <h:outputText value="#{_promotor.asesor.documento}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Arrastrador documento</f:facet>
+                <h:outputText value="#{_promotor.arrastrador.documento}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Comisionviajero</f:facet>
+                <h:outputText value="#{_promotor.comisionviajero}">
+                    <f:convertNumber/>
+                </h:outputText>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Comisionarrastrador</f:facet>
+                <h:outputText value="#{_promotor.comisionarrastrador}">
+                    <f:convertNumber/>
+                </h:outputText>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Tac</f:facet>
+                <h:outputText value="#{_promotor.tac}"/>
+            </h:column>
+        </rich:dataTable>
+
+        <div class="actionButtons">
+            <s:button id="#{activacionHome.instance.promotor != null ? 'changeParent' : 'selectParent'}" value="#{activacionHome.instance.promotor != null ? 'Change' : 'Select'} promotor"
+                       view="/PromotorList.xhtml">
+                <f:param name="from" value="ActivacionEdit"/>
+            </s:button>
+        </div>
+
+    </div>
+    </rich:tab>
+
+    <rich:tab label="Banco">
+    <div class="association" id="bancoParent">
+
+        <h:outputText value="There is no banco associated with this activacion."
+                   rendered="#{activacionHome.instance.banco == null}"/>
+
+        <rich:dataTable var="_banco"
+                   value="#{activacionHome.instance.banco}"
+                rendered="#{activacionHome.instance.banco != null}"
+              rowClasses="rvgRowOne,rvgRowTwo"
+                      id="bancoTable">
+            <h:column>
+                <f:facet name="header">Codbanco</f:facet>
+                <h:outputText value="#{_banco.codbanco}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Nombrebanco</f:facet>
+                <h:outputText value="#{_banco.nombrebanco}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Dias</f:facet>
+                <h:outputText value="#{_banco.dias}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Activo</f:facet>
+                <h:outputText value="#{_banco.activo}"/>
+            </h:column>
+        </rich:dataTable>
+
+        <div class="actionButtons">
+            <s:button id="#{activacionHome.instance.banco != null ? 'changeParent' : 'selectParent'}" value="#{activacionHome.instance.banco != null ? 'Change' : 'Select'} banco"
+                       view="/BancoList.xhtml">
+                <f:param name="from" value="ActivacionEdit"/>
+            </s:button>
+        </div>
+
+    </div>
+    </rich:tab>
+
+    <rich:tab label="Erroringresocadivis">
+        <h:form styleClass="association" id="erroringresocadivisChildren">
+
+            <h:outputText value="There are no erroringresocadivis associated with this activacion."
+                       rendered="#{empty activacionHome.erroringresocadivis}"/>
+
+            <rich:dataTable value="#{activacionHome.erroringresocadivis}"
+                           var="_erroringresocadivi"
+                      rendered="#{not empty activacionHome.erroringresocadivis}"
+                    rowClasses="rvgRowOne,rvgRowTwo"
+                            id="erroringresocadivisTable">
+                <rich:column sortBy="#{_erroringresocadivi.id.consecutivo}">
+                    <f:facet name="header">Consecutivo</f:facet>
+                    <h:outputText value="#{_erroringresocadivi.id.consecutivo}"/>
+                </rich:column>
+                <rich:column sortBy="#{_erroringresocadivi.id.fecha}">
+                    <f:facet name="header">Fecha</f:facet>
+                    <h:outputText value="#{_erroringresocadivi.id.fecha}">
+                        <s:convertDateTime type="both" dateStyle="short"/>
+                    </h:outputText>
+                </rich:column>
+            </rich:dataTable>
+
+        </h:form>
+
+        <f:subview rendered="#{activacionHome.managed}" id="erroringresocadivis">
+        <div class="actionButtons">
+            <s:button id="adderroringresocadivi"
+                   value="Add erroringresocadivi"
+                    view="/ErroringresocadiviEdit.xhtml"
+             propagation="none">
+                 <f:param name="activacionConsecutivo"
+                         value="#{activacionHome.instance.consecutivo}"/>
+                 <f:param name="erroringresocadiviFrom" value="Activacion"/>
+            </s:button>
+        </div>
+        </f:subview>
+    </rich:tab>
+
+    <rich:tab label="Estadoactivacions">
+        <h:form styleClass="association" id="estadoactivacionsChildren">
+
+            <h:outputText value="There are no estadoactivacions associated with this activacion."
+                       rendered="#{empty activacionHome.estadoactivacions}"/>
+
+            <rich:dataTable value="#{activacionHome.estadoactivacions}"
+                           var="_estadoactivacion"
+                      rendered="#{not empty activacionHome.estadoactivacions}"
+                    rowClasses="rvgRowOne,rvgRowTwo"
+                            id="estadoactivacionsTable">
+                <rich:column sortBy="#{_estadoactivacion.id.consecutivo}">
+                    <f:facet name="header">Consecutivo</f:facet>
+                    <h:outputText value="#{_estadoactivacion.id.consecutivo}"/>
+                </rich:column>
+                <rich:column sortBy="#{_estadoactivacion.id.estado}">
+                    <f:facet name="header">Estado</f:facet>
+                    <h:outputText value="#{_estadoactivacion.id.estado}"/>
+                </rich:column>
+                <rich:column sortBy="#{_estadoactivacion.id.fecha}">
+                    <f:facet name="header">Fecha</f:facet>
+                    <h:outputText value="#{_estadoactivacion.id.fecha}">
+                        <s:convertDateTime type="both" dateStyle="short"/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_estadoactivacion.observacion}">
+                    <f:facet name="header">Observacion</f:facet>
+                    <h:outputText value="#{_estadoactivacion.observacion}"/>
+                </rich:column>
+            </rich:dataTable>
+
+        </h:form>
+
+        <f:subview rendered="#{activacionHome.managed}" id="estadoactivacions">
+        <div class="actionButtons">
+            <s:button id="addestadoactivacion"
+                   value="Add estadoactivacion"
+                    view="/EstadoactivacionEdit.xhtml"
+             propagation="none">
+                 <f:param name="activacionConsecutivo"
+                         value="#{activacionHome.instance.consecutivo}"/>
+                 <f:param name="estadoactivacionFrom" value="Activacion"/>
+            </s:button>
+        </div>
+        </f:subview>
+    </rich:tab>
+
+    <rich:tab label="Citas">
+        <h:form styleClass="association" id="citasChildren">
+
+            <h:outputText value="There are no citas associated with this activacion."
+                       rendered="#{empty activacionHome.citas}"/>
+
+            <rich:dataTable value="#{activacionHome.citas}"
+                           var="_cita"
+                      rendered="#{not empty activacionHome.citas}"
+                    rowClasses="rvgRowOne,rvgRowTwo"
+                            id="citasTable">
+                <rich:column sortBy="#{_cita.id.consecutivo}">
+                    <f:facet name="header">Consecutivo</f:facet>
+                    <h:outputText value="#{_cita.id.consecutivo}"/>
+                </rich:column>
+                <rich:column sortBy="#{_cita.id.fecha}">
+                    <f:facet name="header">Fecha</f:facet>
+                    <h:outputText value="#{_cita.id.fecha}">
+                        <s:convertDateTime type="both" dateStyle="short"/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_cita.observacion}">
+                    <f:facet name="header">Observacion</f:facet>
+                    <h:outputText value="#{_cita.observacion}"/>
+                </rich:column>
+            </rich:dataTable>
+
+        </h:form>
+
+        <f:subview rendered="#{activacionHome.managed}" id="citas">
+        <div class="actionButtons">
+            <s:button id="addcita"
+                   value="Add cita"
+                    view="/CitaEdit.xhtml"
+             propagation="none">
+                 <f:param name="activacionConsecutivo"
+                         value="#{activacionHome.instance.consecutivo}"/>
+                 <f:param name="citaFrom" value="Activacion"/>
+            </s:button>
+        </div>
+        </f:subview>
+    </rich:tab>
+
+    <rich:tab label="Activagestors">
+        <h:form styleClass="association" id="activagestorsChildren">
+
+            <h:outputText value="There are no activagestors associated with this activacion."
+                       rendered="#{empty activacionHome.activagestors}"/>
+
+            <rich:dataTable value="#{activacionHome.activagestors}"
+                           var="_activagestor"
+                      rendered="#{not empty activacionHome.activagestors}"
+                    rowClasses="rvgRowOne,rvgRowTwo"
+                            id="activagestorsTable">
+                <rich:column sortBy="#{_activagestor.id.consecutivo}">
+                    <f:facet name="header">Consecutivo</f:facet>
+                    <h:outputText value="#{_activagestor.id.consecutivo}"/>
+                </rich:column>
+                <rich:column sortBy="#{_activagestor.id.documento}">
+                    <f:facet name="header">Documento</f:facet>
+                    <h:outputText value="#{_activagestor.id.documento}"/>
+                </rich:column>
+                <rich:column sortBy="#{_activagestor.id.fecha}">
+                    <f:facet name="header">Fecha</f:facet>
+                    <h:outputText value="#{_activagestor.id.fecha}">
+                        <s:convertDateTime type="both" dateStyle="short"/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_activagestor.observacion}">
+                    <f:facet name="header">Observacion</f:facet>
+                    <h:outputText value="#{_activagestor.observacion}"/>
+                </rich:column>
+            </rich:dataTable>
+
+        </h:form>
+
+        <f:subview rendered="#{activacionHome.managed}" id="activagestors">
+        <div class="actionButtons">
+            <s:button id="addactivagestor"
+                   value="Add activagestor"
+                    view="/ActivagestorEdit.xhtml"
+             propagation="none">
+                 <f:param name="activacionConsecutivo"
+                         value="#{activacionHome.instance.consecutivo}"/>
+                 <f:param name="activagestorFrom" value="Activacion"/>
+            </s:button>
+        </div>
+        </f:subview>
+    </rich:tab>
+
+    <rich:tab label="Observacions">
+        <h:form styleClass="association" id="observacionsChildren">
+
+            <h:outputText value="There are no observacions associated with this activacion."
+                       rendered="#{empty activacionHome.observacions}"/>
+
+            <rich:dataTable value="#{activacionHome.observacions}"
+                           var="_observacion"
+                      rendered="#{not empty activacionHome.observacions}"
+                    rowClasses="rvgRowOne,rvgRowTwo"
+                            id="observacionsTable">
+                <rich:column sortBy="#{_observacion.id.consecutivo}">
+                    <f:facet name="header">Consecutivo</f:facet>
+                    <h:outputText value="#{_observacion.id.consecutivo}"/>
+                </rich:column>
+                <rich:column sortBy="#{_observacion.id.fecha}">
+                    <f:facet name="header">Fecha</f:facet>
+                    <h:outputText value="#{_observacion.id.fecha}">
+                        <s:convertDateTime type="both" dateStyle="short"/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_observacion.observacion}">
+                    <f:facet name="header">Observacion</f:facet>
+                    <h:outputText value="#{_observacion.observacion}"/>
+                </rich:column>
+            </rich:dataTable>
+
+        </h:form>
+
+        <f:subview rendered="#{activacionHome.managed}" id="observacions">
+        <div class="actionButtons">
+            <s:button id="addobservacion"
+                   value="Add observacion"
+                    view="/ObservacionEdit.xhtml"
+             propagation="none">
+                 <f:param name="activacionConsecutivo"
+                         value="#{activacionHome.instance.consecutivo}"/>
+                 <f:param name="observacionFrom" value="Activacion"/>
+            </s:button>
+        </div>
+        </f:subview>
+    </rich:tab>
+</rich:tabPanel>
+</ui:define>
+
+</ui:composition>

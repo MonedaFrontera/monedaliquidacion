@@ -1,0 +1,86 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:a="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    template="layout/template.xhtml">
+
+<ui:define name="body">
+
+    <h:form id="tipoproceso" styleClass="edit">
+
+        <rich:panel>
+            <f:facet name="header">#{tipoprocesoHome.managed ? 'Edit' : 'Add'} Tipoproceso</f:facet>
+
+
+            <s:decorate id="tipoField" template="layout/edit.xhtml">
+                <ui:define name="label">Tipo</ui:define>
+                <h:inputText id="tipo"
+                       disabled="#{tipoprocesoHome.managed}"
+                       required="true"
+                           size="2"
+                      maxlength="2"
+                          value="#{tipoprocesoHome.instance.tipo}">
+                    <a:support event="onblur" reRender="tipoField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="descripcionField" template="layout/edit.xhtml">
+                <ui:define name="label">Descripcion</ui:define>
+                <h:inputText id="descripcion"
+                           size="50"
+                      maxlength="50"
+                          value="#{tipoprocesoHome.instance.descripcion}">
+                    <a:support event="onblur" reRender="descripcionField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+            <div style="clear:both">
+                <span class="required">*</span>
+                required fields
+            </div>
+
+        </rich:panel>
+
+        <div class="actionButtons">
+
+            <h:commandButton id="save"
+                          value="Save"
+                         action="#{tipoprocesoHome.persist}"
+                       disabled="#{!tipoprocesoHome.wired}"
+                       rendered="#{!tipoprocesoHome.managed}"/>
+
+            <h:commandButton id="update"
+                          value="Save"
+                         action="#{tipoprocesoHome.update}"
+                       rendered="#{tipoprocesoHome.managed}"/>
+
+            <h:commandButton id="delete"
+                          value="Delete"
+                         action="#{tipoprocesoHome.remove}"
+                      immediate="true"
+                       rendered="#{tipoprocesoHome.managed}"/>
+
+            <s:button id="cancelEdit"
+                   value="Cancel"
+             propagation="end"
+                    view="/Tipoproceso.xhtml"
+                rendered="#{tipoprocesoHome.managed}"/>
+
+            <s:button id="cancelAdd"
+                   value="Cancel"
+             propagation="end"
+                    view="/#{empty tipoprocesoFrom ? 'TipoprocesoList' : tipoprocesoFrom}.xhtml"
+                rendered="#{!tipoprocesoHome.managed}"/>
+
+        </div>
+    </h:form>
+
+</ui:define>
+
+</ui:composition>

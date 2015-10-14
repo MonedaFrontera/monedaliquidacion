@@ -1,0 +1,112 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:a="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    template="layout/template.xhtml">
+
+<ui:define name="body">
+
+    <h:form id="usuario" styleClass="edit">
+
+        <rich:panel>
+            <f:facet name="header">#{usuarioHome.managed ? 'Edit' : 'Add'} Usuario</f:facet>
+
+
+            <s:decorate id="usuarioField" template="layout/edit.xhtml">
+                <ui:define name="label">Usuario</ui:define>
+                <h:inputText id="usuario"
+                       disabled="#{usuarioHome.managed}"
+                       required="true"
+                           size="15"
+                      maxlength="15"
+                          value="#{usuarioHome.instance.usuario}">
+                    <a:support event="onblur" reRender="usuarioField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="nombreField" template="layout/edit.xhtml">
+                <ui:define name="label">Nombre</ui:define>
+                <h:inputText id="nombre"
+                           size="50"
+                      maxlength="50"
+                          value="#{usuarioHome.instance.nombre}">
+                    <a:support event="onblur" reRender="nombreField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="claveField" template="layout/edit.xhtml">
+                <ui:define name="label">Clave</ui:define>
+                <h:inputText id="clave"
+                           size="16"
+                      maxlength="16"
+                          value="#{usuarioHome.instance.clave}">
+                    <a:support event="onblur" reRender="claveField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="activoField" template="layout/edit.xhtml">
+                <ui:define name="label">Activo</ui:define>
+                <h:selectBooleanCheckbox id="activo"
+                                      value="#{usuarioHome.instance.activo}"/>
+            </s:decorate>
+
+
+            <s:decorate id="administradorField" template="layout/edit.xhtml">
+                <ui:define name="label">Administrador</ui:define>
+                <h:selectBooleanCheckbox id="administrador"
+                                      value="#{usuarioHome.instance.administrador}"/>
+            </s:decorate>
+
+
+            <div style="clear:both">
+                <span class="required">*</span>
+                required fields
+            </div>
+
+        </rich:panel>
+
+        <div class="actionButtons">
+
+            <h:commandButton id="save"
+                          value="Save"
+                         action="#{usuarioHome.persist}"
+                       disabled="#{!usuarioHome.wired}"
+                       rendered="#{!usuarioHome.managed}"/>
+
+            <h:commandButton id="update"
+                          value="Save"
+                         action="#{usuarioHome.update}"
+                       rendered="#{usuarioHome.managed}"/>
+
+            <h:commandButton id="delete"
+                          value="Delete"
+                         action="#{usuarioHome.remove}"
+                      immediate="true"
+                       rendered="#{usuarioHome.managed}"/>
+
+            <s:button id="cancelEdit"
+                   value="Cancel"
+             propagation="end"
+                    view="/Usuario.xhtml"
+                rendered="#{usuarioHome.managed}"/>
+
+            <s:button id="cancelAdd"
+                   value="Cancel"
+             propagation="end"
+                    view="/#{empty usuarioFrom ? 'UsuarioList' : usuarioFrom}.xhtml"
+                rendered="#{!usuarioHome.managed}"/>
+
+        </div>
+    </h:form>
+
+</ui:define>
+
+</ui:composition>

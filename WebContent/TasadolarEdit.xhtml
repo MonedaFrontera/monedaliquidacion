@@ -1,0 +1,154 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:a="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    template="layout/template.xhtml">
+
+<ui:define name="body">
+
+    <h:form id="tasadolar" styleClass="edit">
+
+        <rich:panel>
+            <f:facet name="header">#{tasadolarHome.managed ? 'Edit' : 'Add'} Tasadolar</f:facet>
+
+
+            <s:decorate id="codigopaisField" template="layout/edit.xhtml">
+                <ui:define name="label">Codigopais</ui:define>
+                <h:inputText id="codigopais"
+                       disabled="#{tasadolarHome.managed}"
+                      required="true"
+                          size="5"
+                     maxlength="5"
+                         value="#{tasadolarHome.instance.id.codigopais}">
+                    <a:support event="onblur" reRender="codigopaisField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+            <s:decorate id="fechaField" template="layout/edit.xhtml">
+                <ui:define name="label">Fecha</ui:define>
+                <rich:calendar id="fecha"
+                       required="true"
+                          value="#{tasadolarHome.instance.id.fecha}" datePattern="MM/dd/yyyy hh:mm a" />
+            </s:decorate>
+
+
+
+            <s:decorate id="tasaField" template="layout/edit.xhtml">
+                <ui:define name="label">Tasa</ui:define>
+                <h:inputText id="tasa"
+                          value="#{tasadolarHome.instance.tasa}"
+                           size="13">
+                    <a:support event="onblur" reRender="tasaField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="tasadolarField" template="layout/edit.xhtml">
+                <ui:define name="label">Tasadolar</ui:define>
+                <h:inputText id="tasadolar"
+                          value="#{tasadolarHome.instance.tasadolar}"
+                           size="13">
+                    <a:support event="onblur" reRender="tasadolarField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="trmField" template="layout/edit.xhtml">
+                <ui:define name="label">Trm</ui:define>
+                <h:inputText id="trm"
+                          value="#{tasadolarHome.instance.trm}"
+                           size="13">
+                    <a:support event="onblur" reRender="trmField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+            <div style="clear:both">
+                <span class="required">*</span>
+                required fields
+            </div>
+
+        </rich:panel>
+
+        <div class="actionButtons">
+
+            <h:commandButton id="save"
+                          value="Save"
+                         action="#{tasadolarHome.persist}"
+                       disabled="#{!tasadolarHome.wired}"
+                       rendered="#{!tasadolarHome.managed}"/>
+
+            <h:commandButton id="update"
+                          value="Save"
+                         action="#{tasadolarHome.update}"
+                       rendered="#{tasadolarHome.managed}"/>
+
+            <h:commandButton id="delete"
+                          value="Delete"
+                         action="#{tasadolarHome.remove}"
+                      immediate="true"
+                       rendered="#{tasadolarHome.managed}"/>
+
+            <s:button id="cancelEdit"
+                   value="Cancel"
+             propagation="end"
+                    view="/Tasadolar.xhtml"
+                rendered="#{tasadolarHome.managed}"/>
+
+            <s:button id="cancelAdd"
+                   value="Cancel"
+             propagation="end"
+                    view="/#{empty tasadolarFrom ? 'TasadolarList' : tasadolarFrom}.xhtml"
+                rendered="#{!tasadolarHome.managed}"/>
+
+        </div>
+    </h:form>
+
+<rich:tabPanel switchType="ajax">
+
+    <rich:tab label="Pais *" labelClass="required">
+    <div class="association" id="paisParent">
+
+        <h:outputText value="There is no pais associated with this tasadolar."
+                   rendered="#{tasadolarHome.instance.pais == null}"/>
+
+        <rich:dataTable var="_pais"
+                   value="#{tasadolarHome.instance.pais}"
+                rendered="#{tasadolarHome.instance.pais != null}"
+              rowClasses="rvgRowOne,rvgRowTwo"
+                      id="paisTable">
+            <h:column>
+                <f:facet name="header">Codigopais</f:facet>
+                <h:outputText value="#{_pais.codigopais}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Paisiso codigopais</f:facet>
+                <h:outputText value="#{_pais.paisiso.codigopais}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Nombre</f:facet>
+                <h:outputText value="#{_pais.nombre}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Estado</f:facet>
+                <h:outputText value="#{_pais.estado}"/>
+            </h:column>
+        </rich:dataTable>
+
+        <div class="actionButtons">
+            <s:button id="#{tasadolarHome.instance.pais != null ? 'changeParent' : 'selectParent'}" value="#{tasadolarHome.instance.pais != null ? 'Change' : 'Select'} pais"
+                       view="/PaisList.xhtml">
+                <f:param name="from" value="TasadolarEdit"/>
+            </s:button>
+        </div>
+
+    </div>
+    </rich:tab>
+</rich:tabPanel>
+</ui:define>
+
+</ui:composition>

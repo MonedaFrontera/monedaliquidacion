@@ -1,0 +1,267 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:a="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    template="layout/template.xhtml">
+
+<ui:define name="body">
+
+    <h:form id="envios" styleClass="edit">
+
+        <rich:panel>
+            <f:facet name="header">#{enviosHome.managed ? 'Edit' : 'Add'} Envios</f:facet>
+
+
+            <s:decorate id="consecutivoField" template="layout/edit.xhtml">
+                <ui:define name="label">Consecutivo</ui:define>
+                <h:inputText id="consecutivo"
+                       required="true"
+                       disabled="#{enviosHome.managed}"
+                          value="#{enviosHome.instance.consecutivo}">
+                    <a:support event="onblur" reRender="consecutivoField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+
+
+            <s:decorate id="fechaField" template="layout/edit.xhtml">
+                <ui:define name="label">Fecha</ui:define>
+                <rich:calendar id="fecha"
+                          value="#{enviosHome.instance.fecha}" datePattern="MM/dd/yyyy" />
+            </s:decorate>
+
+
+            <s:decorate id="enviaField" template="layout/edit.xhtml">
+                <ui:define name="label">Envia</ui:define>
+                <h:inputText id="envia"
+                           size="30"
+                      maxlength="30"
+                          value="#{enviosHome.instance.envia}">
+                    <a:support event="onblur" reRender="enviaField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="recibeField" template="layout/edit.xhtml">
+                <ui:define name="label">Recibe</ui:define>
+                <h:inputText id="recibe"
+                           size="30"
+                      maxlength="30"
+                          value="#{enviosHome.instance.recibe}">
+                    <a:support event="onblur" reRender="recibeField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="oficinaField" template="layout/edit.xhtml">
+                <ui:define name="label">Oficina</ui:define>
+                <h:inputText id="oficina"
+                           size="100"
+                      maxlength="100"
+                          value="#{enviosHome.instance.oficina}">
+                    <a:support event="onblur" reRender="oficinaField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="ciudadField" template="layout/edit.xhtml">
+                <ui:define name="label">Ciudad</ui:define>
+                <h:inputText id="ciudad"
+                           size="15"
+                      maxlength="15"
+                          value="#{enviosHome.instance.ciudad}">
+                    <a:support event="onblur" reRender="ciudadField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="nrocuponField" template="layout/edit.xhtml">
+                <ui:define name="label">Nrocupon</ui:define>
+                <h:inputText id="nrocupon"
+                           size="15"
+                      maxlength="15"
+                          value="#{enviosHome.instance.nrocupon}">
+                    <a:support event="onblur" reRender="nrocuponField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="enviadoField" template="layout/edit.xhtml">
+                <ui:define name="label">Enviado</ui:define>
+                <h:selectBooleanCheckbox id="enviado"
+                                      value="#{enviosHome.instance.enviado}"/>
+            </s:decorate>
+
+
+            <s:decorate id="recibidoField" template="layout/edit.xhtml">
+                <ui:define name="label">Recibido</ui:define>
+                <h:selectBooleanCheckbox id="recibido"
+                                      value="#{enviosHome.instance.recibido}"/>
+            </s:decorate>
+
+
+            <s:decorate id="fechaenvioField" template="layout/edit.xhtml">
+                <ui:define name="label">Fechaenvio</ui:define>
+                <rich:calendar id="fechaenvio"
+                          value="#{enviosHome.instance.fechaenvio}" datePattern="MM/dd/yyyy" />
+            </s:decorate>
+
+
+            <s:decorate id="fechamrwField" template="layout/edit.xhtml">
+                <ui:define name="label">Fechamrw</ui:define>
+                <rich:calendar id="fechamrw"
+                          value="#{enviosHome.instance.fechamrw}" datePattern="MM/dd/yyyy" />
+            </s:decorate>
+
+            <div style="clear:both">
+                <span class="required">*</span>
+                required fields
+            </div>
+
+        </rich:panel>
+
+        <div class="actionButtons">
+
+            <h:commandButton id="save"
+                          value="Save"
+                         action="#{enviosHome.persist}"
+                       disabled="#{!enviosHome.wired}"
+                       rendered="#{!enviosHome.managed}"/>
+
+            <h:commandButton id="update"
+                          value="Save"
+                         action="#{enviosHome.update}"
+                       rendered="#{enviosHome.managed}"/>
+
+            <h:commandButton id="delete"
+                          value="Delete"
+                         action="#{enviosHome.remove}"
+                      immediate="true"
+                       rendered="#{enviosHome.managed}"/>
+
+            <s:button id="cancelEdit"
+                   value="Cancel"
+             propagation="end"
+                    view="/Envios.xhtml"
+                rendered="#{enviosHome.managed}"/>
+
+            <s:button id="cancelAdd"
+                   value="Cancel"
+             propagation="end"
+                    view="/#{empty enviosFrom ? 'EnviosList' : enviosFrom}.xhtml"
+                rendered="#{!enviosHome.managed}"/>
+
+        </div>
+    </h:form>
+
+<rich:tabPanel switchType="ajax">
+
+    <rich:tab label="Asesor">
+    <div class="association" id="asesorParent">
+
+        <h:outputText value="There is no asesor associated with this envios."
+                   rendered="#{enviosHome.instance.asesor == null}"/>
+
+        <rich:dataTable var="_asesor"
+                   value="#{enviosHome.instance.asesor}"
+                rendered="#{enviosHome.instance.asesor != null}"
+              rowClasses="rvgRowOne,rvgRowTwo"
+                      id="asesorTable">
+            <h:column>
+                <f:facet name="header">Documento</f:facet>
+                <h:outputText value="#{_asesor.documento}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Personal documento</f:facet>
+                <h:outputText value="#{_asesor.personal.documento}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Comision</f:facet>
+                <h:outputText value="#{_asesor.comision}">
+                    <f:convertNumber/>
+                </h:outputText>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Telefonooficina</f:facet>
+                <h:outputText value="#{_asesor.telefonooficina}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Extension</f:facet>
+                <h:outputText value="#{_asesor.extension}"/>
+            </h:column>
+        </rich:dataTable>
+
+        <div class="actionButtons">
+            <s:button id="#{enviosHome.instance.asesor != null ? 'changeParent' : 'selectParent'}" value="#{enviosHome.instance.asesor != null ? 'Change' : 'Select'} asesor"
+                       view="/AsesorList.xhtml">
+                <f:param name="from" value="EnviosEdit"/>
+            </s:button>
+        </div>
+
+    </div>
+    </rich:tab>
+
+    <rich:tab label="Promotor">
+    <div class="association" id="promotorParent">
+
+        <h:outputText value="There is no promotor associated with this envios."
+                   rendered="#{enviosHome.instance.promotor == null}"/>
+
+        <rich:dataTable var="_promotor"
+                   value="#{enviosHome.instance.promotor}"
+                rendered="#{enviosHome.instance.promotor != null}"
+              rowClasses="rvgRowOne,rvgRowTwo"
+                      id="promotorTable">
+            <h:column>
+                <f:facet name="header">Documento</f:facet>
+                <h:outputText value="#{_promotor.documento}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Personal documento</f:facet>
+                <h:outputText value="#{_promotor.personal.documento}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Asesor documento</f:facet>
+                <h:outputText value="#{_promotor.asesor.documento}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Arrastrador documento</f:facet>
+                <h:outputText value="#{_promotor.arrastrador.documento}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Comisionviajero</f:facet>
+                <h:outputText value="#{_promotor.comisionviajero}">
+                    <f:convertNumber/>
+                </h:outputText>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Comisionarrastrador</f:facet>
+                <h:outputText value="#{_promotor.comisionarrastrador}">
+                    <f:convertNumber/>
+                </h:outputText>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Tac</f:facet>
+                <h:outputText value="#{_promotor.tac}"/>
+            </h:column>
+        </rich:dataTable>
+
+        <div class="actionButtons">
+            <s:button id="#{enviosHome.instance.promotor != null ? 'changeParent' : 'selectParent'}" value="#{enviosHome.instance.promotor != null ? 'Change' : 'Select'} promotor"
+                       view="/PromotorList.xhtml">
+                <f:param name="from" value="EnviosEdit"/>
+            </s:button>
+        </div>
+
+    </div>
+    </rich:tab>
+</rich:tabPanel>
+</ui:define>
+
+</ui:composition>

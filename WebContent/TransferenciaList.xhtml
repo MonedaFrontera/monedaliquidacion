@@ -1,0 +1,231 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    template="layout/template.xhtml">
+
+<ui:define name="body">
+
+    <h:form id="transferenciaSearch" styleClass="edit">
+
+        <rich:simpleTogglePanel label="Transferencia Search Filter" switchType="ajax">
+
+            <s:decorate template="layout/display.xhtml">
+                <ui:define name="label">Tipobolivar</ui:define>
+                <h:inputText id="tipobolivar" value="#{transferenciaList.transferencia.tipobolivar}"/>
+            </s:decorate>
+
+            <s:decorate template="layout/display.xhtml">
+                <ui:define name="label">Numcuenta</ui:define>
+                <h:inputText id="numcuenta" value="#{transferenciaList.transferencia.numcuenta}"/>
+            </s:decorate>
+
+            <s:decorate template="layout/display.xhtml">
+                <ui:define name="label">Match</ui:define>
+                <h:selectOneRadio id="logic" value="#{transferenciaList.restrictionLogicOperator}" styleClass="radio">
+                    <f:selectItem itemLabel="All" itemValue="and"/>
+                    <f:selectItem itemLabel="Any" itemValue="or"/>
+                </h:selectOneRadio>
+            </s:decorate>
+
+        </rich:simpleTogglePanel>
+
+        <div class="actionButtons">
+            <h:commandButton id="search" value="Search" action="/TransferenciaList.xhtml"/>
+            <s:button id="reset" value="Reset" includePageParams="false"/>
+        </div>
+
+    </h:form>
+
+    <rich:panel>
+        <f:facet name="header">Transferencia Search Results (#{empty transferenciaList.resultList ? 0 : (transferenciaList.paginated ? transferenciaList.resultCount : transferenciaList.resultList.size)})</f:facet>
+    <div class="results" id="transferenciaList">
+
+    <h:outputText value="The transferencia search returned no results."
+               rendered="#{empty transferenciaList.resultList}"/>
+
+    <rich:dataTable id="transferenciaList"
+                var="_transferencia"
+              value="#{transferenciaList.resultList}"
+           rendered="#{not empty transferenciaList.resultList}">
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{transferenciaList}"/>
+                    <ui:param name="propertyLabel" value="Consecutivo"/>
+                    <ui:param name="propertyPath" value="transferencia.consecutivo"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_transferencia.consecutivo}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{transferenciaList}"/>
+                    <ui:param name="propertyLabel" value="Gastos consecutivo"/>
+                    <ui:param name="propertyPath" value="transferencia.gastos.consecutivo"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_transferencia.gastos.consecutivo}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{transferenciaList}"/>
+                    <ui:param name="propertyLabel" value="Cuentapromotor numcuenta"/>
+                    <ui:param name="propertyPath" value="transferencia.cuentapromotor.id.numcuenta"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_transferencia.cuentapromotor.id.numcuenta}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{transferenciaList}"/>
+                    <ui:param name="propertyLabel" value="Cuentapromotor documento"/>
+                    <ui:param name="propertyPath" value="transferencia.cuentapromotor.id.documento"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_transferencia.cuentapromotor.id.documento}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{transferenciaList}"/>
+                    <ui:param name="propertyLabel" value="Preciobolivar"/>
+                    <ui:param name="propertyPath" value="transferencia.preciobolivar"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_transferencia.preciobolivar}">
+                <f:convertNumber/>
+            </h:outputText>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{transferenciaList}"/>
+                    <ui:param name="propertyLabel" value="Tipobolivar"/>
+                    <ui:param name="propertyPath" value="transferencia.tipobolivar"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_transferencia.tipobolivar}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{transferenciaList}"/>
+                    <ui:param name="propertyLabel" value="Valorbolivar"/>
+                    <ui:param name="propertyPath" value="transferencia.valorbolivar"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_transferencia.valorbolivar}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{transferenciaList}"/>
+                    <ui:param name="propertyLabel" value="Numcuenta"/>
+                    <ui:param name="propertyPath" value="transferencia.numcuenta"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_transferencia.numcuenta}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{transferenciaList}"/>
+                    <ui:param name="propertyLabel" value="Preciocompra"/>
+                    <ui:param name="propertyPath" value="transferencia.preciocompra"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_transferencia.preciocompra}">
+                <f:convertNumber/>
+            </h:outputText>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{transferenciaList}"/>
+                    <ui:param name="propertyLabel" value="Precioasesor"/>
+                    <ui:param name="propertyPath" value="transferencia.precioasesor"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_transferencia.precioasesor}">
+                <f:convertNumber/>
+            </h:outputText>
+        </h:column>
+        <rich:column styleClass="action">
+            <f:facet name="header">Action</f:facet>
+            <s:link view="/#{empty from ? 'Transferencia' : from}.xhtml"
+                   value="#{empty from ? 'View' : 'Select'}"
+             propagation="#{empty from ? 'none' : 'default'}"
+                      id="transferenciaViewId">
+                <f:param name="transferenciaConsecutivo"
+                        value="#{_transferencia.consecutivo}"/>
+            </s:link>
+            #{' '}
+            <s:link view="/TransferenciaEdit.xhtml"
+                   value="Edit"
+             propagation="none"
+                      id="transferenciaEdit"
+                rendered="#{empty from}">
+                <f:param name="transferenciaConsecutivo"
+                        value="#{_transferencia.consecutivo}"/>
+            </s:link>
+        </rich:column>
+    </rich:dataTable>
+
+    </div>
+    </rich:panel>
+
+    <div class="tableControl">
+
+        <s:link view="/TransferenciaList.xhtml"
+            rendered="#{transferenciaList.previousExists}"
+               value="#{messages.left}#{messages.left} First Page"
+                  id="firstPage">
+          <f:param name="firstResult" value="0"/>
+        </s:link>
+
+        <s:link view="/TransferenciaList.xhtml"
+            rendered="#{transferenciaList.previousExists}"
+               value="#{messages.left} Previous Page"
+                  id="previousPage">
+            <f:param name="firstResult"
+                    value="#{transferenciaList.previousFirstResult}"/>
+        </s:link>
+
+        <s:link view="/TransferenciaList.xhtml"
+            rendered="#{transferenciaList.nextExists}"
+               value="Next Page #{messages.right}"
+                  id="nextPage">
+            <f:param name="firstResult"
+                    value="#{transferenciaList.nextFirstResult}"/>
+        </s:link>
+
+        <s:link view="/TransferenciaList.xhtml"
+            rendered="#{transferenciaList.nextExists}"
+               value="Last Page #{messages.right}#{messages.right}"
+                  id="lastPage">
+            <f:param name="firstResult"
+                    value="#{transferenciaList.lastFirstResult}"/>
+        </s:link>
+
+    </div>
+
+    <s:div styleClass="actionButtons" rendered="#{empty from}">
+        <s:button view="/TransferenciaEdit.xhtml"
+                    id="create"
+           propagation="none"
+                 value="Create transferencia">
+            <f:param name="transferenciaConsecutivo"/>
+        </s:button>
+    </s:div>
+
+</ui:define>
+
+</ui:composition>

@@ -1,0 +1,180 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:a="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    template="layout/template.xhtml">
+
+<ui:define name="body">
+
+    <h:form id="cuentacredito" styleClass="edit">
+
+        <rich:panel>
+            <f:facet name="header">#{cuentacreditoHome.managed ? 'Edit' : 'Add'} Cuentacredito</f:facet>
+
+
+            <s:decorate id="consecutivoField" template="layout/edit.xhtml">
+                <ui:define name="label">Consecutivo</ui:define>
+                <h:inputText id="consecutivo"
+                       required="true"
+                       disabled="#{cuentacreditoHome.managed}"
+                          value="#{cuentacreditoHome.instance.consecutivo}">
+                    <a:support event="onblur" reRender="consecutivoField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+
+            <s:decorate id="valorField" template="layout/edit.xhtml">
+                <ui:define name="label">Valor</ui:define>
+                <h:inputText id="valor"
+                          value="#{cuentacreditoHome.instance.valor}">
+                    <a:support event="onblur" reRender="valorField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="fechaField" template="layout/edit.xhtml">
+                <ui:define name="label">Fecha</ui:define>
+                <rich:calendar id="fecha"
+                          value="#{cuentacreditoHome.instance.fecha}" datePattern="MM/dd/yyyy" />
+            </s:decorate>
+
+
+            <s:decorate id="usuarioField" template="layout/edit.xhtml">
+                <ui:define name="label">Usuario</ui:define>
+                <h:inputText id="usuario"
+                           size="20"
+                      maxlength="20"
+                          value="#{cuentacreditoHome.instance.usuario}">
+                    <a:support event="onblur" reRender="usuarioField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="fechamodField" template="layout/edit.xhtml">
+                <ui:define name="label">Fechamod</ui:define>
+                <rich:calendar id="fechamod"
+                          value="#{cuentacreditoHome.instance.fechamod}" datePattern="MM/dd/yyyy hh:mm a"/>
+            </s:decorate>
+
+
+            <s:decorate id="usuariomodField" template="layout/edit.xhtml">
+                <ui:define name="label">Usuariomod</ui:define>
+                <h:inputText id="usuariomod"
+                           size="20"
+                      maxlength="20"
+                          value="#{cuentacreditoHome.instance.usuariomod}">
+                    <a:support event="onblur" reRender="usuariomodField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="tipoField" template="layout/edit.xhtml">
+                <ui:define name="label">Tipo</ui:define>
+                <h:inputText id="tipo"
+                          value="#{cuentacreditoHome.instance.tipo}">
+                    <a:support event="onblur" reRender="tipoField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="observacionField" template="layout/edit.xhtml">
+                <ui:define name="label">Observacion</ui:define>
+                <h:inputTextarea id="observacion"
+                               cols="80"
+                               rows="6"
+                              value="#{cuentacreditoHome.instance.observacion}"/>
+            </s:decorate>
+
+            <div style="clear:both">
+                <span class="required">*</span>
+                required fields
+            </div>
+
+        </rich:panel>
+
+        <div class="actionButtons">
+
+            <h:commandButton id="save"
+                          value="Save"
+                         action="#{cuentacreditoHome.persist}"
+                       disabled="#{!cuentacreditoHome.wired}"
+                       rendered="#{!cuentacreditoHome.managed}"/>
+
+            <h:commandButton id="update"
+                          value="Save"
+                         action="#{cuentacreditoHome.update}"
+                       rendered="#{cuentacreditoHome.managed}"/>
+
+            <h:commandButton id="delete"
+                          value="Delete"
+                         action="#{cuentacreditoHome.remove}"
+                      immediate="true"
+                       rendered="#{cuentacreditoHome.managed}"/>
+
+            <s:button id="cancelEdit"
+                   value="Cancel"
+             propagation="end"
+                    view="/Cuentacredito.xhtml"
+                rendered="#{cuentacreditoHome.managed}"/>
+
+            <s:button id="cancelAdd"
+                   value="Cancel"
+             propagation="end"
+                    view="/#{empty cuentacreditoFrom ? 'CuentacreditoList' : cuentacreditoFrom}.xhtml"
+                rendered="#{!cuentacreditoHome.managed}"/>
+
+        </div>
+    </h:form>
+
+<rich:tabPanel switchType="ajax">
+
+    <rich:tab label="Cuenta">
+    <div class="association" id="cuentaParent">
+
+        <h:outputText value="There is no cuenta associated with this cuentacredito."
+                   rendered="#{cuentacreditoHome.instance.cuenta == null}"/>
+
+        <rich:dataTable var="_cuenta"
+                   value="#{cuentacreditoHome.instance.cuenta}"
+                rendered="#{cuentacreditoHome.instance.cuenta != null}"
+              rowClasses="rvgRowOne,rvgRowTwo"
+                      id="cuentaTable">
+            <h:column>
+                <f:facet name="header">Numcuenta</f:facet>
+                <h:outputText value="#{_cuenta.numcuenta}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Banco codbanco</f:facet>
+                <h:outputText value="#{_cuenta.banco.codbanco}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Nombre</f:facet>
+                <h:outputText value="#{_cuenta.nombre}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Saldo</f:facet>
+                <h:outputText value="#{_cuenta.saldo}">
+                    <f:convertNumber/>
+                </h:outputText>
+            </h:column>
+        </rich:dataTable>
+
+        <div class="actionButtons">
+            <s:button id="#{cuentacreditoHome.instance.cuenta != null ? 'changeParent' : 'selectParent'}" value="#{cuentacreditoHome.instance.cuenta != null ? 'Change' : 'Select'} cuenta"
+                       view="/CuentaList.xhtml">
+                <f:param name="from" value="CuentacreditoEdit"/>
+            </s:button>
+        </div>
+
+    </div>
+    </rich:tab>
+</rich:tabPanel>
+</ui:define>
+
+</ui:composition>

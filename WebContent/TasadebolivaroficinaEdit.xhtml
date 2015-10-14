@@ -1,0 +1,110 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:a="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    template="layout/template.xhtml">
+
+<ui:define name="body">
+
+    <h:form id="tasadebolivaroficina" styleClass="edit">
+
+        <rich:panel>
+            <f:facet name="header">#{tasadebolivaroficinaHome.managed ? 'Edit' : 'Add'} Tasadebolivaroficina</f:facet>
+
+
+            <s:decorate id="fechaField" template="layout/edit.xhtml">
+                <ui:define name="label">Fecha</ui:define>
+                <rich:calendar id="fecha"
+                       required="true"
+                          value="#{tasadebolivaroficinaHome.instance.id.fecha}" datePattern="MM/dd/yyyy hh:mm a" />
+            </s:decorate>
+
+            <s:decorate id="tipoField" template="layout/edit.xhtml">
+                <ui:define name="label">Tipo</ui:define>
+                <h:inputText id="tipo"
+                       disabled="#{tasadebolivaroficinaHome.managed}"
+                      required="true"
+                          size="1"
+                     maxlength="1"
+                         value="#{tasadebolivaroficinaHome.instance.id.tipo}">
+                    <a:support event="onblur" reRender="tipoField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="preciobolivarField" template="layout/edit.xhtml">
+                <ui:define name="label">Preciobolivar</ui:define>
+                <h:inputText id="preciobolivar"
+                          value="#{tasadebolivaroficinaHome.instance.preciobolivar}"
+                           size="15">
+                    <a:support event="onblur" reRender="preciobolivarField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="usuariomodField" template="layout/edit.xhtml">
+                <ui:define name="label">Usuariomod</ui:define>
+                <h:inputText id="usuariomod"
+                           size="15"
+                      maxlength="15"
+                          value="#{tasadebolivaroficinaHome.instance.usuariomod}">
+                    <a:support event="onblur" reRender="usuariomodField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="fechamodField" template="layout/edit.xhtml">
+                <ui:define name="label">Fechamod</ui:define>
+                <rich:calendar id="fechamod"
+                          value="#{tasadebolivaroficinaHome.instance.fechamod}" datePattern="MM/dd/yyyy hh:mm a"/>
+            </s:decorate>
+
+            <div style="clear:both">
+                <span class="required">*</span>
+                required fields
+            </div>
+
+        </rich:panel>
+
+        <div class="actionButtons">
+
+            <h:commandButton id="save"
+                          value="Save"
+                         action="#{tasadebolivaroficinaHome.persist}"
+                       disabled="#{!tasadebolivaroficinaHome.wired}"
+                       rendered="#{!tasadebolivaroficinaHome.managed}"/>
+
+            <h:commandButton id="update"
+                          value="Save"
+                         action="#{tasadebolivaroficinaHome.update}"
+                       rendered="#{tasadebolivaroficinaHome.managed}"/>
+
+            <h:commandButton id="delete"
+                          value="Delete"
+                         action="#{tasadebolivaroficinaHome.remove}"
+                      immediate="true"
+                       rendered="#{tasadebolivaroficinaHome.managed}"/>
+
+            <s:button id="cancelEdit"
+                   value="Cancel"
+             propagation="end"
+                    view="/Tasadebolivaroficina.xhtml"
+                rendered="#{tasadebolivaroficinaHome.managed}"/>
+
+            <s:button id="cancelAdd"
+                   value="Cancel"
+             propagation="end"
+                    view="/#{empty tasadebolivaroficinaFrom ? 'TasadebolivaroficinaList' : tasadebolivaroficinaFrom}.xhtml"
+                rendered="#{!tasadebolivaroficinaHome.managed}"/>
+
+        </div>
+    </h:form>
+
+</ui:define>
+
+</ui:composition>

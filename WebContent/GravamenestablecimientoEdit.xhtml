@@ -1,0 +1,225 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:a="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    template="layout/template.xhtml">
+
+<ui:define name="body">
+
+    <h:form id="gravamenestablecimiento" styleClass="edit">
+
+        <rich:panel>
+            <f:facet name="header">#{gravamenestablecimientoHome.managed ? 'Edit' : 'Add'} Gravamenestablecimiento</f:facet>
+
+
+            <s:decorate id="codigounicoField" template="layout/edit.xhtml">
+                <ui:define name="label">Codigounico</ui:define>
+                <h:inputText id="codigounico"
+                       disabled="#{gravamenestablecimientoHome.managed}"
+                      required="true"
+                          size="8"
+                     maxlength="8"
+                         value="#{gravamenestablecimientoHome.instance.id.codigounico}">
+                    <a:support event="onblur" reRender="codigounicoField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+            <s:decorate id="gravamenField" template="layout/edit.xhtml">
+                <ui:define name="label">Gravamen</ui:define>
+                <h:inputText id="gravamen"
+                       disabled="#{gravamenestablecimientoHome.managed}"
+                      required="true"
+                          size="2"
+                     maxlength="2"
+                         value="#{gravamenestablecimientoHome.instance.id.gravamen}">
+                    <a:support event="onblur" reRender="gravamenField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+
+
+            <s:decorate id="porcentajeField" template="layout/edit.xhtml">
+                <ui:define name="label">Porcentaje</ui:define>
+                <h:inputText id="porcentaje"
+                          value="#{gravamenestablecimientoHome.instance.porcentaje}"
+                           size="12">
+                    <a:support event="onblur" reRender="porcentajeField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="ivaField" template="layout/edit.xhtml">
+                <ui:define name="label">Iva</ui:define>
+                <h:selectBooleanCheckbox id="iva"
+                                      value="#{gravamenestablecimientoHome.instance.iva}"/>
+            </s:decorate>
+
+
+            <s:decorate id="activoField" template="layout/edit.xhtml">
+                <ui:define name="label">Activo</ui:define>
+                <h:selectBooleanCheckbox id="activo"
+                                      value="#{gravamenestablecimientoHome.instance.activo}"/>
+            </s:decorate>
+
+            <div style="clear:both">
+                <span class="required">*</span>
+                required fields
+            </div>
+
+        </rich:panel>
+
+        <div class="actionButtons">
+
+            <h:commandButton id="save"
+                          value="Save"
+                         action="#{gravamenestablecimientoHome.persist}"
+                       disabled="#{!gravamenestablecimientoHome.wired}"
+                       rendered="#{!gravamenestablecimientoHome.managed}"/>
+
+            <h:commandButton id="update"
+                          value="Save"
+                         action="#{gravamenestablecimientoHome.update}"
+                       rendered="#{gravamenestablecimientoHome.managed}"/>
+
+            <h:commandButton id="delete"
+                          value="Delete"
+                         action="#{gravamenestablecimientoHome.remove}"
+                      immediate="true"
+                       rendered="#{gravamenestablecimientoHome.managed}"/>
+
+            <s:button id="cancelEdit"
+                   value="Cancel"
+             propagation="end"
+                    view="/Gravamenestablecimiento.xhtml"
+                rendered="#{gravamenestablecimientoHome.managed}"/>
+
+            <s:button id="cancelAdd"
+                   value="Cancel"
+             propagation="end"
+                    view="/#{empty gravamenestablecimientoFrom ? 'GravamenestablecimientoList' : gravamenestablecimientoFrom}.xhtml"
+                rendered="#{!gravamenestablecimientoHome.managed}"/>
+
+        </div>
+    </h:form>
+
+<rich:tabPanel switchType="ajax">
+
+    <rich:tab label="Establecimiento *" labelClass="required">
+    <div class="association" id="establecimientoParent">
+
+        <h:outputText value="There is no establecimiento associated with this gravamenestablecimiento."
+                   rendered="#{gravamenestablecimientoHome.instance.establecimiento == null}"/>
+
+        <rich:dataTable var="_establecimiento"
+                   value="#{gravamenestablecimientoHome.instance.establecimiento}"
+                rendered="#{gravamenestablecimientoHome.instance.establecimiento != null}"
+              rowClasses="rvgRowOne,rvgRowTwo"
+                      id="establecimientoTable">
+            <h:column>
+                <f:facet name="header">Codigounico</f:facet>
+                <h:outputText value="#{_establecimiento.codigounico}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Pais codigopais</f:facet>
+                <h:outputText value="#{_establecimiento.pais.codigopais}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Empresa nit</f:facet>
+                <h:outputText value="#{_establecimiento.empresa.nit}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Bancocol codbanco</f:facet>
+                <h:outputText value="#{_establecimiento.bancocol.codbanco}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Nombreestable</f:facet>
+                <h:outputText value="#{_establecimiento.nombreestable}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Direccion</f:facet>
+                <h:outputText value="#{_establecimiento.direccion}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Telefono</f:facet>
+                <h:outputText value="#{_establecimiento.telefono}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Porcentaje</f:facet>
+                <h:outputText value="#{_establecimiento.porcentaje}">
+                    <f:convertNumber/>
+                </h:outputText>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Iva</f:facet>
+                <h:outputText value="#{_establecimiento.iva}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Numcuenta</f:facet>
+                <h:outputText value="#{_establecimiento.numcuenta}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Facturar</f:facet>
+                <h:outputText value="#{_establecimiento.facturar}"/>
+            </h:column>
+        </rich:dataTable>
+
+        <div class="actionButtons">
+            <s:button id="#{gravamenestablecimientoHome.instance.establecimiento != null ? 'changeParent' : 'selectParent'}" value="#{gravamenestablecimientoHome.instance.establecimiento != null ? 'Change' : 'Select'} establecimiento"
+                       view="/EstablecimientoList.xhtml">
+                <f:param name="from" value="GravamenestablecimientoEdit"/>
+            </s:button>
+        </div>
+
+    </div>
+    </rich:tab>
+
+    <rich:tab label="Gravamen *" labelClass="required">
+    <div class="association" id="gravamenParent">
+
+        <h:outputText value="There is no gravamen associated with this gravamenestablecimiento."
+                   rendered="#{gravamenestablecimientoHome.instance.gravamen == null}"/>
+
+        <rich:dataTable var="_gravamen"
+                   value="#{gravamenestablecimientoHome.instance.gravamen}"
+                rendered="#{gravamenestablecimientoHome.instance.gravamen != null}"
+              rowClasses="rvgRowOne,rvgRowTwo"
+                      id="gravamenTable">
+            <h:column>
+                <f:facet name="header">Codigo</f:facet>
+                <h:outputText value="#{_gravamen.codigo}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Iva</f:facet>
+                <h:outputText value="#{_gravamen.iva}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Nombre</f:facet>
+                <h:outputText value="#{_gravamen.nombre}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Porcentaje</f:facet>
+                <h:outputText value="#{_gravamen.porcentaje}">
+                    <f:convertNumber/>
+                </h:outputText>
+            </h:column>
+        </rich:dataTable>
+
+        <div class="actionButtons">
+            <s:button id="#{gravamenestablecimientoHome.instance.gravamen != null ? 'changeParent' : 'selectParent'}" value="#{gravamenestablecimientoHome.instance.gravamen != null ? 'Change' : 'Select'} gravamen"
+                       view="/GravamenList.xhtml">
+                <f:param name="from" value="GravamenestablecimientoEdit"/>
+            </s:button>
+        </div>
+
+    </div>
+    </rich:tab>
+</rich:tabPanel>
+</ui:define>
+
+</ui:composition>

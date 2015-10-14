@@ -1,0 +1,630 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:rich="http://richfaces.org/rich"
+    template="layout/template.xhtml">
+
+<ui:define name="body">
+
+    <h:form id="activacionSearch" styleClass="edit">
+
+        <rich:simpleTogglePanel label="Activacion Search Filter" switchType="ajax">
+
+            <s:decorate template="layout/display.xhtml">
+                <ui:define name="label">Cedula</ui:define>
+                <h:inputText id="cedula" value="#{activacionList.activacion.cedula}"/>
+            </s:decorate>
+
+            <s:decorate template="layout/display.xhtml">
+                <ui:define name="label">Nombre</ui:define>
+                <h:inputText id="nombre" value="#{activacionList.activacion.nombre}"/>
+            </s:decorate>
+
+            <s:decorate template="layout/display.xhtml">
+                <ui:define name="label">Usuarioreg</ui:define>
+                <h:inputText id="usuarioreg" value="#{activacionList.activacion.usuarioreg}"/>
+            </s:decorate>
+
+            <s:decorate template="layout/display.xhtml">
+                <ui:define name="label">Correo</ui:define>
+                <h:inputText id="correo" value="#{activacionList.activacion.correo}"/>
+            </s:decorate>
+
+            <s:decorate template="layout/display.xhtml">
+                <ui:define name="label">Clave</ui:define>
+                <h:inputText id="clave" value="#{activacionList.activacion.clave}"/>
+            </s:decorate>
+
+            <s:decorate template="layout/display.xhtml">
+                <ui:define name="label">Usuario</ui:define>
+                <h:inputText id="usuario" value="#{activacionList.activacion.usuario}"/>
+            </s:decorate>
+
+            <s:decorate template="layout/display.xhtml">
+                <ui:define name="label">Llave</ui:define>
+                <h:inputText id="llave" value="#{activacionList.activacion.llave}"/>
+            </s:decorate>
+
+            <s:decorate template="layout/display.xhtml">
+                <ui:define name="label">Usuariomod</ui:define>
+                <h:inputText id="usuariomod" value="#{activacionList.activacion.usuariomod}"/>
+            </s:decorate>
+
+            <s:decorate template="layout/display.xhtml">
+                <ui:define name="label">Agencia</ui:define>
+                <h:inputText id="agencia" value="#{activacionList.activacion.agencia}"/>
+            </s:decorate>
+
+            <s:decorate template="layout/display.xhtml">
+                <ui:define name="label">Tipoviaje</ui:define>
+                <h:inputText id="tipoviaje" value="#{activacionList.activacion.tipoviaje}"/>
+            </s:decorate>
+
+            <s:decorate template="layout/display.xhtml">
+                <ui:define name="label">Clavemercantil</ui:define>
+                <h:inputText id="clavemercantil" value="#{activacionList.activacion.clavemercantil}"/>
+            </s:decorate>
+
+            <s:decorate template="layout/display.xhtml">
+                <ui:define name="label">Provinet</ui:define>
+                <h:inputText id="provinet" value="#{activacionList.activacion.provinet}"/>
+            </s:decorate>
+
+            <s:decorate template="layout/display.xhtml">
+                <ui:define name="label">Claveprovinet</ui:define>
+                <h:inputText id="claveprovinet" value="#{activacionList.activacion.claveprovinet}"/>
+            </s:decorate>
+
+            <s:decorate template="layout/display.xhtml">
+                <ui:define name="label">Deposito</ui:define>
+                <h:inputText id="deposito" value="#{activacionList.activacion.deposito}"/>
+            </s:decorate>
+
+            <s:decorate template="layout/display.xhtml">
+                <ui:define name="label">Usuariobanco</ui:define>
+                <h:inputText id="usuariobanco" value="#{activacionList.activacion.usuariobanco}"/>
+            </s:decorate>
+
+            <s:decorate template="layout/display.xhtml">
+                <ui:define name="label">Match</ui:define>
+                <h:selectOneRadio id="logic" value="#{activacionList.restrictionLogicOperator}" styleClass="radio">
+                    <f:selectItem itemLabel="All" itemValue="and"/>
+                    <f:selectItem itemLabel="Any" itemValue="or"/>
+                </h:selectOneRadio>
+            </s:decorate>
+
+        </rich:simpleTogglePanel>
+
+        <div class="actionButtons">
+            <h:commandButton id="search" value="Search" action="/ActivacionList.xhtml"/>
+            <s:button id="reset" value="Reset" includePageParams="false"/>
+        </div>
+
+    </h:form>
+
+    <rich:panel>
+        <f:facet name="header">Activacion Search Results (#{empty activacionList.resultList ? 0 : (activacionList.paginated ? activacionList.resultCount : activacionList.resultList.size)})</f:facet>
+    <div class="results" id="activacionList">
+
+    <h:outputText value="The activacion search returned no results."
+               rendered="#{empty activacionList.resultList}"/>
+
+    <rich:dataTable id="activacionList"
+                var="_activacion"
+              value="#{activacionList.resultList}"
+           rendered="#{not empty activacionList.resultList}">
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{activacionList}"/>
+                    <ui:param name="propertyLabel" value="Consecutivo"/>
+                    <ui:param name="propertyPath" value="activacion.consecutivo"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_activacion.consecutivo}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{activacionList}"/>
+                    <ui:param name="propertyLabel" value="Gestor documento"/>
+                    <ui:param name="propertyPath" value="activacion.gestor.documento"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_activacion.gestor.documento}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{activacionList}"/>
+                    <ui:param name="propertyLabel" value="Actestado codestado"/>
+                    <ui:param name="propertyPath" value="activacion.actestado.codestado"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_activacion.actestado.codestado}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{activacionList}"/>
+                    <ui:param name="propertyLabel" value="Promotor documento"/>
+                    <ui:param name="propertyPath" value="activacion.promotor.documento"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_activacion.promotor.documento}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{activacionList}"/>
+                    <ui:param name="propertyLabel" value="Banco codbanco"/>
+                    <ui:param name="propertyPath" value="activacion.banco.codbanco"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_activacion.banco.codbanco}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{activacionList}"/>
+                    <ui:param name="propertyLabel" value="Cedula"/>
+                    <ui:param name="propertyPath" value="activacion.cedula"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_activacion.cedula}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{activacionList}"/>
+                    <ui:param name="propertyLabel" value="Nombre"/>
+                    <ui:param name="propertyPath" value="activacion.nombre"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_activacion.nombre}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{activacionList}"/>
+                    <ui:param name="propertyLabel" value="Fechareg"/>
+                    <ui:param name="propertyPath" value="activacion.fechareg"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_activacion.fechareg}">
+                <s:convertDateTime type="both" dateStyle="short"/>
+            </h:outputText>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{activacionList}"/>
+                    <ui:param name="propertyLabel" value="Usuarioreg"/>
+                    <ui:param name="propertyPath" value="activacion.usuarioreg"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_activacion.usuarioreg}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{activacionList}"/>
+                    <ui:param name="propertyLabel" value="Correo"/>
+                    <ui:param name="propertyPath" value="activacion.correo"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_activacion.correo}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{activacionList}"/>
+                    <ui:param name="propertyLabel" value="Clave"/>
+                    <ui:param name="propertyPath" value="activacion.clave"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_activacion.clave}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{activacionList}"/>
+                    <ui:param name="propertyLabel" value="Usuario"/>
+                    <ui:param name="propertyPath" value="activacion.usuario"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_activacion.usuario}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{activacionList}"/>
+                    <ui:param name="propertyLabel" value="Llave"/>
+                    <ui:param name="propertyPath" value="activacion.llave"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_activacion.llave}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{activacionList}"/>
+                    <ui:param name="propertyLabel" value="Ano"/>
+                    <ui:param name="propertyPath" value="activacion.ano"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_activacion.ano}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{activacionList}"/>
+                    <ui:param name="propertyLabel" value="Usuariomod"/>
+                    <ui:param name="propertyPath" value="activacion.usuariomod"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_activacion.usuariomod}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{activacionList}"/>
+                    <ui:param name="propertyLabel" value="Fechacita"/>
+                    <ui:param name="propertyPath" value="activacion.fechacita"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_activacion.fechacita}">
+                <s:convertDateTime type="both" dateStyle="short"/>
+            </h:outputText>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{activacionList}"/>
+                    <ui:param name="propertyLabel" value="Fechaact"/>
+                    <ui:param name="propertyPath" value="activacion.fechaact"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_activacion.fechaact}">
+                <s:convertDateTime type="both" dateStyle="short"/>
+            </h:outputText>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{activacionList}"/>
+                    <ui:param name="propertyLabel" value="Fechamod"/>
+                    <ui:param name="propertyPath" value="activacion.fechamod"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_activacion.fechamod}">
+                <s:convertDateTime type="both" dateStyle="short"/>
+            </h:outputText>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{activacionList}"/>
+                    <ui:param name="propertyLabel" value="Ingresocadivi"/>
+                    <ui:param name="propertyPath" value="activacion.ingresocadivi"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_activacion.ingresocadivi}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{activacionList}"/>
+                    <ui:param name="propertyLabel" value="Documentoscompletos"/>
+                    <ui:param name="propertyPath" value="activacion.documentoscompletos"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_activacion.documentoscompletos}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{activacionList}"/>
+                    <ui:param name="propertyLabel" value="Citaasignada"/>
+                    <ui:param name="propertyPath" value="activacion.citaasignada"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_activacion.citaasignada}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{activacionList}"/>
+                    <ui:param name="propertyLabel" value="Agencia"/>
+                    <ui:param name="propertyPath" value="activacion.agencia"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_activacion.agencia}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{activacionList}"/>
+                    <ui:param name="propertyLabel" value="Tipoviaje"/>
+                    <ui:param name="propertyPath" value="activacion.tipoviaje"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_activacion.tipoviaje}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{activacionList}"/>
+                    <ui:param name="propertyLabel" value="Fechainicioviaje"/>
+                    <ui:param name="propertyPath" value="activacion.fechainicioviaje"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_activacion.fechainicioviaje}">
+                <s:convertDateTime type="both" dateStyle="short"/>
+            </h:outputText>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{activacionList}"/>
+                    <ui:param name="propertyLabel" value="Fechafinviaje"/>
+                    <ui:param name="propertyPath" value="activacion.fechafinviaje"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_activacion.fechafinviaje}">
+                <s:convertDateTime type="both" dateStyle="short"/>
+            </h:outputText>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{activacionList}"/>
+                    <ui:param name="propertyLabel" value="Clavemercantil"/>
+                    <ui:param name="propertyPath" value="activacion.clavemercantil"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_activacion.clavemercantil}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{activacionList}"/>
+                    <ui:param name="propertyLabel" value="Coordenadas"/>
+                    <ui:param name="propertyPath" value="activacion.coordenadas"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_activacion.coordenadas}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{activacionList}"/>
+                    <ui:param name="propertyLabel" value="Provinet"/>
+                    <ui:param name="propertyPath" value="activacion.provinet"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_activacion.provinet}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{activacionList}"/>
+                    <ui:param name="propertyLabel" value="Claveprovinet"/>
+                    <ui:param name="propertyPath" value="activacion.claveprovinet"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_activacion.claveprovinet}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{activacionList}"/>
+                    <ui:param name="propertyLabel" value="Rusad"/>
+                    <ui:param name="propertyPath" value="activacion.rusad"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_activacion.rusad}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{activacionList}"/>
+                    <ui:param name="propertyLabel" value="Noingresacadivi"/>
+                    <ui:param name="propertyPath" value="activacion.noingresacadivi"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_activacion.noingresacadivi}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{activacionList}"/>
+                    <ui:param name="propertyLabel" value="Rif"/>
+                    <ui:param name="propertyPath" value="activacion.rif"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_activacion.rif}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{activacionList}"/>
+                    <ui:param name="propertyLabel" value="Deposito"/>
+                    <ui:param name="propertyPath" value="activacion.deposito"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_activacion.deposito}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{activacionList}"/>
+                    <ui:param name="propertyLabel" value="Fechadeposito"/>
+                    <ui:param name="propertyPath" value="activacion.fechadeposito"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_activacion.fechadeposito}">
+                <s:convertDateTime type="both" dateStyle="short"/>
+            </h:outputText>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{activacionList}"/>
+                    <ui:param name="propertyLabel" value="Valordeposito"/>
+                    <ui:param name="propertyPath" value="activacion.valordeposito"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_activacion.valordeposito}">
+                <f:convertNumber/>
+            </h:outputText>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{activacionList}"/>
+                    <ui:param name="propertyLabel" value="Fechadevolucion"/>
+                    <ui:param name="propertyPath" value="activacion.fechadevolucion"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_activacion.fechadevolucion}">
+                <s:convertDateTime type="both" dateStyle="short"/>
+            </h:outputText>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{activacionList}"/>
+                    <ui:param name="propertyLabel" value="Valordevolucion"/>
+                    <ui:param name="propertyPath" value="activacion.valordevolucion"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_activacion.valordevolucion}">
+                <f:convertNumber/>
+            </h:outputText>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{activacionList}"/>
+                    <ui:param name="propertyLabel" value="Erroringresocadivi"/>
+                    <ui:param name="propertyPath" value="activacion.erroringresocadivi"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_activacion.erroringresocadivi}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{activacionList}"/>
+                    <ui:param name="propertyLabel" value="Cupoaprobado"/>
+                    <ui:param name="propertyPath" value="activacion.cupoaprobado"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_activacion.cupoaprobado}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{activacionList}"/>
+                    <ui:param name="propertyLabel" value="Usuariobanco"/>
+                    <ui:param name="propertyPath" value="activacion.usuariobanco"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_activacion.usuariobanco}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{activacionList}"/>
+                    <ui:param name="propertyLabel" value="Ingresobancalinea"/>
+                    <ui:param name="propertyPath" value="activacion.ingresobancalinea"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_activacion.ingresobancalinea}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                <ui:include src="layout/sort.xhtml">
+                    <ui:param name="entityList" value="#{activacionList}"/>
+                    <ui:param name="propertyLabel" value="Noingresobancalinea"/>
+                    <ui:param name="propertyPath" value="activacion.noingresobancalinea"/>
+                </ui:include>
+            </f:facet>
+            <h:outputText value="#{_activacion.noingresobancalinea}"/>
+        </h:column>
+        <rich:column styleClass="action">
+            <f:facet name="header">Action</f:facet>
+            <s:link view="/#{empty from ? 'Activacion' : from}.xhtml"
+                   value="#{empty from ? 'View' : 'Select'}"
+             propagation="#{empty from ? 'none' : 'default'}"
+                      id="activacionViewId">
+                <f:param name="activacionConsecutivo"
+                        value="#{_activacion.consecutivo}"/>
+            </s:link>
+            #{' '}
+            <s:link view="/ActivacionEdit.xhtml"
+                   value="Edit"
+             propagation="none"
+                      id="activacionEdit"
+                rendered="#{empty from}">
+                <f:param name="activacionConsecutivo"
+                        value="#{_activacion.consecutivo}"/>
+            </s:link>
+        </rich:column>
+    </rich:dataTable>
+
+    </div>
+    </rich:panel>
+
+    <div class="tableControl">
+
+        <s:link view="/ActivacionList.xhtml"
+            rendered="#{activacionList.previousExists}"
+               value="#{messages.left}#{messages.left} First Page"
+                  id="firstPage">
+          <f:param name="firstResult" value="0"/>
+        </s:link>
+
+        <s:link view="/ActivacionList.xhtml"
+            rendered="#{activacionList.previousExists}"
+               value="#{messages.left} Previous Page"
+                  id="previousPage">
+            <f:param name="firstResult"
+                    value="#{activacionList.previousFirstResult}"/>
+        </s:link>
+
+        <s:link view="/ActivacionList.xhtml"
+            rendered="#{activacionList.nextExists}"
+               value="Next Page #{messages.right}"
+                  id="nextPage">
+            <f:param name="firstResult"
+                    value="#{activacionList.nextFirstResult}"/>
+        </s:link>
+
+        <s:link view="/ActivacionList.xhtml"
+            rendered="#{activacionList.nextExists}"
+               value="Last Page #{messages.right}#{messages.right}"
+                  id="lastPage">
+            <f:param name="firstResult"
+                    value="#{activacionList.lastFirstResult}"/>
+        </s:link>
+
+    </div>
+
+    <s:div styleClass="actionButtons" rendered="#{empty from}">
+        <s:button view="/ActivacionEdit.xhtml"
+                    id="create"
+           propagation="none"
+                 value="Create activacion">
+            <f:param name="activacionConsecutivo"/>
+        </s:button>
+    </s:div>
+
+</ui:define>
+
+</ui:composition>

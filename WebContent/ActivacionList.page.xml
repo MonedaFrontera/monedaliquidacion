@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page xmlns="http://jboss.com/products/seam/pages"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://jboss.com/products/seam/pages http://jboss.com/products/seam/pages-2.2.xsd">
+
+   <param name="firstResult" value="#{activacionList.firstResult}"/>
+   <param name="sort" value="#{activacionList.orderColumn}"/>
+   <param name="dir" value="#{activacionList.orderDirection}"/>
+   <param name="logic" value="#{activacionList.restrictionLogicOperator}"/>
+
+   <param name="from"/>
+   <param name="cedula" value="#{activacionList.activacion.cedula}"/>
+   <param name="nombre" value="#{activacionList.activacion.nombre}"/>
+   <param name="usuarioreg" value="#{activacionList.activacion.usuarioreg}"/>
+   <param name="correo" value="#{activacionList.activacion.correo}"/>
+   <param name="clave" value="#{activacionList.activacion.clave}"/>
+   <param name="usuario" value="#{activacionList.activacion.usuario}"/>
+   <param name="llave" value="#{activacionList.activacion.llave}"/>
+   <param name="usuariomod" value="#{activacionList.activacion.usuariomod}"/>
+   <param name="agencia" value="#{activacionList.activacion.agencia}"/>
+   <param name="tipoviaje" value="#{activacionList.activacion.tipoviaje}"/>
+   <param name="clavemercantil" value="#{activacionList.activacion.clavemercantil}"/>
+   <param name="provinet" value="#{activacionList.activacion.provinet}"/>
+   <param name="claveprovinet" value="#{activacionList.activacion.claveprovinet}"/>
+   <param name="deposito" value="#{activacionList.activacion.deposito}"/>
+   <param name="usuariobanco" value="#{activacionList.activacion.usuariobanco}"/>
+
+</page>

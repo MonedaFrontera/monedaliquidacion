@@ -1,0 +1,600 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:a="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    template="layout/template.xhtml">
+
+<ui:define name="body">
+
+    <h:form id="personal" styleClass="edit">
+
+        <rich:panel>
+            <f:facet name="header">#{personalHome.managed ? 'Edit' : 'Add'} Personal</f:facet>
+
+
+            <s:decorate id="documentoField" template="layout/edit.xhtml">
+                <ui:define name="label">Documento</ui:define>
+                <h:inputText id="documento"
+                       disabled="#{personalHome.managed}"
+                       required="true"
+                           size="15"
+                      maxlength="15"
+                          value="#{personalHome.instance.documento}">
+                    <a:support event="onblur" reRender="documentoField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+
+            <s:decorate id="tipodocumentoField" template="layout/edit.xhtml">
+                <ui:define name="label">Tipodocumento</ui:define>
+                <h:inputText id="tipodocumento"
+                           size="3"
+                      maxlength="3"
+                          value="#{personalHome.instance.tipodocumento}">
+                    <a:support event="onblur" reRender="tipodocumentoField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="nombreField" template="layout/edit.xhtml">
+                <ui:define name="label">Nombre</ui:define>
+                <h:inputText id="nombre"
+                       required="true"
+                           size="50"
+                      maxlength="50"
+                          value="#{personalHome.instance.nombre}">
+                    <a:support event="onblur" reRender="nombreField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="apellidoField" template="layout/edit.xhtml">
+                <ui:define name="label">Apellido</ui:define>
+                <h:inputText id="apellido"
+                           size="50"
+                      maxlength="50"
+                          value="#{personalHome.instance.apellido}">
+                    <a:support event="onblur" reRender="apellidoField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="celularField" template="layout/edit.xhtml">
+                <ui:define name="label">Celular</ui:define>
+                <h:inputText id="celular"
+                           size="15"
+                      maxlength="15"
+                          value="#{personalHome.instance.celular}">
+                    <a:support event="onblur" reRender="celularField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="telefonoField" template="layout/edit.xhtml">
+                <ui:define name="label">Telefono</ui:define>
+                <h:inputText id="telefono"
+                           size="15"
+                      maxlength="15"
+                          value="#{personalHome.instance.telefono}">
+                    <a:support event="onblur" reRender="telefonoField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="pinbbField" template="layout/edit.xhtml">
+                <ui:define name="label">Pinbb</ui:define>
+                <h:inputText id="pinbb"
+                           size="20"
+                      maxlength="20"
+                          value="#{personalHome.instance.pinbb}">
+                    <a:support event="onblur" reRender="pinbbField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="direccionField" template="layout/edit.xhtml">
+                <ui:define name="label">Direccion</ui:define>
+                <h:inputText id="direccion"
+                           size="100"
+                      maxlength="150"
+                          value="#{personalHome.instance.direccion}">
+                    <a:support event="onblur" reRender="direccionField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="correoField" template="layout/edit.xhtml">
+                <ui:define name="label">Correo</ui:define>
+                <h:inputText id="correo"
+                           size="50"
+                      maxlength="50"
+                          value="#{personalHome.instance.correo}">
+                    <a:support event="onblur" reRender="correoField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="correoalternativoField" template="layout/edit.xhtml">
+                <ui:define name="label">Correoalternativo</ui:define>
+                <h:inputText id="correoalternativo"
+                           size="50"
+                      maxlength="50"
+                          value="#{personalHome.instance.correoalternativo}">
+                    <a:support event="onblur" reRender="correoalternativoField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+            <s:decorate id="fechanacField" template="layout/edit.xhtml">
+                <ui:define name="label">Fechanac</ui:define>
+                <rich:calendar id="fechanac"
+                          value="#{personalHome.instance.fechanac}" datePattern="MM/dd/yyyy hh:mm a"/>
+            </s:decorate>
+
+
+            <s:decorate id="ultmactualizacionField" template="layout/edit.xhtml">
+                <ui:define name="label">Ultmactualizacion</ui:define>
+                <rich:calendar id="ultmactualizacion"
+                          value="#{personalHome.instance.ultmactualizacion}" datePattern="MM/dd/yyyy hh:mm a"/>
+            </s:decorate>
+
+
+            <s:decorate id="correosalertaField" template="layout/edit.xhtml">
+                <ui:define name="label">Correosalerta</ui:define>
+                <h:selectBooleanCheckbox id="correosalerta"
+                                      value="#{personalHome.instance.correosalerta}"/>
+            </s:decorate>
+
+
+
+
+
+
+
+
+
+            <div style="clear:both">
+                <span class="required">*</span>
+                required fields
+            </div>
+
+        </rich:panel>
+
+        <div class="actionButtons">
+
+            <h:commandButton id="save"
+                          value="Save"
+                         action="#{personalHome.persist}"
+                       disabled="#{!personalHome.wired}"
+                       rendered="#{!personalHome.managed}"/>
+
+            <h:commandButton id="update"
+                          value="Save"
+                         action="#{personalHome.update}"
+                       rendered="#{personalHome.managed}"/>
+
+            <h:commandButton id="delete"
+                          value="Delete"
+                         action="#{personalHome.remove}"
+                      immediate="true"
+                       rendered="#{personalHome.managed}"/>
+
+            <s:button id="cancelEdit"
+                   value="Cancel"
+             propagation="end"
+                    view="/Personal.xhtml"
+                rendered="#{personalHome.managed}"/>
+
+            <s:button id="cancelAdd"
+                   value="Cancel"
+             propagation="end"
+                    view="/#{empty personalFrom ? 'PersonalList' : personalFrom}.xhtml"
+                rendered="#{!personalHome.managed}"/>
+
+        </div>
+    </h:form>
+
+<rich:tabPanel switchType="ajax">
+
+    <rich:tab label="Cargo">
+    <div class="association" id="cargoParent">
+
+        <h:outputText value="There is no cargo associated with this personal."
+                   rendered="#{personalHome.instance.cargo == null}"/>
+
+        <rich:dataTable var="_cargo"
+                   value="#{personalHome.instance.cargo}"
+                rendered="#{personalHome.instance.cargo != null}"
+              rowClasses="rvgRowOne,rvgRowTwo"
+                      id="cargoTable">
+            <h:column>
+                <f:facet name="header">Codcargo</f:facet>
+                <h:outputText value="#{_cargo.codcargo}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Nombrecargo</f:facet>
+                <h:outputText value="#{_cargo.nombrecargo}"/>
+            </h:column>
+        </rich:dataTable>
+
+        <div class="actionButtons">
+            <s:button id="#{personalHome.instance.cargo != null ? 'changeParent' : 'selectParent'}" value="#{personalHome.instance.cargo != null ? 'Change' : 'Select'} cargo"
+                       view="/CargoList.xhtml">
+                <f:param name="from" value="PersonalEdit"/>
+            </s:button>
+        </div>
+
+    </div>
+    </rich:tab>
+
+    <rich:tab label="Gastoses">
+        <h:form styleClass="association" id="gastosesChildren">
+
+            <h:outputText value="There are no gastoses associated with this personal."
+                       rendered="#{empty personalHome.gastoses}"/>
+
+            <rich:dataTable value="#{personalHome.gastoses}"
+                           var="_gastos"
+                      rendered="#{not empty personalHome.gastoses}"
+                    rowClasses="rvgRowOne,rvgRowTwo"
+                            id="gastosesTable">
+                <rich:column sortBy="#{_gastos.consecutivo}">
+                    <f:facet name="header">Consecutivo</f:facet>
+                    <h:outputText value="#{_gastos.consecutivo}"/>
+                </rich:column>
+                <rich:column sortBy="#{_gastos.fecha}">
+                    <f:facet name="header">Fecha</f:facet>
+                    <h:outputText value="#{_gastos.fecha}">
+                        <s:convertDateTime type="date" dateStyle="short"/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_gastos.valor}">
+                    <f:facet name="header">Valor</f:facet>
+                    <h:outputText value="#{_gastos.valor}"/>
+                </rich:column>
+                <rich:column sortBy="#{_gastos.observacion}">
+                    <f:facet name="header">Observacion</f:facet>
+                    <h:outputText value="#{_gastos.observacion}"/>
+                </rich:column>
+                <rich:column sortBy="#{_gastos.valorbolivar}">
+                    <f:facet name="header">Valorbolivar</f:facet>
+                    <h:outputText value="#{_gastos.valorbolivar}">
+                        <f:convertNumber/>
+                    </h:outputText>
+                </rich:column>
+            </rich:dataTable>
+
+        </h:form>
+
+        <f:subview rendered="#{personalHome.managed}" id="gastoses">
+        <div class="actionButtons">
+            <s:button id="addgastos"
+                   value="Add gastos"
+                    view="/GastosEdit.xhtml"
+             propagation="none">
+                 <f:param name="personalDocumento"
+                         value="#{personalHome.instance.documento}"/>
+                 <f:param name="gastosFrom" value="Personal"/>
+            </s:button>
+        </div>
+        </f:subview>
+    </rich:tab>
+
+    <rich:tab label="Comisionhistoricos">
+        <h:form styleClass="association" id="comisionhistoricosChildren">
+
+            <h:outputText value="There are no comisionhistoricos associated with this personal."
+                       rendered="#{empty personalHome.comisionhistoricos}"/>
+
+            <rich:dataTable value="#{personalHome.comisionhistoricos}"
+                           var="_comisionhistorico"
+                      rendered="#{not empty personalHome.comisionhistoricos}"
+                    rowClasses="rvgRowOne,rvgRowTwo"
+                            id="comisionhistoricosTable">
+                <rich:column sortBy="#{_comisionhistorico.id.documento}">
+                    <f:facet name="header">Documento</f:facet>
+                    <h:outputText value="#{_comisionhistorico.id.documento}"/>
+                </rich:column>
+                <rich:column sortBy="#{_comisionhistorico.id.fechainicio}">
+                    <f:facet name="header">Fechainicio</f:facet>
+                    <h:outputText value="#{_comisionhistorico.id.fechainicio}">
+                        <s:convertDateTime type="both" dateStyle="short"/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_comisionhistorico.fechafin}">
+                    <f:facet name="header">Fechafin</f:facet>
+                    <h:outputText value="#{_comisionhistorico.fechafin}">
+                        <s:convertDateTime type="both" dateStyle="short"/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_comisionhistorico.valor}">
+                    <f:facet name="header">Valor</f:facet>
+                    <h:outputText value="#{_comisionhistorico.valor}">
+                        <f:convertNumber/>
+                    </h:outputText>
+                </rich:column>
+            </rich:dataTable>
+
+        </h:form>
+
+        <f:subview rendered="#{personalHome.managed}" id="comisionhistoricos">
+        <div class="actionButtons">
+            <s:button id="addcomisionhistorico"
+                   value="Add comisionhistorico"
+                    view="/ComisionhistoricoEdit.xhtml"
+             propagation="none">
+                 <f:param name="personalDocumento"
+                         value="#{personalHome.instance.documento}"/>
+                 <f:param name="comisionhistoricoFrom" value="Personal"/>
+            </s:button>
+        </div>
+        </f:subview>
+    </rich:tab>
+
+    <rich:tab label="Gestor">
+    <div class="association" id="gestorParent">
+
+        <h:outputText value="There is no gestor associated with this personal."
+                   rendered="#{personalHome.instance.gestor == null}"/>
+
+        <rich:dataTable var="_gestor"
+                   value="#{personalHome.instance.gestor}"
+                rendered="#{personalHome.instance.gestor != null}"
+              rowClasses="rvgRowOne,rvgRowTwo"
+                      id="gestorTable">
+            <h:column>
+                <f:facet name="header">Documento</f:facet>
+                <h:outputText value="#{_gestor.documento}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Personal documento</f:facet>
+                <h:outputText value="#{_gestor.personal.documento}"/>
+            </h:column>
+        </rich:dataTable>
+
+        <div class="actionButtons">
+            <s:button id="#{personalHome.instance.gestor != null ? 'changeParent' : 'selectParent'}" value="#{personalHome.instance.gestor != null ? 'Change' : 'Select'} gestor"
+                       view="/GestorList.xhtml">
+                <f:param name="from" value="PersonalEdit"/>
+            </s:button>
+        </div>
+
+    </div>
+    </rich:tab>
+
+    <rich:tab label="Arrastrador">
+    <div class="association" id="arrastradorParent">
+
+        <h:outputText value="There is no arrastrador associated with this personal."
+                   rendered="#{personalHome.instance.arrastrador == null}"/>
+
+        <rich:dataTable var="_arrastrador"
+                   value="#{personalHome.instance.arrastrador}"
+                rendered="#{personalHome.instance.arrastrador != null}"
+              rowClasses="rvgRowOne,rvgRowTwo"
+                      id="arrastradorTable">
+            <h:column>
+                <f:facet name="header">Documento</f:facet>
+                <h:outputText value="#{_arrastrador.documento}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Personal documento</f:facet>
+                <h:outputText value="#{_arrastrador.personal.documento}"/>
+            </h:column>
+        </rich:dataTable>
+
+        <div class="actionButtons">
+            <s:button id="#{personalHome.instance.arrastrador != null ? 'changeParent' : 'selectParent'}" value="#{personalHome.instance.arrastrador != null ? 'Change' : 'Select'} arrastrador"
+                       view="/ArrastradorList.xhtml">
+                <f:param name="from" value="PersonalEdit"/>
+            </s:button>
+        </div>
+
+    </div>
+    </rich:tab>
+
+    <rich:tab label="Saldos">
+        <h:form styleClass="association" id="saldosChildren">
+
+            <h:outputText value="There are no saldos associated with this personal."
+                       rendered="#{empty personalHome.saldos}"/>
+
+            <rich:dataTable value="#{personalHome.saldos}"
+                           var="_saldo"
+                      rendered="#{not empty personalHome.saldos}"
+                    rowClasses="rvgRowOne,rvgRowTwo"
+                            id="saldosTable">
+                <rich:column sortBy="#{_saldo.id.documento}">
+                    <f:facet name="header">Documento</f:facet>
+                    <h:outputText value="#{_saldo.id.documento}"/>
+                </rich:column>
+                <rich:column sortBy="#{_saldo.id.fecha}">
+                    <f:facet name="header">Fecha</f:facet>
+                    <h:outputText value="#{_saldo.id.fecha}">
+                        <s:convertDateTime type="date" dateStyle="short"/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_saldo.saldo}">
+                    <f:facet name="header">Saldo</f:facet>
+                    <h:outputText value="#{_saldo.saldo}">
+                        <f:convertNumber/>
+                    </h:outputText>
+                </rich:column>
+                <rich:column sortBy="#{_saldo.usuariomod}">
+                    <f:facet name="header">Usuariomod</f:facet>
+                    <h:outputText value="#{_saldo.usuariomod}"/>
+                </rich:column>
+                <rich:column sortBy="#{_saldo.fechamod}">
+                    <f:facet name="header">Fechamod</f:facet>
+                    <h:outputText value="#{_saldo.fechamod}">
+                        <s:convertDateTime type="date" dateStyle="short"/>
+                    </h:outputText>
+                </rich:column>
+            </rich:dataTable>
+
+        </h:form>
+
+        <f:subview rendered="#{personalHome.managed}" id="saldos">
+        <div class="actionButtons">
+            <s:button id="addsaldo"
+                   value="Add saldo"
+                    view="/SaldoEdit.xhtml"
+             propagation="none">
+                 <f:param name="personalDocumento"
+                         value="#{personalHome.instance.documento}"/>
+                 <f:param name="saldoFrom" value="Personal"/>
+            </s:button>
+        </div>
+        </f:subview>
+    </rich:tab>
+
+    <rich:tab label="Administrativo">
+    <div class="association" id="administrativoParent">
+
+        <h:outputText value="There is no administrativo associated with this personal."
+                   rendered="#{personalHome.instance.administrativo == null}"/>
+
+        <rich:dataTable var="_administrativo"
+                   value="#{personalHome.instance.administrativo}"
+                rendered="#{personalHome.instance.administrativo != null}"
+              rowClasses="rvgRowOne,rvgRowTwo"
+                      id="administrativoTable">
+            <h:column>
+                <f:facet name="header">Documento</f:facet>
+                <h:outputText value="#{_administrativo.documento}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Personal documento</f:facet>
+                <h:outputText value="#{_administrativo.personal.documento}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Comision</f:facet>
+                <h:outputText value="#{_administrativo.comision}">
+                    <f:convertNumber/>
+                </h:outputText>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Cargo</f:facet>
+                <h:outputText value="#{_administrativo.cargo}"/>
+            </h:column>
+        </rich:dataTable>
+
+        <div class="actionButtons">
+            <s:button id="#{personalHome.instance.administrativo != null ? 'changeParent' : 'selectParent'}" value="#{personalHome.instance.administrativo != null ? 'Change' : 'Select'} administrativo"
+                       view="/AdministrativoList.xhtml">
+                <f:param name="from" value="PersonalEdit"/>
+            </s:button>
+        </div>
+
+    </div>
+    </rich:tab>
+
+    <rich:tab label="Promotor">
+    <div class="association" id="promotorParent">
+
+        <h:outputText value="There is no promotor associated with this personal."
+                   rendered="#{personalHome.instance.promotor == null}"/>
+
+        <rich:dataTable var="_promotor"
+                   value="#{personalHome.instance.promotor}"
+                rendered="#{personalHome.instance.promotor != null}"
+              rowClasses="rvgRowOne,rvgRowTwo"
+                      id="promotorTable">
+            <h:column>
+                <f:facet name="header">Documento</f:facet>
+                <h:outputText value="#{_promotor.documento}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Personal documento</f:facet>
+                <h:outputText value="#{_promotor.personal.documento}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Asesor documento</f:facet>
+                <h:outputText value="#{_promotor.asesor.documento}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Arrastrador documento</f:facet>
+                <h:outputText value="#{_promotor.arrastrador.documento}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Comisionviajero</f:facet>
+                <h:outputText value="#{_promotor.comisionviajero}">
+                    <f:convertNumber/>
+                </h:outputText>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Comisionarrastrador</f:facet>
+                <h:outputText value="#{_promotor.comisionarrastrador}">
+                    <f:convertNumber/>
+                </h:outputText>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Tac</f:facet>
+                <h:outputText value="#{_promotor.tac}"/>
+            </h:column>
+        </rich:dataTable>
+
+        <div class="actionButtons">
+            <s:button id="#{personalHome.instance.promotor != null ? 'changeParent' : 'selectParent'}" value="#{personalHome.instance.promotor != null ? 'Change' : 'Select'} promotor"
+                       view="/PromotorList.xhtml">
+                <f:param name="from" value="PersonalEdit"/>
+            </s:button>
+        </div>
+
+    </div>
+    </rich:tab>
+
+    <rich:tab label="Asesor">
+    <div class="association" id="asesorParent">
+
+        <h:outputText value="There is no asesor associated with this personal."
+                   rendered="#{personalHome.instance.asesor == null}"/>
+
+        <rich:dataTable var="_asesor"
+                   value="#{personalHome.instance.asesor}"
+                rendered="#{personalHome.instance.asesor != null}"
+              rowClasses="rvgRowOne,rvgRowTwo"
+                      id="asesorTable">
+            <h:column>
+                <f:facet name="header">Documento</f:facet>
+                <h:outputText value="#{_asesor.documento}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Personal documento</f:facet>
+                <h:outputText value="#{_asesor.personal.documento}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Comision</f:facet>
+                <h:outputText value="#{_asesor.comision}">
+                    <f:convertNumber/>
+                </h:outputText>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Telefonooficina</f:facet>
+                <h:outputText value="#{_asesor.telefonooficina}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Extension</f:facet>
+                <h:outputText value="#{_asesor.extension}"/>
+            </h:column>
+        </rich:dataTable>
+
+        <div class="actionButtons">
+            <s:button id="#{personalHome.instance.asesor != null ? 'changeParent' : 'selectParent'}" value="#{personalHome.instance.asesor != null ? 'Change' : 'Select'} asesor"
+                       view="/AsesorList.xhtml">
+                <f:param name="from" value="PersonalEdit"/>
+            </s:button>
+        </div>
+
+    </div>
+    </rich:tab>
+</rich:tabPanel>
+</ui:define>
+
+</ui:composition>

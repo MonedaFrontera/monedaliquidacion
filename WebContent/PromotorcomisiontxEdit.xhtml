@@ -1,0 +1,210 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:s="http://jboss.com/products/seam/taglib"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:a="http://richfaces.org/a4j"
+    xmlns:rich="http://richfaces.org/rich"
+    template="layout/template.xhtml">
+
+<ui:define name="body">
+
+    <h:form id="promotorcomisiontx" styleClass="edit">
+
+        <rich:panel>
+            <f:facet name="header">#{promotorcomisiontxHome.managed ? 'Edit' : 'Add'} Promotorcomisiontx</f:facet>
+
+
+            <s:decorate id="codpaisField" template="layout/edit.xhtml">
+                <ui:define name="label">Codpais</ui:define>
+                <h:inputText id="codpais"
+                       disabled="#{promotorcomisiontxHome.managed}"
+                      required="true"
+                          size="5"
+                     maxlength="5"
+                         value="#{promotorcomisiontxHome.instance.id.codpais}">
+                    <a:support event="onblur" reRender="codpaisField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+            <s:decorate id="fechainicioField" template="layout/edit.xhtml">
+                <ui:define name="label">Fechainicio</ui:define>
+                <rich:calendar id="fechainicio"
+                       disabled="#{promotorcomisiontxHome.managed}"
+                       required="true"
+                          value="#{promotorcomisiontxHome.instance.id.fechainicio}" datePattern="MM/dd/yyyy" />
+            </s:decorate>
+
+            <s:decorate id="documentoField" template="layout/edit.xhtml">
+                <ui:define name="label">Documento</ui:define>
+                <h:inputText id="documento"
+                       disabled="#{promotorcomisiontxHome.managed}"
+                      required="true"
+                          size="15"
+                     maxlength="15"
+                         value="#{promotorcomisiontxHome.instance.id.documento}">
+                    <a:support event="onblur" reRender="documentoField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+
+
+
+            <s:decorate id="fechafinField" template="layout/edit.xhtml">
+                <ui:define name="label">Fechafin</ui:define>
+                <rich:calendar id="fechafin"
+                          value="#{promotorcomisiontxHome.instance.fechafin}" datePattern="MM/dd/yyyy" />
+            </s:decorate>
+
+
+            <s:decorate id="porcentajeField" template="layout/edit.xhtml">
+                <ui:define name="label">Porcentaje</ui:define>
+                <h:inputText id="porcentaje"
+                          value="#{promotorcomisiontxHome.instance.porcentaje}"
+                           size="11">
+                    <a:support event="onblur" reRender="porcentajeField" bypassUpdates="true" ajaxSingle="true"/>
+                </h:inputText>
+            </s:decorate>
+
+            <div style="clear:both">
+                <span class="required">*</span>
+                required fields
+            </div>
+
+        </rich:panel>
+
+        <div class="actionButtons">
+
+            <h:commandButton id="save"
+                          value="Save"
+                         action="#{promotorcomisiontxHome.persist}"
+                       disabled="#{!promotorcomisiontxHome.wired}"
+                       rendered="#{!promotorcomisiontxHome.managed}"/>
+
+            <h:commandButton id="update"
+                          value="Save"
+                         action="#{promotorcomisiontxHome.update}"
+                       rendered="#{promotorcomisiontxHome.managed}"/>
+
+            <h:commandButton id="delete"
+                          value="Delete"
+                         action="#{promotorcomisiontxHome.remove}"
+                      immediate="true"
+                       rendered="#{promotorcomisiontxHome.managed}"/>
+
+            <s:button id="cancelEdit"
+                   value="Cancel"
+             propagation="end"
+                    view="/Promotorcomisiontx.xhtml"
+                rendered="#{promotorcomisiontxHome.managed}"/>
+
+            <s:button id="cancelAdd"
+                   value="Cancel"
+             propagation="end"
+                    view="/#{empty promotorcomisiontxFrom ? 'PromotorcomisiontxList' : promotorcomisiontxFrom}.xhtml"
+                rendered="#{!promotorcomisiontxHome.managed}"/>
+
+        </div>
+    </h:form>
+
+<rich:tabPanel switchType="ajax">
+
+    <rich:tab label="Promotor *" labelClass="required">
+    <div class="association" id="promotorParent">
+
+        <h:outputText value="There is no promotor associated with this promotorcomisiontx."
+                   rendered="#{promotorcomisiontxHome.instance.promotor == null}"/>
+
+        <rich:dataTable var="_promotor"
+                   value="#{promotorcomisiontxHome.instance.promotor}"
+                rendered="#{promotorcomisiontxHome.instance.promotor != null}"
+              rowClasses="rvgRowOne,rvgRowTwo"
+                      id="promotorTable">
+            <h:column>
+                <f:facet name="header">Documento</f:facet>
+                <h:outputText value="#{_promotor.documento}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Personal documento</f:facet>
+                <h:outputText value="#{_promotor.personal.documento}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Asesor documento</f:facet>
+                <h:outputText value="#{_promotor.asesor.documento}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Arrastrador documento</f:facet>
+                <h:outputText value="#{_promotor.arrastrador.documento}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Comisionviajero</f:facet>
+                <h:outputText value="#{_promotor.comisionviajero}">
+                    <f:convertNumber/>
+                </h:outputText>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Comisionarrastrador</f:facet>
+                <h:outputText value="#{_promotor.comisionarrastrador}">
+                    <f:convertNumber/>
+                </h:outputText>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Tac</f:facet>
+                <h:outputText value="#{_promotor.tac}"/>
+            </h:column>
+        </rich:dataTable>
+
+        <div class="actionButtons">
+            <s:button id="#{promotorcomisiontxHome.instance.promotor != null ? 'changeParent' : 'selectParent'}" value="#{promotorcomisiontxHome.instance.promotor != null ? 'Change' : 'Select'} promotor"
+                       view="/PromotorList.xhtml">
+                <f:param name="from" value="PromotorcomisiontxEdit"/>
+            </s:button>
+        </div>
+
+    </div>
+    </rich:tab>
+
+    <rich:tab label="Pais *" labelClass="required">
+    <div class="association" id="paisParent">
+
+        <h:outputText value="There is no pais associated with this promotorcomisiontx."
+                   rendered="#{promotorcomisiontxHome.instance.pais == null}"/>
+
+        <rich:dataTable var="_pais"
+                   value="#{promotorcomisiontxHome.instance.pais}"
+                rendered="#{promotorcomisiontxHome.instance.pais != null}"
+              rowClasses="rvgRowOne,rvgRowTwo"
+                      id="paisTable">
+            <h:column>
+                <f:facet name="header">Codigopais</f:facet>
+                <h:outputText value="#{_pais.codigopais}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Paisiso codigopais</f:facet>
+                <h:outputText value="#{_pais.paisiso.codigopais}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Nombre</f:facet>
+                <h:outputText value="#{_pais.nombre}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Estado</f:facet>
+                <h:outputText value="#{_pais.estado}"/>
+            </h:column>
+        </rich:dataTable>
+
+        <div class="actionButtons">
+            <s:button id="#{promotorcomisiontxHome.instance.pais != null ? 'changeParent' : 'selectParent'}" value="#{promotorcomisiontxHome.instance.pais != null ? 'Change' : 'Select'} pais"
+                       view="/PaisList.xhtml">
+                <f:param name="from" value="PromotorcomisiontxEdit"/>
+            </s:button>
+        </div>
+
+    </div>
+    </rich:tab>
+</rich:tabPanel>
+</ui:define>
+
+</ui:composition>
