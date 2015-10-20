@@ -68,7 +68,7 @@ import org.jboss.seam.security.Identity;
 public class AdministrarTransaccion 
 {
     @Logger 
-    private Log log;
+    private Log log; 
     
     @In
     private FacesMessages facesMessages;
@@ -188,8 +188,7 @@ public class AdministrarTransaccion
 		System.out.println(">>>Tiempo total de la busqueda: " + t2 + "ms");		
 		return result;
 	}
-	
-	
+		
 	public void llenarPromotores(){
 		entityManager.clear();
 		String sql = "";
@@ -2166,7 +2165,6 @@ public class AdministrarTransaccion
 		return "persisted";
 		
 	}
-	
 	
 	
 	
