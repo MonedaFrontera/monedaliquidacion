@@ -650,9 +650,8 @@
 					</f:facet>
                 </rich:column>
                 <rich:column style="text-align:right">
-                    <f:facet name="header">Tasa Dolar</f:facet>
-                    <h:outputText value="#{AdministrarTarjeta.tasaDolar(_transaccion.fechatx, _transaccion.establecimiento.pais.codigopais,
-                    tarjetaHome.instance.promotor.documento)}">
+                    <f:facet name="header">Tasa de Cambio</f:facet>
+                    <h:outputText value="#{AdministrarTarjeta.tasaDolarNew(_transaccion.consecutivo)}">
                         <f:convertNumber/>
                     </h:outputText>
                 </rich:column>
