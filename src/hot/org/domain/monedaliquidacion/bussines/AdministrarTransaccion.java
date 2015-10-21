@@ -1177,8 +1177,8 @@ public class AdministrarTransaccion
 				String queryString = " select t from Tasaeuropromotorparametro t where " +
 						"t.pais.codigopais = '" + pais.getCodigopais() + "' and " +
 						"t.promotor.documento = '" + promotor.getDocumento() + "' and " +
-						"t.fechainicio >= '" + transaccionHome.getInstance().getFechatx() + "' and " +
-						"(t.fechafin <= '" + transaccionHome.getInstance().getFechatx() + "' or t.fechafin is null ) ";
+						"t.fechainicio <= '" + transaccionHome.getInstance().getFechatx() + "' and " +
+						"(t.fechafin >= '" + transaccionHome.getInstance().getFechatx() + "' or t.fechafin is null ) ";
 				
 				List< Tasaeuropromotorparametro > listEPromo  = 
 									entityManager.createQuery(queryString).getResultList();
@@ -1226,8 +1226,8 @@ public class AdministrarTransaccion
 				String queryString = " select t from Tasadolarpromotorparametro t where " +
 						"t.pais.codigopais = '" + pais.getCodigopais() + "' and " +
 						"t.promotor.documento = '" + promotor.getDocumento() + "' and " +
-						"t.fechainicio >= '" + transaccionHome.getInstance().getFechatx() + "' and " +
-						"(t.fechafin <= '" + transaccionHome.getInstance().getFechatx() + "' or t.fechafin is null ) ";
+						"t.fechainicio <= '" + transaccionHome.getInstance().getFechatx() + "' and " +
+						"(t.fechafin >= '" + transaccionHome.getInstance().getFechatx() + "' or t.fechafin is null ) ";
 				
 				List< Tasadolarpromotorparametro > listEPromo  = 
 									entityManager.createQuery(queryString).getResultList();
@@ -1676,8 +1676,8 @@ public class AdministrarTransaccion
 		String queryStringEuro = "select t from Tasaeuropromotorparametro t where " +
 					"t.pais.codigopais = '" + pais.getCodigopais() + "' and " +
 					"t.promotor.documento = '" + promotor.getDocumento() + "' and " +
-					"t.fechainicio >= '" + transaccionHome.getInstance().getFechatx() + "' and " +
-					"(t.fechafin <= '" + transaccionHome.getInstance().getFechatx() + "' or t.fechafin is null ) and " +
+					"t.fechainicio <= '" + transaccionHome.getInstance().getFechatx() + "' and " +
+					"(t.fechafin >= '" + transaccionHome.getInstance().getFechatx() + "' or t.fechafin is null ) and " +
 					"t.tipocupo = '" + transaccionHome.getInstance().getTipotx() + "' " ;
 					 
 		String est = " and t.establecimiento.codigounico = '" + establecimiento.getCodigounico() + "'  ";
@@ -1747,8 +1747,8 @@ public class AdministrarTransaccion
 			queryStringEuro = "select t from Tasaeuropromotorparametro t where " +
 					"t.pais.codigopais = '" + pais.getCodigopais() + "' and " +
 					"t.promotor.documento = '" + promotor.getDocumento() + "' and " +
-					"t.fechainicio >= '" + transaccionHome.getInstance().getFechatx() + "' and " +
-					"(t.fechafin <= '" + transaccionHome.getInstance().getFechatx() + "' or t.fechafin is null ) and " +
+					"t.fechainicio <= '" + transaccionHome.getInstance().getFechatx() + "' and " +
+					"(t.fechafin >= '" + transaccionHome.getInstance().getFechatx() + "' or t.fechafin is null ) and " +
 					"t.tipocupo = '" + transaccionHome.getInstance().getTipotx() + "' " ;
 		}// fin del for principal	
 		
@@ -1779,8 +1779,8 @@ public class AdministrarTransaccion
 		
 		String queryStringEuro = "select t from Tasaeuroparametro t where " +
 					"t.pais.codigopais = '" + pais.getCodigopais() + "' and " +
-					"t.fechainicio >= '" + transaccionHome.getInstance().getFechatx() + "' and " +
-					"(t.fechafin <= '" + transaccionHome.getInstance().getFechatx() + "' or t.fechafin is null ) and " +
+					"t.fechainicio <= '" + transaccionHome.getInstance().getFechatx() + "' and " +
+					"(t.fechafin >= '" + transaccionHome.getInstance().getFechatx() + "' or t.fechafin is null ) and " +
 					"t.tipocupo = '" + transaccionHome.getInstance().getTipotx() + "' " ;
 					 
 		String est = " and t.establecimiento.codigounico = '" + establecimiento.getCodigounico() + "'  ";
@@ -1866,8 +1866,8 @@ public class AdministrarTransaccion
 				//reinicio de consulta base.
 			queryStringEuro = "select t from Tasaeuroparametro t where " +
 					"t.pais.codigopais = '" + pais.getCodigopais() + "' and " +
-					"t.fechainicio >= '" + transaccionHome.getInstance().getFechatx() + "' and " +
-					"(t.fechafin <= '" + transaccionHome.getInstance().getFechatx() + "' or t.fechafin is null ) and " +
+					"t.fechainicio <= '" + transaccionHome.getInstance().getFechatx() + "' and " +
+					"(t.fechafin >= '" + transaccionHome.getInstance().getFechatx() + "' or t.fechafin is null ) and " +
 					"t.tipocupo = '" + transaccionHome.getInstance().getTipotx() + "' " ;
 		}// fin del for principal
 		
@@ -1909,8 +1909,8 @@ public class AdministrarTransaccion
 		String queryStringEuro = "select t from Tasadolarpromotorparametro t where " +
 					"t.pais.codigopais = '" + pais.getCodigopais() + "' and " +
 					"t.promotor.documento = '" + promotor.getDocumento() + "' and " +
-					"t.fechainicio >= '" + transaccionHome.getInstance().getFechatx() + "' and " +
-					"(t.fechafin <= '" + transaccionHome.getInstance().getFechatx() + "' or t.fechafin is null ) and " +
+					"t.fechainicio <= '" + transaccionHome.getInstance().getFechatx() + "' and " +
+					"(t.fechafin >= '" + transaccionHome.getInstance().getFechatx() + "' or t.fechafin is null ) and " +
 					"t.tipocupo = '" + transaccionHome.getInstance().getTipotx() + "' " ;
 					 
 		String est = " and t.establecimiento.codigounico = '" + establecimiento.getCodigounico() + "'  ";
@@ -1980,8 +1980,8 @@ public class AdministrarTransaccion
 			queryStringEuro = "select t from Tasadolarpromotorparametro t where " +
 					"t.pais.codigopais = '" + pais.getCodigopais() + "' and " +
 					"t.promotor.documento = '" + promotor.getDocumento() + "' and " +
-					"t.fechainicio >= '" + transaccionHome.getInstance().getFechatx() + "' and " +
-					"(t.fechafin <= '" + transaccionHome.getInstance().getFechatx() + "' or t.fechafin is null ) and " +
+					"t.fechainicio <= '" + transaccionHome.getInstance().getFechatx() + "' and " +
+					"(t.fechafin >= '" + transaccionHome.getInstance().getFechatx() + "' or t.fechafin is null ) and " +
 					"t.tipocupo = '" + transaccionHome.getInstance().getTipotx() + "' " ;
 		}// fin del for principal	
 		
@@ -2013,8 +2013,8 @@ public class AdministrarTransaccion
 		
 		String queryStringEuro = "select t from Tasadolarparametro t where " +
 					"t.pais.codigopais = '" + pais.getCodigopais() + "' and " +
-					"t.fechainicio >= '" + transaccionHome.getInstance().getFechatx() + "' and " +
-					"(t.fechafin <= '" + transaccionHome.getInstance().getFechatx() + "' or t.fechafin is null ) and " +
+					"t.fechainicio <= '" + transaccionHome.getInstance().getFechatx() + "' and " +
+					"(t.fechafin >= '" + transaccionHome.getInstance().getFechatx() + "' or t.fechafin is null ) and " +
 					"t.tipocupo = '" + transaccionHome.getInstance().getTipotx() + "' " ;
 					 
 		String est = " and t.establecimiento.codigounico = '" + establecimiento.getCodigounico() + "'  ";
@@ -2099,8 +2099,8 @@ public class AdministrarTransaccion
 				//reinicio de consulta base.
 			queryStringEuro = "select t from Tasadolarparametro t where " +
 					"t.pais.codigopais = '" + pais.getCodigopais() + "' and " +
-					"t.fechainicio >= '" + transaccionHome.getInstance().getFechatx() + "' and " +
-					"(t.fechafin <= '" + transaccionHome.getInstance().getFechatx() + "' or t.fechafin is null ) and " +
+					"t.fechainicio <= '" + transaccionHome.getInstance().getFechatx() + "' and " +
+					"(t.fechafin >= '" + transaccionHome.getInstance().getFechatx() + "' or t.fechafin is null ) and " +
 					"t.tipocupo = '" + transaccionHome.getInstance().getTipotx() + "' " ;
 		}// fin del for principal
 		
