@@ -126,6 +126,8 @@ public class AdministrarTasa
 		private Porcentajecomisiontxparam porcentajeGlob;
 		
 		private String pathBandera;
+		
+		private boolean formValido;
 	    
 		
 		 public void administrarTasa() {
@@ -312,9 +314,16 @@ public class AdministrarTasa
 		public void setPathBandera(String pathBandera) {
 			this.pathBandera = pathBandera;
 		}
-
-		//Metodos de servicio para la Vista
 		
+		public boolean isFormValido() {
+			return formValido;
+		}
+
+		public void setFormValido(boolean formValido) {
+			this.formValido = formValido;
+		}
+
+		//Metodos de servicio para la Vista		
 		public void ubicarPromotor(){
 			Promotor pr = CargarObjetos.ubicarPromotor(this.nombre);
 			if(pr!=null){
@@ -478,7 +487,118 @@ public class AdministrarTasa
 		 * Tasa Dolar, Tasa Euro, porcentajes de comision y paridad de monedas
 		 * @return
 		 */
-		public String guardarTasaDolarParam(){
+		public String guardarTasaDolarParam(){			
+			
+			// Valida que se haya elegido un pais
+			if( this.getPaisTemp() == null || this.getPaisTemp().equals("") ){
+				facesMessages.addToControl("paisSel",
+						"Se debe seleccionar un pais");
+					return null;
+			}			
+			// Valida que se haya seleccionado la fecha
+			if( this.getFechaIniTemp() == null){
+				facesMessages.addToControl("fechainicio",	
+				"Se debe seleccionar una fecha para esta tasa");
+				return null;
+				
+			}
+			// Valida que se haya ingresado las tasas y porcentajes para estableicimiento
+			if( this.getPaisTemp().getPaisiso().getCodigomoneda().equals("EUR")){
+				if( this.getTasaEuroOfTemp() == null ){
+					facesMessages.addToControl("tasaeurorOf",	
+					"Se debe ingresar la tasa de euro para la oficina");
+					return null;
+				}
+				if(this.getTasaEuroTacTemp() == null){
+					facesMessages.addToControl("tasaeuroTac",	
+					"Se debe ingresar la tasa de euro para clientes TAC");
+					return null;
+				}					
+				if(this.getTasaEuroTemp() == null){					
+					facesMessages.addToControl("tasaEuro",	
+					"Se debe ingresar la tasa de euro para clientes");
+					return null;
+				}	
+				//Valida el porcentaje de oficna y cliente 
+				if( this.getPorcentCt() == null ){
+					facesMessages.addToControl("porcentClient",	
+					"Se debe ingresar la tasa de porcentaje  para cliente");
+					return null;
+				}
+				if( this.getPorcentOfi()== null ){
+					facesMessages.addToControl("porcentOf",	
+					"Se debe ingresar la tasa de porcentaje para oficina");
+					return null;
+				}
+			}else{
+				if( this.getTasaDolarOfTemp() == null ){
+					facesMessages.addToControl("tasadolarOf",	
+					"Se debe ingresar la tasa de dolar para la oficina");
+					return null;
+				}
+				if(this.getTasaEuroTacTemp() == null){
+					facesMessages.addToControl("tasadolarTac",	
+					"Se debe ingresar la tasa de dolar para clientes TAC");
+					return null;
+				}					
+				if(this.getTasaEuroTemp() == null){					
+					facesMessages.addToControl("tasadolar",	
+					"Se debe ingresar la tasa de dolar para clientes");
+					return null;
+				}
+				//Valida el porcentaje de oficna y cliente 
+				if( this.getPorcentCt() == null ){
+					facesMessages.addToControl("porcentClient",	
+					"Se debe ingresar la tasa de porcentaje  para cliente");
+					return null;
+				}
+				if( this.getPorcentOfi()== null ){
+					facesMessages.addToControl("porcentOf",	
+					"Se debe ingresar la tasa de porcentaje para oficina");
+					return null;
+				}
+			}			
+			
+			// Valida que se haya seleccionado un establecimiento
+			System.out.println(this.getTasaEuroOfTemp() != null);
+			System.out.println(this.getTasaDolarOfTemp() != null);
+			if((this.getTasaDolarOfTemp() != null || this.getTasaEuroOfTemp() != null) &&
+					this.getEstaTemp() == null ){
+				facesMessages.addToControl("name",	
+					"Se debe seleccionar el establecimiento");
+					return null;
+			}
+			// Valida los parametros de euro negociado para promotor
+			if( this.getPromoTemp() != null && 
+					this.getPaisTemp().getPaisiso().getCodigomoneda().equals("EUR") ){
+				if( this.getPorcentCt() == null){
+					facesMessages.addToControl("porcentClient",	
+					"Se debe ingresar la tasa de porcentaje  para cliente");
+					return null;					
+				}
+				if(this.getTasaEuroNegTemp() == null){
+					facesMessages.addToControl("tasaeurorNeg",	
+					"Se debe ingresar la tasa de euro  para cliente");
+					return null;
+					
+				}
+			}
+			// Valida los parametros de dolar negociado para promotor
+			if( this.getPromoTemp() != null && 
+					this.getPaisTemp().getPaisiso().getCodigomoneda().equals("USD") ){
+				if( this.getPorcentCt() == null){
+					facesMessages.addToControl("porcentClient",	
+					"Se debe ingresar la tasa de porcentaje  para cliente");
+					return null;					
+				}
+				if(this.getTasaDolarNegTemp() == null){
+					facesMessages.addToControl("tasadolarNeg",	
+					"Se debe ingresar la tasa de euro  para cliente");
+					return null;
+					
+				}
+			}
+			
 			
 			Boolean euro = false;
 			Boolean negociado = false;
@@ -551,8 +671,7 @@ public class AdministrarTasa
 						facesMessages.addToControl("name", "Ya se encuentra grabada la tasa para " +
 								"esta fecha y establecimiento");
 						return null;
-					}
-				
+					}				
 					this.cerrarTasaEuroGlobal();
 					this.cerrarComisionGlobal();
 					
@@ -567,8 +686,7 @@ public class AdministrarTasa
 								"Ya se encuentra grabada la tasa para "
 										+ "esta fecha y establecimiento");
 							return null;
-					}
-					
+					}					
 					this.cerrarTasaDolarGlobal();
 					this.cerrarComisionGlobal();
 					
@@ -577,8 +695,7 @@ public class AdministrarTasa
 					}
 					mensaje = this.grabarTasaDolarGlobal();
 				}
-			}
-			
+			}			
 			// Si es global Instancio el objeto Establecimiento precio
 			if( estbto ){
 				// Cierra los parametros de %, € o $ para el establecimiento
@@ -593,6 +710,10 @@ public class AdministrarTasa
 		}
 		
 		
+		public void validarCamposFormulario(){
+			// Se implementa proceso de validacion del formulario 
+			// con alerta de interfaz.
+		}
 		
 		///////////////////////////////
 		// Metodos para Grabar Tasas //

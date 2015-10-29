@@ -67,6 +67,7 @@ import org.jboss.seam.security.Identity;
 @Name("AdministrarTransaccion")
 public class AdministrarTransaccion 
 {
+	
     @Logger 
     private Log log; 
     
@@ -1347,7 +1348,7 @@ public class AdministrarTransaccion
 			transaccionHome.getInstance().setValortxpesos(new BigDecimal(pesos));
 		}
 		
-		//Busca el % de comision de la transaccion con base en los parametros de esta y 
+		//Busca el % de comision de la transaccion con base en los parametros de la Tx y 
 		//los niveles de precedencia contenidos en el cuadro 
 		// http://www.monedafrontera.com:8080/tech/precedencias.jsp
 		Integer comision = null;//comision de la TX
