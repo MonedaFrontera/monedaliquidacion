@@ -522,8 +522,7 @@ public class AdministrarTarjeta
     				t = tx.getValortxpesos().divide(tx.getValortxdolares());
         			}
     			}
-    		} 
-    		
+    		}    		
     	return t;
     	
     	}catch(Exception e){
